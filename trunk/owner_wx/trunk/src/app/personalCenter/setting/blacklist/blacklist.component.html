@@ -1,0 +1,14 @@
+
+<div class="b-b back_fff padding17 dis_flex" *ngFor="let user of data">
+  <div class="flex1" (click)="Driverdetails(user?.blackId)">
+    <img src="../assets/images/receive_Touxiang.png" alt="" class="touxiang m-t10 m-b10"/>
+  </div>
+  <div class="flex9 pL_10 p_T10">
+    <div class="col_333 fon900 back_fff pL_10 m_t5">
+      <div class="fonSml">{{user?.name}}</div>
+      <div class="perTopSpan font12 fff">&nbsp;<img src="../assets/images/jifen.png" alt=""/>&nbsp;&nbsp;已认证</div>
+     </div>
+  </div>
+  <span class="remove ea5529" (click)="remove(user?.id)">移除黑名单</span>
+</div>
+<app-showCeng [message]="message" (outer)="cengShow($event)" *ngIf="showTrue"></app-showCeng>

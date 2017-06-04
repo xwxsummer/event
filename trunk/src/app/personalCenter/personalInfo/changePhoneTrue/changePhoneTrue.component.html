@@ -1,0 +1,13 @@
+<form (ngSubmit)="submitForm()" #Form="ngForm" name="submitForm" role="form">
+  <input class="input_org" required type="tel" name="newMobile" placeholder="请输入手机号码" [(ngModel)]="change.newMobile" #newMobile="ngModel" minlength="11" maxlength="11" pattern="^1[3|5|6|7|8]{1}[0-9]{9}$"/>
+  <div class="posi_relative">
+    <input class="input_org" type="tel" name="newCaptcha" placeholder="请输入验证码" required [(ngModel)]="change.newCaptcha" #newCaptcha="ngModel" minlength="4" maxlength="4" pattern=""/>
+    <div class="posi_abslotu ea5529 posi_right transformY50 fonSml" (click)="changCaptcha()"><span class="clo_ccc m-r16">|</span>获取验证码</div>
+  </div>
+  <div class="m0_auto" style="width: 80%;">
+    <input type="submit" class="bindFinish text_center fff fonSml fon900" id="submit" value="确认修改" [disabled]="!Form.form.valid"/>
+  </div>
+</form>
+
+
+

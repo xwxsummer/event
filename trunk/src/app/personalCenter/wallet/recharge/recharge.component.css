@@ -1,0 +1,39 @@
+.box{
+    background: #efeff4;
+}
+.box2{
+    height: 7rem;
+    background: #ffffff;
+    border-bottom: 1px solid #CCCCCC;
+}
+.box2 .box3{
+    height: 4rem;
+    border-bottom: 1px solid #CCCCCC;
+}
+.bank{
+    height: 4rem;
+    margin: 0 auto;
+    line-height: 4rem;
+    padding-left: 15px;
+    color: #000000;
+}
+.bank .bank_h img{
+
+     height: 2rem;
+     width: 2rem;
+
+    vertical-align: middle;
+ }
+.bank span:nth-child(4){
+    font-size: 1rem;
+    float: right;
+    padding-right: 15px;
+}
+#input{
+    width: 50%;
+    background: #ea5529;
+    color: #ffffff;
+   margin-top: 10%;
+    margin-left: 25%;
+
+}

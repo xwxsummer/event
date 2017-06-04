@@ -1,0 +1,29 @@
+
+.perCenterImg{
+  width: 2.5rem;
+  vertical-align: middle;
+}
+.m_t20{
+  display: inline-block;
+  margin-top: 15px;
+}
+.m_t10{
+  margin-top: 10px;
+}
+.shimingRenzheng{
+  width: 25px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+ul>li{
+  border-bottom: 1px solid #ccc;
+  padding: 12px 1.6rem;
+  color: #333;
+}
+.f89c3a{
+  color: #f89c3a;
+}
+.lv{
+  color: #00cc00;
+}
+

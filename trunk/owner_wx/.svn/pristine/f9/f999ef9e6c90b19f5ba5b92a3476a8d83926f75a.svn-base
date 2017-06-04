@@ -1,0 +1,54 @@
+.yewotongji_flex{
+  flex: 1;
+  height: 2rem;
+  line-height: 2rem;
+}
+.padding17{
+  padding-right: 1.7rem;
+  padding-left: 1.7rem;
+}
+/*top*/
+.height36{
+  height: 3.6rem;
+  line-height: 3.6rem;
+}
+.myGoods_content{
+  box-sizing: border-box;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  margin-bottom: 10px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+}
+.myGoods_jiantou{
+  width: 2.4rem;
+  display: inline-block;
+  vertical-align: bottom;
+}
+.myGoods_bottom{
+  height: 2.6rem;
+  line-height: 2.6rem;
+}
+.jiantou_7{
+  top: -7px;
+}
+.myGoods_cancel{
+  height: 1.6rem;
+  line-height: 1.6rem;
+  border: 1px solid #4bbcbd;
+  color: #4bbcbd;
+  border-radius: 10px;
+  width: 4.7rem;
+  margin-top: 0.5rem;
+  margin-left: 5px;
+}
+.List>div{
+  height: 1.5rem;
+  line-height: 1.5rem;
+}
+
+
+
+
+
+

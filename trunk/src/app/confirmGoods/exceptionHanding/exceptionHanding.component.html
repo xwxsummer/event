@@ -1,0 +1,48 @@
+
+<div class="padding16 b-b m-b10 back_fff">
+  <h3 class="height3 fonNormal col_333 b-b">装货信息</h3>
+  <ul class="clearfix p_T10 p_b10">
+    <li class="detail_li pull-left">皮重： {{data?.sendTare}}/{{data?.goodsUnit }}</li>
+     <li class="detail_li pull-left">毛重： {{data?.sendRough}}/{{data?.goodsUnit }}</li>
+    <li class="detail_li pull-left">净重： {{data?.sendNet}}/{{data?.goodsUnit }}</li>
+    <li class="detail_li">装货时间： {{data?.loadTime}}</li>
+  </ul>
+</div>
+
+
+  
+  <form>
+      <div class="padding16 b-b m-b10 back_fff">
+          <h3 class="height3 fonNormal col_333 b-b">收货信息</h3>
+    <ul class="input_ul clearfix">
+      <li class="pull-left">皮重：<input type="text" ngModel name="pizhong"  />&nbsp;{{data?.goodsUnit }}&nbsp;</li>
+<li class="pull-left">&nbsp;毛重：<input type="text" ngModel name="maozhong" />&nbsp;{{data?.goodsUnit}}</li>
+      <li class="pull-left">净重：<input type="text" ngModel name="jingzhong" />&nbsp;{{data?.goodsUnit}}&nbsp;</li>
+      <li class="pull-left">&nbsp;运费：<input type="text" ngModel name="yunfei" />&nbsp;元</li>
+       <li class="pull-left">装货时间： {{data?.loadTime}}</li>
+    </ul>
+    </div>
+
+    <div class="padding16 b-b m-b10 back_fff">
+     <h3 class="height3 fonNormal col_333">异常原因</h3>
+    <textarea  name="speaks"  cols="10" rows="5" style="background-color:#ccc; border-radius:.5rem"></textarea>
+     <div></div>
+     </div>
+<div class="padding16 back_fff b-b" >
+    <h3 class="fonNormal col_333 height3" >添加照片（选填）</h3>
+    <div class="addImg p_b10 p_T10 fonSml m-b10"  style="background-color:#ccc;border-radius:.5rem">
+        <label class="img" id="upload" for="file">最多可添加6张照片</label>
+        <input type="file" id="file"  style="display:none"/>
+    </div>     
+</div>
+<div class="remarks">
+        <div class="remarks2">
+        <span *ngFor="let img of imgList" [ngStyle]="{'background-image':'url(' + img + ')'}" ></span></div>
+</div>
+    <div type="submit" class="zhuangche_sure text_center bgc_ea5529 fff fonSml" (click)="ReceivedSuccess()">提交申请</div>
+      <div class="text_center">联系客服</div>
+ </form>
+<!--<div>{{myForm.value.pizhong | json}}</div>-->
+<!--<p>{{values2-values}}</p>-->
+
+

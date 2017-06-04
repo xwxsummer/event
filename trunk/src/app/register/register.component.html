@@ -1,0 +1,25 @@
+<form (ngSubmit)="submitForm()" #Form="ngForm" name="submitForm" role="form">
+<input class="input_org" required type="tel" name="phone" placeholder="请输入手机号码" [(ngModel)]="user.mobile" #phone="ngModel" minlength="11" maxlength="11" pattern="^1[3|5|6|7|8]{1}[0-9]{9}$"/>
+<div class="posi_relative">
+<input class="input_org" type="tel" [(ngModel)]="user.captcha" name="yzm1" id="yzm1" placeholder="请输入验证码" minlength="4" maxlength="4"/>
+<div class="posi_abslotu ea5529 posi_right transformY50 fonSml" (click)="captchaReg()"><span class="clo_ccc m-r16">|</span>获取验证码</div>
+</div>
+<div class="m-t10 posi_relative">
+<input class="border_top input_org" type="{{imgWatch_img1.ImgType}}" name="password" minlength="6" maxlength="12" pattern="^[a-zA-Z0-9_\.]+$" [(ngModel)]="pwd" required #password="ngModel"  placeholder="请输入6-12位数字或字母密码"/>
+<img src="{{imgWatch_img1.imgSrc}}" alt="" class="posi_abslotu posi_right transformY50" style="width: 24px;" (click)="changeImg_img1()"/>
+</div>
+<div class="posi_relative">
+<input type="{{imgWatch_img2.ImgType}}" class="input_org" name="confirmPassword" [(ngModel)]="rePwd" required #confirmPassword="ngModel" minlength="6" maxlength="12" pattern="^[a-zA-Z0-9_\.]+$" placeholder="再次输入密码" />
+<img src="{{imgWatch_img2.imgSrc}}" alt="" class="posi_abslotu posi_right transformY50" style="width: 24px;" (click)="changeImg_img2()"/>
+</div>
+<div class="m0_auto" style="width: 80%;">
+<input type="submit" class="bindFinish text_center fff fonSml fon900" id="submit" value="完&nbsp;&nbsp;&nbsp;成" [disabled]="!Form.form.valid"/>
+<p class="m-t10 fon85">点击完成代表您已同意<span style="color:#0000FF;">《***用户协议》</span></p>
+</div>
+</form>
+
+
+
+
+
+

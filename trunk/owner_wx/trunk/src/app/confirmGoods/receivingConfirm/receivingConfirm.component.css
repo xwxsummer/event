@@ -1,0 +1,81 @@
+.padding16{
+  padding-top: 1rem;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+}
+.height3{
+  height: 3rem;
+  line-height: 3rem;
+}
+li{
+  line-height: 1.6rem;
+}
+.detail_li1{
+  width: 50%;
+}
+.input_ul li {
+  width: 50%;
+  display: flex;
+  margin-top: 5px;
+}
+.input_ul li input{
+  flex: 1;
+  height: 1.8rem;
+  margin-bottom: 5px;
+}
+.input_ul1 li {
+  width:70%;
+  display: flex;
+  margin-top: 5px;
+}
+.input_ul1 li input{
+  flex: 1;
+  height: 1.8rem;
+  margin-bottom: 5px;
+}
+.zhuangche_sure{
+  width: 70%;
+  height: 2.6rem;
+  line-height: 2.6rem;
+  border-radius: 10px;
+  margin: 0 auto;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+.remarks2{
+    width: 90%;
+    margin: 0 auto;
+}
+.remarks p{
+    padding-left: 1.5rem;
+    width: 95%;
+}
+.remarks span{
+    display: inline-block;
+    width: 32%;
+    /*margin: 5px;*/
+    height: 4rem;
+    background: #CCCCCC;
+    background-size: 100% 100%;
+}
+textarea{
+  border-radius: 10px;
+  background-color: #ebebeb;
+  color: #333;
+  margin:0
+}
+.imgs{
+  font-size: 20px;
+  vertical-align: middle;
+}
+.camera{
+  width: 8%;
+  height: 3%;
+  margin-left: 10%;
+  margin-right: 5px;
+}
+.addImg{
+  background-color: #ebebeb;
+  border-radius: 10px;
+  padding-left: 16px;
+}

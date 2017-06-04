@@ -1,0 +1,41 @@
+<div class="component" id="id">
+
+  <form class="" #myForm="ngForm" >
+    <div class="c_top">
+        <div class="c_top_box">
+           
+    <ul class="mui-table-view back_fff cancel_ul">
+        <div class="fonNormal col_333 height3 padding16">请选择拒绝装货的原因</div>
+        <li class="mui-table-view-cell cancel_li" [class.special]="AdditionalTip[0]" (click)="AdditionalTip_click(0)">身份不符</li>
+        <li class="mui-table-view-cell cancel_li" [class.special]="AdditionalTip[1]" (click)="AdditionalTip_click(1)">驾龄不符</li>
+        <li class="mui-table-view-cell cancel_li" [class.special]="AdditionalTip[2]" (click)="AdditionalTip_click(2)">车辆问题</li>
+        <li class="mui-table-view-cell cancel_li" [class.special]="AdditionalTip[3]" (click)="AdditionalTip_click(3)">没有货单</li>
+        <li class="mui-table-view-cell cancel_li" [class.special]="AdditionalTip[4]" (click)="AdditionalTip_click(4)">驾驶问题</li>
+        <li class="mui-table-view-cell cancel_li" [class.special]="AdditionalTip[5]" (click)="AdditionalTip_click(5)">不知道</li>
+    </ul><br/>
+<div class="padding16 back_fff m-t10 b-b b-t">
+    <div class="fonNormal col_333 height3">还有话说</div>
+    <textarea  name="speaks" maxlength="200"  cols="10" rows="4" ngModel placeholder="最多可以输入200字"></textarea>
+  </div>
+<div class="padding16 back_fff b-b" >
+    <div class="fonNormal col_333 height3" >添加照片（选填）</div>
+   
+     <div class="addImg p_b10 p_T10 fonSml m-b10">
+        <label class="imgs" id="upload" for="file"><img src="../../../assets/images/Camera.png" alt="" class="camera" />最多可添加6张照片</label>
+         <input type="file" id="file" value="" style="display:none"/>
+         </div>    
+          </div>
+
+ <div class="remarks">
+        <div class="remarks2">
+        <span *ngFor="let img of imgList; let i = index" [ngStyle]="{'background-image':'url(' + img + ')'}" (click)="removeImage(i)" >X</span>
+    </div>
+  </div>
+</div>
+    </div>
+    <div class="c_bottom">
+        <button class="button" type="submit" [disabled]="!myForm.form.valid" (click)="onSubmit(myForm.value)" >拒绝装车</button>
+    </div>
+  </form>
+</div>
+

@@ -1,0 +1,45 @@
+
+.padding17{
+  padding-right: 1.6rem;
+  padding-left: 1.6rem;
+}
+.touxiang{
+  vertical-align: middle;
+  width: 3.5rem;
+}
+.dis_flex{
+  display: flex;
+}
+.dis_flex>.flex1{
+  flex: 1;
+}
+.dis_flex>.flex9{
+  flex: 9;
+}
+
+.perTopSpan{
+  display: inline-block;
+  padding: 2px 10px 0px 3px;
+  background-color: #333;
+  opacity: .5;
+  border-radius: 10px;
+  margin-bottom: 2px;
+  margin-top: 4px;
+  font-size: 10px;
+}
+.perTopSpan img {
+  width: 15px;
+  vertical-align: middle;
+  margin-bottom: 2px;
+}
+.remove{
+  padding: 5px 8px;
+  border: 1px solid #ea5529;
+  border-radius: 5px;
+  height: 1.8rem;
+  margin-top: 25px;
+}
+.m_t5{
+  margin-top: 5px;
+}
+

@@ -1,0 +1,53 @@
+import { RouterModule } from '@angular/router';
+import { AppComponent } from './app.component';
+import { Register } from './register/register.component';
+import {trajectoryMap} from "./trajectoryMap/trajectoryMap.component";
+export const AppRoutes=[
+  {
+    path:'',
+    redirectTo:"market",
+    pathMatch:'full'
+  },
+  {    path:'register',//注册
+    component:Register
+  },
+  {    path:'certification',//认证
+    loadChildren:'./register/register.module#RegisterModule'
+  },
+  {    path:'market',//市场
+    loadChildren:'./market/market.module#MarketModule'
+  },
+  {    path:'myGoods',//我的货源
+    loadChildren:'./myGoods/myGoods.module#MyGoodsModule'
+  },
+  {    path:'deliverGoods',//我的发货
+    loadChildren:'./deliverGoods/deliverGoods.module#DeliverGoodsModule'
+  },
+  {    path:'goodsReceipt',//我的收货
+    loadChildren:'./goodsReceipt/goodsReceipt.module#GoodsReceiptModule'
+  },
+  {    path:'personalCenter',//个人中心
+    loadChildren:'./personalCenter/personalCenter.module#PersonalCenterModule'
+  },
+  {    path:'saoYiSao',//扫一扫
+    loadChildren:'./saoyisao/saoyisao.module#SaoyisaoModule'
+  },
+  {
+    path:'confirmGoods',
+    loadChildren:'./confirmGoods/confirmGoods.module#ConfirmGoodsModule'
+  },
+  {
+    path:'trajectoryMap',
+    component:trajectoryMap
+  }
+
+
+
+
+
+
+  //,
+  //{    path:'**',//加载不到跳到登录
+  //  loadChildren:'Register'
+  //}
+];

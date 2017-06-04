@@ -1,0 +1,30 @@
+<div class="input_org talkTop text_center fff fonSml">反馈记录</div>
+<div class="height_3 w100 talkPhone col_333 fonSml padding_17">手机号码:{{phone}}</div>
+<!--数据列表-->
+<div class="talkHome watchtalkHome" (scroll)="onScroll()">
+    <div *ngFor="let site of data">
+        <!--<div class="clearfix"  *ngIf="site.type!=1">-->
+        <!--&lt;!&ndash;我们&ndash;&gt;-->
+        <!--<div class="talkMind posi_relative pull-left">-->
+        <!--<div class="m-t10">{{site?.createTime}}</div>-->
+        <!--<img src="../assets/images/receive_Touxiang.png" class="touxiang posi_abslotu transformY50 pos_left0" alt=""/>-->
+        <!--<p class="back_fff col_333">{{site?.content}}</p>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="clearfix">
+            <!--货主-->
+            <div class="talkGoods pull-right posi_relative">
+                <div *ngIf="site.type==1">
+                    <div class="m-t10">{{site?.createTime}}</div>
+                    <p class="back_fff col_333">{{site?.content}}</p>
+                </div>
+                <div class="contentImg pull-right" *ngIf="site.type==2">
+                    <div class="m-t10">{{site?.createTime}}</div>
+                    <img src="{{site.content}}" class="w100" alt=""/>
+                </div>
+                <img src="{{headImg}}" class="touxiang posi_abslotu transformY50 pos_right0" alt=""/>
+            </div>
+        </div>
+    </div>
+    <div class="text_center m-t10" (click)="loadingMore()">点击加载更多</div>
+</div>

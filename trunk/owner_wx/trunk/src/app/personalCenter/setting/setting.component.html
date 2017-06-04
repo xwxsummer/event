@@ -1,0 +1,14 @@
+<ul class="col_333 back_fff">
+  <li (click)="ChangePassword()">修改登录密码<span class="mui-icon mui-icon-arrowright pull-right"></span></li>
+  <li (click)="changePhone()">修改手机号码<span class="mui-icon mui-icon-arrowright pull-right"></span></li>
+  <li (click)="Blacklist()">黑名单<span class="mui-icon mui-icon-arrowright pull-right"></span></li>
+  <li (click)="AboutUs()">关于我们<span class="mui-icon mui-icon-arrowright pull-right"></span></li>
+</ul>
+<div id="contact_show" class="ceng_show clearfix col_333 fonSml" *ngIf="isShow">
+  <div class="text_center b-b ceng_top">{{message}}</div>
+  <div class="clearfix ea5529">
+    <div class="text_center contactUs_cancel pull-left b-r" id="contactUs_cancel" (click)="isCancel()">取消</div>
+    <div class="text_center contactUs_sure pull-right" (click)="myShow()">去认证</div>
+  </div>
+</div>
+<div id="contact_bg" class="bg" *ngIf="isShow"></div>

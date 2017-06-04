@@ -1,0 +1,21 @@
+
+<form (ngSubmit)="submitForm()" #Form="ngForm" name="submitForm" role="form">
+  <div class="posi_relative" (click)="WatchContact()">
+    <input type="tel" class="input_org padding_17 col_333 back_fff fonSml" name="phone" placeholder="请输入手机号码" [(ngModel)]="getAddress.phone" #phone="ngModel" minlength="11" maxlength="11" pattern="^1[3|5|6|7|8]{1}[0-9]{9}$" value="" required readOnly="true"/>
+    <span class="mui-icon mui-icon-plusempty posi_abslotu transformY50 pos_right0 right17 col_333 fon900"></span>
+  </div>
+  <div class="input_org padding_17 col_333 back_fff fonSml">{{getAddress?.name}}</div>
+  <input type="text" class="input_org padding_17 col_333 back_fff fonSml" value="" name="company" placeholder="请输入公司名称" [(ngModel)]="getAddress.company" #company="ngModel" required/>
+  <div (click)="map()" class="input_org padding_17 col_333 back_fff fonSml">{{getAddress?.province}} {{getAddress?.city}} {{getAddress?.county}} {{getAddress?.town}}<span class="mui-icon mui-icon-arrowright pull-right m-t18"></span></div>
+  <textarea name="address" [(ngModel)]="getAddress.address" #address="ngModel" cols="30" rows="3" class="padding_17" placeholder="请填写详细地址">{{getAddress.address}}</textarea>
+  <div class="input_org padding_17 col_333 back_fff fonSml b-t">设为默认地址
+    <div class="mui-switch mui-switch-mini"  id="mySwitch">
+      <div class="mui-switch-handle"></div>
+    </div>
+  </div>
+  <div class="m0_auto" style="width: 80%">
+    <input type="submit" class="text_center bindFinish fff fonSml fon900" value="保&nbsp;&nbsp;&nbsp;存" [disabled]="!Form.form.valid"/>
+
+  </div>
+
+ </form>

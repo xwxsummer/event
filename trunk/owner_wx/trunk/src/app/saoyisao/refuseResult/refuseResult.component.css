@@ -1,0 +1,15 @@
+.height3{
+  height: 3rem;
+  line-height: 3rem;
+}
+.padding16{
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  box-sizing: border-box;
+}
+.refuseImg{
+ /*// display: inline-block;*/
+  margin-left:2%;
+  width: 30%;
+  height: 30%;
+}

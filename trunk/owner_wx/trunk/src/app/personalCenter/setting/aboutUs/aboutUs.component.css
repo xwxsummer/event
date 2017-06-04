@@ -1,0 +1,26 @@
+body{
+    background-color: #fff;
+}
+.big{
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    padding-top: 2rem;
+}
+.mslLogo{
+    display: block;
+    width: 36%;
+    margin: 0rem auto 1rem;
+}
+.aboutUsBottom{
+    position: absolute;
+    width: 100%;
+    bottom: 2rem;
+    left: 0;
+}
+.lan{
+    color: #0400e9;
+}
+.contactUs{
+    margin-bottom: 1.5rem;
+}

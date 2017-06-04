@@ -1,0 +1,12 @@
+<form (ngSubmit)="submitForm()" #Form="ngForm" name="submitForm" role="form">
+    <input class="input_org" type="tel" name="phone" placeholder="请输入手机号码" [(ngModel)]="ownerStaffDTO.phone" #phone="ngModel" maxlength="11"/>
+    <div class="m0_auto" style="width: 80%;">
+        <input type="submit" class="bindFinish text_center fff fonSml fon900" id="submit" value="确&nbsp;&nbsp;&nbsp;定"/>
+    </div>
+</form>
+
+
+
+
+
+

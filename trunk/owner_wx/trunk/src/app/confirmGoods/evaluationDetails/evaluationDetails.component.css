@@ -1,0 +1,30 @@
+.conver {
+    width: 100%;
+    margin: 0 auto;
+    color: #999;
+}
+.mui-table-view {
+    margin: 0;
+    /*text-align: center;*/
+    color: #999;
+    border-radius: 0px;
+}
+.cancel_li{
+    border: 1px solid #000;
+    border-radius: 15px;
+    width: 30%;
+    display: inline-block;
+    margin-bottom: 10px;
+    height: 2.5rem;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #000;
+}
+.cancel_ul{
+    padding-top: 20px;
+}
+.speak{
+    margin-left:10px;
+    margin-right: 10px; 
+}

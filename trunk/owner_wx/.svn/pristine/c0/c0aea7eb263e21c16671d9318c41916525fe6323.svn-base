@@ -1,0 +1,95 @@
+.talkTop{
+    background-color:rgba(51, 51, 51, 1);
+    position: fixed;
+    top: 0px;
+    z-index: 100;
+}
+.right17{
+    right: 1rem;
+}
+.talkPhone{
+    background-color:rgba(228, 228, 228, 1);
+    position: fixed;
+    top: 3rem;
+    z-index: 100;
+}
+.talkBottom{
+    position: fixed;
+    bottom: 0px;
+    display: flex;
+}
+.talkBottom input{
+    flex: 1;
+}
+.talkBottom span{
+   margin-top: 10px;
+}
+select, textarea, input[type='text'], input[type='search'], input[type='password'], input[type='datetime'], input[type='datetime-local'], input[type='date'], input[type='month'], input[type='time'], input[type='week'], input[type='number'], input[type='email'], input[type='url'], input[type='tel'], input[type='color']{
+    border: none;
+    border-bottom: 1px solid #6bde42;
+    margin-bottom: 5px;
+    padding: 0px;
+    border-radius: 0px;
+}
+.col6bde42{
+    color:#6bde42;
+}
+.talkHome{
+    padding: 6.6rem 0px 62px 0px;
+}
+.watchtalkHome{
+    padding-bottom: 20px;
+}
+.talkHome .talkGoods,.talkHome .talkMind{
+   max-width: 70%;
+
+}
+.talkHome .talkGoods p,.talkHome .talkMind p{
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: .4rem;
+    min-height: 2rem;
+    margin-top: 5px;
+    word-wrap:break-word; word-break:normal;
+
+}
+.talkHome .talkGoods p{
+    margin-right: 3.2rem;
+}
+.talkHome .talkMind p{
+    margin-left: 3.2rem;
+}
+.touxiang{
+    width: 2rem;
+    height: 2rem;
+    margin-left: .6rem;
+    margin-right: .6rem;
+    margin-top: 17px;
+    border-radius: 50%;
+}
+
+input[type='file']{
+    width: 40%;
+}
+
+canvas{
+    width: 100%;
+    border: 1px solid #000000;
+}
+#handChoose{
+    position: absolute;
+    /*overflow: hidden;*/
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.upload{
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    position: relative;
+}
+.contentImg{
+    margin-right: 3.2rem;
+    width: 40%;
+}

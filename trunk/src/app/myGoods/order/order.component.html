@@ -1,0 +1,51 @@
+<div class="jiedanshu_bottom bgc_ea5529 padding17 posi_relative">
+  <input type="text" placeholder="请输入司机姓名或车牌号"/>
+  <span class="mui-icon mui-icon-search posi_abslotu"></span>
+</div>
+<div class="Lists b-t b-b" *ngFor="let site of data">
+  <div class="col_333 fon900 height36 back_fff padding17">
+    <img src="../assets/images/myGoodsTel.png" class="touxiang" alt=""/>
+    &nbsp;&nbsp;<span class="fonSml">{{site.driverName}}</span>&nbsp;&nbsp;
+    <span class="perTopSpan font12 fff">&nbsp;<img src="../assets/images/jifen.png" alt=""/>&nbsp;&nbsp;&nbsp;已认证</span>
+    <span class="ea5529 pull-right fonSml" *ngIf="site.status==1">待接单</span>
+    <span class="ea5529 pull-right fonSml" *ngIf="site.status==2">接单成功</span>
+    <span class="ea5529 pull-right fonSml" *ngIf="site.status==3">前往货源地</span>
+    <span class="ea5529 pull-right fonSml" *ngIf="site.status==4">到达货源地</span>
+    <span class="ea5529 pull-right fonSml" *ngIf="site.status==5">货主确认车辆</span>
+    <span class="ea5529 pull-right fonSml" *ngIf="site.status==6">货主装车</span>
+    <span class="ea5529 pull-right fonSml" *ngIf="site.status==7">司机确认装车</span>
+    <span class="ea5529 pull-right fonSml" *ngIf="site.status==8">前往目的地</span>
+    <span class="ea5529 pull-right fonSml" *ngIf="site.status==9">到达目的地</span>
+  </div>
+  <div class="dis_flex padding17 posi_relative" (click)="sourceInfo()">
+    <ul class="clearfix fon85">
+      <li class="">车牌号：{{site.truckNo}}</li>
+      <li class="">载重：{{site.capacity}}吨</li>
+      <li class="">车型：{{site.truckModel}}</li>
+    </ul>
+    <div class="posi_abslotu col_333">{{site.driverPhone}}&nbsp;<img src="../assets/images/myGoodsTel.png" alt=""/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mui-icon mui-icon-arrowright col_999"></span></div>
+  </div>
+  <div class="jiedanshu_bottom back_fff padding17">
+    <span>12-32  13:13:13</span>
+    <span class="jiedanshu_contact pull-right text_center" (click)="activate();$event.stopPropagation();">取消</span>
+  </div>
+</div>
+<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action ">
+  <!-- 可选择菜单 -->
+  <div class="cancle_resuit text_center fonNormal">取消原因</div>
+  <ul class="mui-table-view back_fff cancel_ul">
+    <li class="mui-table-view-cell cancel_li" [class.special]="isSpecial0" (click)="myGoods_cancle0('isSpecial0')">信息填写错误</li>
+    <li class="mui-table-view-cell cancel_li" [class.special]="isSpecial1" (click)="myGoods_cancle0('isSpecial1')">信息填写错误</li>
+    <li class="mui-table-view-cell cancel_li" [class.special]="isSpecial2" (click)="myGoods_cancle0('isSpecial2')">信息填写错误</li>
+    <li class="mui-table-view-cell cancel_li" [class.special]="isSpecial3" (click)="myGoods_cancle0('isSpecial3')">信息填写错误</li>
+    <li class="mui-table-view-cell cancel_li" [class.special]="isSpecial4" (click)="myGoods_cancle0('isSpecial4')">信息填写错误</li>
+    <li class="mui-table-view-cell cancel_li" [class.special]="isSpecial5" (click)="myGoods_cancle0('isSpecial5')">信息填写错误</li>
+    <li class="cancle_yes bgc_ea5529 ">
+      <a href="#sheet1"><b>确定</b></a>
+    </li>
+    <li class="cancle_no bgc_c0c0">
+      <a href="#sheet1"><b>取消</b></a>
+    </li>
+  </ul>
+</div>
+

@@ -1,0 +1,36 @@
+import { Component,OnInit } from '@angular/core';
+import { RouterModule,ActivatedRoute, Router } from '@angular/router';
+declare var mui: any;
+import { confirmGoodsService } from '../confirmGoods.service';
+
+@Component({
+  selector: 'app-receivedSuccess',
+  templateUrl: './receivedSuccess.component.html',
+  styleUrls: ['./receivedSuccess.component.css']
+
+})
+
+export class ReceivedSuccess implements OnInit{
+  public data: any;
+  constructor(
+    public router: Router,
+    public activatedRoute: ActivatedRoute,
+    public service: confirmGoodsService
+  ){}
+  ngOnInit(): void{
+   this.service.getOrderChildByChildNo(this.activatedRoute.snapshot.params['id'])
+    .subscribe(data => {
+          if(data.code==0){//成功
+            this.data=data.data;
+          }
+      }
+    );
+  }
+ DetailsInfo() {
+   //status==101 货主确认收货  status==102司机确认收货  司机确认收货后才可以评价
+  // alert(this.data.status)
+  // if(this.data.status==102){
+      this.router.navigateByUrl("confirmGoods/SuccessGoods/"+this.activatedRoute.snapshot.params['id']);
+  // }
+  }
+}

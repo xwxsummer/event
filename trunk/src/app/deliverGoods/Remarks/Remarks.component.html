@@ -1,0 +1,18 @@
+<div class="box">
+    <textarea class="textarea" cols="10" id="text" name="text" placeholder="可填写货物参数" rows="2" #text (keyup)="setRemarkText(text.value)"  ></textarea>
+    <div>
+        <input type="file" id="choose" accept="image/*" multiple>
+        <ul class="img-list">
+            <li *ngFor="let img of imgList; let i = index" [ngStyle]="{'background-image':'url(' + img.data + ')'}" (click)="removeImage(i)" >X</li>
+        </ul>
+        <p></p>
+
+        <!--<ul class="img-list"></ul>-->
+        <!--<div class="pic-list"></div>-->
+        <label class="img" id="upload" for="file">最多可添加6张照片</label>
+        <input type="file" id="file" value="" />
+    </div>
+    <div class="button" (click)="RemarksToggle()" >确定</div>
+
+    <!--<input class="input" type="button" value="确定" [ngModel]="imgInput" (ngModelChange)="readImage($event)" (change)="readImage()" />-->
+</div>

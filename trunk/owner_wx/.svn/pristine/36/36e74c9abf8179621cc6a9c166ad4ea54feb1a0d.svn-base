@@ -1,0 +1,9 @@
+<div class="text_center">
+  <img src="../assets/images/finish_certifi.png" alt="" class="m_top50" width="70px"/>
+  <p class="text_center fonNormal col_333 m30">添加成功</p>
+  <div class="m0_auto text_center m30">
+    <div class="goods bgc_ea5529 fff" (click)="Management()">返回</div>
+    <div class="goods bgc_ea5529 fff" (click)="addEmploye()">继续添加员工</div>
+
+  </div>
+</div>

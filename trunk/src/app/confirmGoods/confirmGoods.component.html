@@ -1,0 +1,31 @@
+<div class="padding16 b-b m-b10 back_fff">
+  
+    <h6 class="height3 fonNormal col_333 b-b ">车辆信息</h6>
+  <ul class="clearfix p_T10 p_b10">
+    <li class="detail_li pull-left">司机姓名：{{data?.driverName}}</li>
+    <li class="detail_li pull-left">{{data?.driverPhone}}</li>
+    <li class="detail_li pull-left">品牌：{{data?.truckBrand}}</li>
+    <li class="detail_li pull-left">车牌号：{{data?.truckNo}}</li>
+    <li class="detail_li pull-left">载重：{{data?.goodsResidue}}{{data?.goodsUnit}}</li>
+    <li class="detail_li pull-left">车型：{{data?.truckModel}}</li>
+  </ul>
+</div>
+<div class="padding16 b-b m-b10 back_fff">
+  <h6 class="height3 fonNormal col_333 b-b ">货单信息</h6>
+  <ul class="clearfix p_T10 p_b10 b-b">
+    <li>收货人姓名：{{data?.receiveName}} </li>
+    <li class="detail_li ">收货人电话：{{data?.receivePhone }}</li>
+    <li class="detail_li ">出发地：{{data?.sendCity }}</li>
+    <li class="detail_li ">目的地：{{data?.receiveCity }}</li>
+    <li class="detail_li ">发货单位：{{data?.sendCompany }}</li>
+    <li class="detail_li ">收货单位：{{data?.receiveCompany }}</li>
+    <li class="detail_li ">货物名称：{{data?.goodsName }}</li>
+    <li class="detail_li ">运费单价：{{data?.freightPrice }}</li>
+    <li class="detail_li ">货物价值：{{data?.goodsPrice }}</li>
+    <li class="detail_li ">截止日期：{{data?.endTime }}</li>
+  </ul>
+  
+   <div class="button_refuse"  (click)="confirmGoods()">确认信息</div>
+</div>
+
+

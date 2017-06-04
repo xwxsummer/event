@@ -1,0 +1,31 @@
+.assess{
+  height: 8rem;
+  background: #fff;
+  margin-top: 10px;
+}
+.assess .assess2{
+  width: 90%;
+  height: 8rem;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.assess .assess2 .der{
+  height: 4rem;
+  border-bottom: 1px solid #ccc;
+  padding-top: 2%;
+}
+.assess .assess2 .der .to{
+  width:50px;
+  height:50px;
+  border-radius:50px;
+  float: left;
+
+}
+.assess .assess2 .der span{
+  float: left;
+  line-height: 3rem;
+  padding-left: 10px;
+}
+.assess .assess2 .h{
+  line-height: 1.8rem;
+}

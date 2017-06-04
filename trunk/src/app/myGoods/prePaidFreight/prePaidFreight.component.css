@@ -1,0 +1,54 @@
+.height36{
+  height: 3rem;
+  line-height: 3rem;
+}
+.padding16{
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  box-sizing: border-box;
+}
+ul{
+  padding-bottom: 10px;
+}
+.efeff4{
+  background-color: #efeff4;
+}
+.goodsDetail ul li{
+  margin-bottom: 8px;
+}
+.jian{
+  width: 2.4rem;
+}
+.deliverGoods_bottom{
+  display: block;
+}
+
+.payMoney{
+  padding-bottom: 20px;
+  padding-top: 20px;
+  margin-bottom: 3.6rem;
+}
+.deliverGoods_bottom{
+  display: block;
+}
+.myGoods_wallet{
+  width: 1.5rem;
+  vertical-align: middle;
+  margin-bottom: 3px;
+}
+.m_top{
+  display: flex;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+}
+.flex7{
+ flex: 7;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+
+.flex3{
+  flex: 3;
+}
+

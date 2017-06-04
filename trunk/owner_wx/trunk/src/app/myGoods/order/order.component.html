@@ -1,0 +1,72 @@
+<div class="jiedanshu_bottom bgc_ea5529 padding17 posi_relative">
+  <input class="input_org" type="text" [(ngModel)]="searchValue" name="yzm1" (keyup)="search()" id="search" placeholder="请输入司机姓名或车牌号" maxlength="11"/>
+  <span class="mui-icon mui-icon-search posi_abslotu"></span>
+</div>
+<div class="Lists b-t b-b" *ngFor="let site of data">
+  <div class="col_333 fon900 height36 back_fff padding17">
+    <img src="../assets/images/myDriver.png" alt="" class="touxiang" (click)="driverdetails(site.driverId);$event.stopPropagation();" *ngIf="site?.headImg==null"/>
+    <img src="{{site?.headImg}}" alt="" class="touxiang" (click)="driverdetails(site.driverId);$event.stopPropagation();" *ngIf="site.headImg!=null"/>
+    &nbsp;&nbsp;<span class="fonSml">{{site.driverName}}</span>&nbsp;&nbsp;
+    <span class="perTopSpan font12 fff">&nbsp;<img src="../assets/images/jifen.png" alt=""/>&nbsp;&nbsp;&nbsp;已认证</span>
+    <span class="pull-right ea5529" *ngIf="site.status==2">接单成功</span>
+    <span class="pull-right ea5529" *ngIf="site.status==3">前往货源地</span>
+    <span class="pull-right ea5529" *ngIf="site.status==4">到达货源地</span>
+    <span class="pull-right ea5529" *ngIf="site.status==50">货主确认车辆</span>
+    <span class="pull-right ea5529" *ngIf="site.status==51">货主装车</span>
+    <span class="pull-right ea5529" *ngIf="site.status==52">司机确认装车</span>
+    <span class="pull-right ea5529" *ngIf="site.status==53">前往目的地</span>
+    <span class="pull-right ea5529" *ngIf="site.status==54">到达目的地</span>
+    <span class="pull-right ea5529" *ngIf="site.status==100">货主确认车辆</span>
+    <span class="pull-right ea5529" *ngIf="site.status==101">货主确认收货</span>
+    <span class="pull-right ea5529" *ngIf="site.status==102">司机确认收货</span>
+    <span class="pull-right ea5529" *ngIf="site.status==150">完成</span>
+    <span class="pull-right ea5529" *ngIf="site.status==151">评价完成 </span>
+    <span class="pull-right ea5529" *ngIf="site.status==200">货主拒绝装车</span>
+    <span class="pull-right ea5529" *ngIf="site.status==210">货主取消</span>
+    <span class="pull-right ea5529" *ngIf="site.status==211">司机取消</span>
+    <span class="pull-right ea5529" *ngIf="site.status==212">客服取消</span>
+    <span class="pull-right ea5529" *ngIf="site.status==220">协商中</span>
+    <!--status-->
+  </div>
+  <div class="dis_flex padding17 posi_relative" (click)="sourceInfo(site.childNo)">
+    <ul class="clearfix fon85">
+      <li class="">车牌号：{{site.truckNo}}</li>
+      <li class="">载重：{{site.truckLoad.toFixed(2)}}吨</li>
+      <li class="">车型：{{site.truckModel}}</li>
+    </ul>
+    <div class="posi_abslotu col_333">{{site.driverPhone}}&nbsp;<img src="../assets/images/myGoodsTel.png" alt=""/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mui-icon mui-icon-arrowright col_999"></span></div>
+  </div>
+  <div class="jiedanshu_bottom back_fff padding17">
+    <span>{{site.payTime}}</span>
+    <span class="jiedanshu_contact pull-right text_center" (click)="trajectoryMap(site.childNo)" *ngIf="site.status==2||site.status==3||site.status==4||site.status==50||site.status==51||site.status==52||site.status==53||site.status==54||site.status==100||site.status==101||site.status==102||site.status==150||site.status==151">轨迹查询</span>
+    <span class="jiedanshu_contact pull-right text_center" (click)="activate(site.status,site.childNo);$event.stopPropagation();" *ngIf="site.status==2||site.status==3||site.status==4">取消</span>
+  </div>
+</div>
+<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action">
+  <!-- 可选择菜单 -->
+  <div class="cancle_resuit text_center fonNormal">取消原因</div>
+  <ul class="mui-table-view back_fff cancel_ul">
+    <li class="mui-table-view-cell cancel_li" [class.special]="isSpecial0" (click)="myGoods_cancle0('isSpecial0','信息填写错误')">信息填写错误</li>
+    <li class="mui-table-view-cell cancel_li" [class.special]="isSpecial1" (click)="myGoods_cancle0('isSpecial1','不想发货了')">不想发货了</li>
+    <li class="mui-table-view-cell cancel_li" [class.special]="isSpecial2" (click)="myGoods_cancle0('isSpecial2','时间超时')">时间超时</li>
+    <!--<li class="mui-table-view-cell cancel_li" [class.special]="isSpecial3" (click)="myGoods_cancle0('isSpecial3')">已经发完了</li>-->
+    <li class="mui-table-view-cell cancel_li" [class.special]="isSpecial4" (click)="myGoods_cancle0('isSpecial4','其他原因')">其他原因</li>
+    <!--<li class="mui-table-view-cell cancel_li" [class.special]="isSpecial5" (click)="myGoods_cancle0('isSpecial5')">信息填写错误</li>-->
+    <li class="cancle_yes bgc_ea5529">
+      <a href="" class="sureCancle" (click)="goodsCancle()"><b>确定</b></a>
+    </li>
+    <li class="cancle_no bgc_c0c0">
+      <a href="#sheet1"><b>取消</b></a>
+    </li>
+  </ul>
+</div>
+
+<div id="contact_show" class="ceng_show clearfix col_333 fonSml" *ngIf="myShow">
+  <div class="text_center b-b ceng_top fonNormal">温馨提示</div>
+  <p class="fon85 col_333 pL_10 pR_10 b-b">此单已超过免责取消时间，如取消将支付违约金。</p>
+  <div class="clearfix ea5529">
+    <div class="text_center contactUs_cancel pull-left b-r" id="contactUs_cancel" (click)="isCancel()">取消</div>
+    <div class="text_center contactUs_sure pull-right" (click)="isShow()">确定</div>
+  </div>
+</div>
+<div id="contact_bg" class="bg" *ngIf="myShow"></div>

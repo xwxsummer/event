@@ -1,0 +1,49 @@
+.box{
+    background: #efeff4;
+}
+.box2{
+    height: 16rem;
+    background: #fff;
+}
+.box2_c{
+    width: 30%;
+    height: 16rem;
+    color: #000000;
+    margin: 0 auto;
+}
+.box2_c span{
+    display: block;
+    text-align: center;
+
+}
+.box2_c span:nth-child(1){
+    padding-top: 50%;
+}
+.box2_c img{
+    height: 5rem;
+}
+.box3{
+    margin-top: 5px;
+    height: 3rem;
+    border-top: 1px solid #CCCCCC;
+    background: #fff;
+    line-height: 3rem;
+    padding-left: 15px;
+}
+.box3 span:nth-child(2){
+    color: #000000;
+    padding-bottom: 3px;
+}
+.box3 span:nth-child(3){
+    float: right;
+    padding-right: 15px;
+}
+.box input{
+    display: block;
+    width: 80%;
+    height: 2rem;
+    margin: 20px auto;
+    border-radius: 5px;
+    color: #ffffff;
+    background: #ea5529;
+}

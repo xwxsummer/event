@@ -1,0 +1,66 @@
+<div class="dis_flex b-b padding17 back_fff">
+  <div class="flex1">
+    <img src="{{headImg}}" alt="" class="perCenterImg m-t10 m-b10"/>
+  </div>
+  <div class="flex9">
+    <div class="col_333 fon900 back_fff">
+      <span class="fonSml">{{name}}</span>
+      <span class="perTopSpan font12 fff">&nbsp;<img src="../assets/images/jifen.png" alt=""/>&nbsp;&nbsp;&nbsp;已认证</span>
+    </div>
+    <p class="fonSml telP b-t">{{phone}}<img src="../assets/images/myGoodsTel.png" alt="" class="pull-right"/></p>
+  </div>
+</div>
+<div class="employeeTab dis_flex text_center">
+  <div class="{{zhuangche}}" (click)="changeInfo(1)">装车信息</div>
+  <div class="{{shouhuo}}" (click)="changeInfo(2)">收货信息</div>
+</div>
+
+<!--装货信息-->
+<div *ngIf="myStatus==1">
+  <div class="Lists b-t b-b m-b10" (click)="receiptDetails(user.childNo)" *ngFor="let user of data">
+    <div class="col_333 fon900 height36 back_fff padding17">
+      <img src="{{user?.headImg}}" class="touxiang" alt="" (click)="driverdetails(user.driverId);$event.stopPropagation();"/>
+      <span class="perTopSpan font12 fff">&nbsp;<img src="../assets/images/jifen.png" alt=""/>&nbsp;&nbsp;&nbsp;已认证</span>
+      <span class="pull-right ea5529" *ngIf="user.status==51">货主装车</span>
+      <span class="pull-right ea5529" *ngIf="user.status==101">货主确认收货</span>
+    </div>
+    <div class="dis_flex padding17">
+      <ul class="clearfix fon85">
+        <li class="pull-left">车牌号：{{user?.truckNo}}</li>
+        <li class="pull-left">载重：{{user?.truckLoad}}</li>
+        <li class="pull-left">车型：{{user?.truckModel }}</li>
+        <li class="pull-left">实际载货：{{user?.sendTare}}吨</li>
+      </ul>
+      <div class="toJian"><span class="col_999">></span></div>
+    </div>
+    <div class="jiedanshu_bottom back_fff padding17">
+      <span class="jiedanshu_contact pull-right text_center" (click)="trajectoryMap(user.childNo)" *ngIf="user.status==2||user.status==3||user.status==4||user.status==50||user.status==51||user.status==52||user.status==53||user.status==54||user.status==100||user.status==101||user.status==102||user.status==150||user.status==151">轨迹查询</span>
+      <span class="jiedanshu_contact pull-right text_center">联系司机</span>
+    </div>
+  </div>
+
+</div>
+<!--发货信息-->
+<div *ngIf="myStatus==2">
+  <div class="Lists b-t b-b m-b10" (click)="receiptDetails(user.childNo)" *ngFor="let user of data">
+    <div class="col_333 fon900 height36 back_fff padding17">
+      <img src="{{user?.headImg}}" class="touxiang" alt="" (click)="driverdetails(user.driverId);$event.stopPropagation();"/>
+      <span class="pull-right ea5529" *ngIf="user.status==51">货主装车</span>
+      <span class="pull-right ea5529" *ngIf="user.status==101">货主确认收货</span>
+    </div>
+    <div class="dis_flex padding17">
+      <ul class="clearfix fon85">
+        <li class="pull-left">车牌号：{{user?.truckNo}}</li>
+        <li class="pull-left">载重：{{user?.truckLoad}}</li>
+        <li class="pull-left">车型：{{user?.truckModel }}</li>
+        <li class="pull-left">实际载货：{{user?.receiveTare}}吨</li>
+      </ul>
+      <div class="toJian"><span class="col_999">></span></div>
+    </div>
+    <div class="jiedanshu_bottom back_fff padding17">
+      <span class="jiedanshu_contact pull-right text_center" (click)="trajectoryMap(user.childNo)" *ngIf="user.status==2||user.status==3||user.status==4||user.status==50||user.status==51||user.status==52||user.status==53||user.status==54||user.status==100||user.status==101||user.status==102||user.status==150||user.status==151">轨迹查询</span>
+      <span class="jiedanshu_contact pull-right text_center">联系司机</span>
+    </div>
+  </div>
+</div>
+<div id="infoNone" class="text_center m-t3">暂无该信息</div>

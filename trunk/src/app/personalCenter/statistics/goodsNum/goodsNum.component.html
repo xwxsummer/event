@@ -1,0 +1,32 @@
+<div class="padding17 fonSml b-b clearfix">
+  <div class="yewotongji_flex pull-left">{{beginTime}}&nbsp;&nbsp;至&nbsp;&nbsp;{{endTime}}</div>
+  <div class="yewotongji_flex pull-right" *ngIf="type==1">{{num}}吨</div>
+  <div class="yewotongji_flex pull-right" *ngIf="type==2">{{num}}元</div>
+</div>
+<div class="b-b back_fff padding17 dis_flex" (click)="receiptDetails()"  *ngFor="let site of data">
+  <div class="flex1">
+    <img src="../assets/images/receive_Touxiang.png" alt="" class="touxiang m-t10 m-b10"/>
+  </div>
+  <div class="flex9 pL_10 p_T10">
+    <div class="col_333 fon900 back_fff">
+      <span class="fonSml">{{site.driverName}}</span>
+      <span class="perTopSpan font12 fff">&nbsp;<img src="../assets/images/jifen.png" alt=""/>&nbsp;&nbsp;&nbsp;已认证</span>
+      <span class="ea5529 pull-right fonSml">{{site.receiveNet}}吨&nbsp;&nbsp;&nbsp;&nbsp;{{site.freight}}元</span>
+    </div>
+    <p class="fon85">车牌号：{{site.truckNo}}<span class="pull-right">2013-1-19&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12:22:22&nbsp;</span></p>
+  </div>
+</div>
+
+<div class="b-b back_fff padding17 dis_flex" (click)="receiptDetails()">
+  <div class="flex1">
+    <img src="../assets/images/receive_Touxiang.png" alt="" class="touxiang m-t10 m-b10"/>
+  </div>
+  <div class="flex9 pL_10 p_T10">
+    <div class="col_333 fon900 back_fff">
+      <span class="fonSml">李白</span>
+      <span class="perTopSpan font12 fff">&nbsp;<img src="../assets/images/jifen.png" alt=""/>&nbsp;&nbsp;&nbsp;已认证</span>
+      <span class="ea5529 pull-right fonSml">20.00吨&nbsp;&nbsp;&nbsp;&nbsp;20.00元</span>
+    </div>
+    <p class="fon85">车牌号：A11111 <span class="pull-right">2013-1-19&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12:22:22&nbsp;</span></p>
+  </div>
+</div>

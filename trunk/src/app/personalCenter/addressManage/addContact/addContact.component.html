@@ -1,0 +1,12 @@
+<form (ngSubmit)="submitForm()" #Form="ngForm" name="submitForm" role="form">
+    <input class="input_org" required type="tel" name="phone" placeholder="请输入手机号码" [(ngModel)]="ownerStaffDTO.phone" #phone="ngModel" (keyup)="checkMobile()" minlength="11" maxlength="11" pattern="^1[3|5|6|7|8]{1}[0-9]{9}$"/>
+    <div class="m0_auto" style="width: 80%;">
+        <input type="submit" class="bindFinish text_center fff fonSml fon900" id="submit" value="确&nbsp;&nbsp;&nbsp;定" [disabled]="!Form.form.valid||isSubmit"/>
+    </div>
+</form>
+
+
+
+
+
+

@@ -1,0 +1,2 @@
+<div class="fonNormal height_3 b-b padding_17 back_fff" (click)="addContact()"><span class="mui-icon mui-icon-plusempty fon900"></span>&nbsp;&nbsp;添加新联系人</div>
+<div class="padding_17 height_3 col_333 fonSml b-b back_fff posi_relative" *ngFor="let data of datas" (click)="addEmpoly(data)"><img src="../assets/images/disWactch.png" alt="" class="m-r10"/>{{data?.name}}<span class="pos_right0 transformY50 right17 posi_abslotu">{{data?.phone}}</span></div>

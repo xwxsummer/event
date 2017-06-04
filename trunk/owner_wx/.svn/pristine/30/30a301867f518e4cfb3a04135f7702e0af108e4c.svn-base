@@ -1,0 +1,7 @@
+<div class="conver">
+   <ul class="mui-table-view back_fff cancel_ul">
+        <li class="mui-table-view-cell cancel_li" *ngFor="let text of arr">{{text}}</li>
+          <p class="speak">{{speak}}</p><br/>
+          <!--<p class="speak">评价时间：{{times}}</p>-->
+   </ul> 
+</div>

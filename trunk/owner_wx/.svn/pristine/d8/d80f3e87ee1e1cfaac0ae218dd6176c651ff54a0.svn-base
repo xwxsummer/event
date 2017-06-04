@@ -1,0 +1,65 @@
+<div class="height36 text_center ea5529 back_fff fonNormal b-b" *ngIf="data?.orderStatus==1">待付款</div>
+<div class="height36 text_center ea5529 back_fff fonNormal b-b" *ngIf="data?.orderStatus==2">待接单</div>
+<div class="height36 text_center ea5529 back_fff fonNormal b-b" *ngIf="data?.orderStatus==10">进行中</div>
+<div class="height36 text_center ea5529 back_fff fonNormal b-b" *ngIf="data?.orderStatus==4">协商中</div>
+<div class="height36 text_center ea5529 back_fff fonNormal b-b" *ngIf="data?.orderStatus==30">已完成</div>
+<div class="height36 text_center ea5529 back_fff fonNormal b-b" *ngIf="data?.orderStatus==40">已取消</div>
+<div class="goodsDetail b-b back_fff padding16 b-t m-t10 fonSml">
+  <div class="height36">{{data?.sendCity}}&nbsp;&nbsp;<img src="../assets/images/jian.png" class="jian" alt=""/>&nbsp;&nbsp;{{data?.receiveCity}}&nbsp;&nbsp;&nbsp;（{{data?.distance}}公里）</div>
+  <ul class="">
+    <li>货物名称：{{data?.goodsName}}</li>
+    <li>货物剩余量：<span class="ea5529">{{data?.goodsResidue}}</span>/{{data?.goodsAmount}}吨</li>
+    <li>货物价值：{{data?.goodsPrice}}元/吨</li>
+    <li>运费单价：{{data?.freightPrice}}元/吨</li>
+    <li>截止日期：{{data?.endTime}}</li>
+  </ul>
+</div>
+<div class="goodsDetail back_fff b-t m-t10">
+  <div class="fonNormal col_333 height36 padding16  pL_10">发货信息</div>
+  <ul class="efeff4 p_T10 padding16">
+    <li class="fonSml col_333">发货人：{{data?.sendName}}<span class="pull-right">{{data?.sendPhone}}</span></li>
+    <li class="fonSml">发货地址：{{data?.sendProvince}}{{data?.sendCity}}{{data?.sendCounty}}{{data?.sendTown}}{{data?.sendAddress}}</li>
+  </ul>
+  <img src="../assets/images/deliverGoods_bottom.png" alt="" class="w100 deliverGoods_bottom"/>
+</div>
+
+<div class="goodsDetail back_fff b-t m-t10">
+  <div class="fonNormal col_333 height36 padding16  pL_10">收货信息</div>
+  <ul class="efeff4 p_T10 padding16">
+    <li class="fonSml col_333">收货人：{{data?.receiveName}}<span class="pull-right">{{data?.receivePhone}}</span></li>
+    <li class="fonSml">收货地址：{{data?.receiveProvince}}{{data?.receiveCity}}{{data?.receiveCounty}}{{data?.receiveTown}}{{data?.receiveAddress}}</li>
+  </ul>
+  <img src="../assets/images/deliverGoods_bottom.png" alt="" class="w100 deliverGoods_bottom"/>
+</div>
+<div class="goodsDetail b-b back_fff padding16 b-t m-t10 p_T10">
+  <ul class="fon85">
+    <li>订单编号：{{data?.orderNo}}</li>
+    <li>提交时间：{{data?.createTime}}</li>
+    <li *ngIf="data?.orderStatus!=1">付费方式：马上来平台钱包</li>
+  </ul>
+</div>
+<div class="p_T10 p_b10 clearfix back_fff m_top" *ngIf="data?.orderStatus!=40||data?.orderStatus!=1">
+  <div class="details_btn fff text_center pull-right" *ngIf="data?.orderStatus==10||data?.orderStatus==2" (click)="activate(data.orderStatus,data.orderNo,data.goodsResidue);$event.stopPropagation();">取消</div>
+  <div class="details_btn fff text_center pull-right bgc_ea5529" (click)="Order(data.orderNo)" *ngIf="data?.orderStatus==10||data?.orderStatus==30">接单查询</div>
+  <div class="details_btn fff text_center pull-right bgc_ea5529" (click)="PublicGoods(data.orderNo)" *ngIf="data?.orderStatus==1">发布货源</div>
+  <!--<div class="details_btn fff text_center pull-left bgc_ea5529">运费充值</div>-->
+</div><div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action ">
+  <!-- 可选择菜单 -->
+  <div class="cancle_resuit text_center fonNormal">取消原因</div>
+  <ul class="mui-table-view back_fff cancel_ul">
+    <li class="mui-table-view-cell cancel_li" [class.special]="isSpecial0" (click)="myGoods_cancle0('isSpecial0')">信息填写错误</li>
+    <li class="mui-table-view-cell cancel_li" [class.special]="isSpecial1" (click)="myGoods_cancle0('isSpecial1')">不想发货了</li>
+    <li class="mui-table-view-cell cancel_li" [class.special]="isSpecial2" (click)="myGoods_cancle0('isSpecial2')">时间超时</li>
+    <!--<li class="mui-table-view-cell cancel_li" [class.special]="isSpecial3" (click)="myGoods_cancle0('isSpecial3')">已经发完了</li>-->
+    <li class="mui-table-view-cell cancel_li" [class.special]="isSpecial4" (click)="myGoods_cancle0('isSpecial4')">其他原因</li>
+    <!--<li class="mui-table-view-cell cancel_li" [class.special]="isSpecial5" (click)="myGoods_cancle0('isSpecial5')">信息填写错误</li>-->
+    <li class="cancle_yes bgc_ea5529">
+      <a href="" class="sureCancle" (click)="goodsCancle()"><b>确定</b></a>
+    </li>
+    <li class="cancle_no bgc_c0c0">
+      <a href="#sheet1"><b>取消</b></a>
+    </li>
+  </ul>
+</div>
+
+<app-cancelOrderInfo (outer)="cancelOrder($event)" *ngIf="isShow"></app-cancelOrderInfo>

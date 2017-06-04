@@ -1,0 +1,135 @@
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import { RouterModule,ActivatedRoute, Router } from '@angular/router';
+import {personalCenterService} from "../../../personalCenter.service";
+declare var mui: any;
+declare var $:any;
+
+@Component({
+    selector: 'app-detail',
+    templateUrl: './detail.component.html',
+    styleUrls: ['./detail.component.css']
+
+})
+
+
+export class Detail implements OnInit {
+    public list:any[] = [];
+    public incomeList:any[] = [];
+    public expendList:any[] = [];
+
+    constructor(
+        public router:Router,
+        public service:personalCenterService,
+        public changeDetectorRef: ChangeDetectorRef
+    ) {}
+
+    ngOnInit():void {
+
+        mui.ready(function() {
+            mui('.mui-scroll-wrapper').scroll({
+                bounce: true,
+                indicators: true,
+                deceleration:mui.os.ios?0.003:0.0009
+            });
+            mui('.mui-scroll').on('tap','.mui-control-item:not(.mui-active)',function(){
+                mui('.mui-slider').slider().gotoItem(this.getAttribute('data-index'));
+            });
+
+        });
+        this.service.tradeFindList(10000005,'').subscribe(data=>{
+            this.list = data.data;
+            this.updateMonthView();
+        });
+        this.service.tradeFindList(10000005,'income').subscribe(data=>{
+            this.incomeList = data.data;
+            this.updateMonthView();
+        });
+        this.service.tradeFindList(10000005,'expend').subscribe(data=>{
+            this.expendList = data.data;
+            this.updateMonthView();
+        });
+
+    }
+
+    //显示年月，隐藏重复年月
+    updateMonthView(){
+      setTimeout(function(){
+        let monthArr=[];
+        $('.month').css('display','none');
+        //年月的class都为 .month .年+月+收入\支出
+        $('.month').filter(function(){//过滤出第一个未显示的
+            //return monthArr.includes(this.classList[1])?//第二个class名未显示过
+            return monthArr.filter(i=>i===this.classList[1]).length?
+            false:monthArr.push(this.classList[1])
+        }).css('display','block')
+          //隐藏空白项目
+          $('.list,.expendList,.incomeList').parent().css('display','none');
+      },200)
+
+    }
+
+    DetailChild()
+    {
+        this.router.navigateByUrl("personalCenter/DetailChild");
+    }
+    //日期Picker
+    showMsg3():void{
+
+        mui.confirm('日,月','',['日','月'],function(value){
+                new mui.DtPicker({
+                    type:  value.index === 0 ?  'date' :'month'
+                }).show(function(e){
+                    let date = e.value + (e.value.length === 10 ? '' : '-01');
+                    console.log(date);
+                    getList(date,value.index);
+                })
+        });
+
+        let getList = (date,type)=>{
+            //清空原来的值
+            this.list.length = 0;
+            this.incomeList.length = 0;
+            this.expendList.length = 0;
+            this.updateMonthView();
+
+            //let fund = $('.mui-control-item.mui-active').text();
+            //let fundList = this.list;
+            // switch(fund){
+            //     case '收入':
+            //         fund = 'income';
+            //         fundList = this.incomeList;
+            //         break;
+            //     case '支出':
+            //         fund = 'expend';
+            //         fundList = this.expendList;
+            // }
+            //获取全部数据
+            this.service.findDateList(date,'',type).subscribe(data=>{
+                console.log(data);
+                [].push.apply(this.list,data.data);
+                this.updateMonthView();
+            });
+            //获取支出数据
+            this.service.findDateList(date,'expend',type).subscribe(data=>{
+                console.log(data);
+                [].push.apply(this.expendList,data.data);
+                this.updateMonthView();
+            });
+            //获取输入数据
+            this.service.findDateList(date,'income',type).subscribe(data=>{
+                console.log(data);
+                [].push.apply(this.incomeList,data.data);
+                this.updateMonthView();
+            });
+        };
+
+        // var dtPicker = new mui.DtPicker();
+        // dtPicker.show(function (selectItems) {
+        //
+        //
+        //     console.log(selectItems.y);//{text: "2016",value: 2016}
+        //     console.log(selectItems.m);//{text: "05",value: "05"}
+        // })
+    }
+
+}

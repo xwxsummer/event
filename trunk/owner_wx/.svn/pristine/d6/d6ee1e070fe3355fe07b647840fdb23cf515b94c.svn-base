@@ -1,0 +1,95 @@
+
+<div  *ngIf="info" style="overflow: hidden;overflow-y: hidden">
+<div class="goodsDetail b-b back_fff padding16 fonSml">
+    <div class="height36">{{info.sendCity}}&nbsp;&nbsp;<img src="../assets/images/jian.png" class="jian" alt=""/>&nbsp;&nbsp;{{info.receiveCity}}&nbsp;&nbsp;&nbsp;（{{info.distance}}公里）</div>
+    <ul class="">
+        <li>货物名称：{{info.goodsName}}</li>
+        <li>货物剩余量：<span class="ea5529">{{info.goodsResidue}}</span>/{{info.goodsAmount}}吨</li>
+        <li>货物价值：{{info.goodsPrice}}元/吨</li>
+        <li>运费单价：{{info.freightPrice}}元/吨</li>
+        <li>截止日期：{{info.endTime}}</li>
+    </ul>
+</div>
+<div class="goodsDetail back_fff b-t m-t10">
+    <div class="fonNormal col_333 height36 padding16  pL_10">发货信息</div>
+    <ul class="efeff4 p_T10 padding16">
+        <li class="fonSml col_333">发货人：{{info.sendName}} <span class="pull-right">{{info.sendPhone}}</span></li>
+        <li class="fonSml">发货地址：{{ info.sendProvince + info.sendCity + info.sendCounty + info.sendTown + info.sendAddress}}</li>
+    </ul>
+    <img src="../assets/images/deliverGoods_bottom.png" alt="" class="w100 deliverGoods_bottom"/>
+</div>
+
+<div class="goodsDetail back_fff b-t m-t10">
+    <div class="fonNormal col_333 height36 padding16  pL_10">收货信息</div>
+    <ul class="efeff4 p_T10 padding16">
+        <li class="fonSml col_333">收货人：{{info.receiveName}} <span class="pull-right">{{info.receivePhone}}</span></li>
+        <li class="fonSml">收货地址：{{info.receiveProvince +  info.receiveCity + info.receiveCounty + info.receiveTown + info.receiveAddress}}</li>
+    </ul>
+    <img src="../assets/images/deliverGoods_bottom.png" alt="" class="w100 deliverGoods_bottom"/>
+</div>
+<div class="guarantee">
+    <!--<img src="../assets/images/guar.png"/>-->
+    <div class="mui-input-row mui-checkbox mui-left">
+        <span>马上来平台担保{{fmoney(info.insuranceFee)}}元</span>
+        <input name="checkbox1" value="Item 1" type="checkbox" checked="">
+        <nav>担保赔偿？</nav>
+    </div>
+
+<!--<input name="checkbox" value="Item 2" type="checkbox" checked="">-->
+</div>
+<div class="payMoney b-b back_fff padding16 b-t m-t10">
+    <p class="fonNormal col_333 m-b10">总运费:￥{{fmoney((info.freightPrice+info.insuranceFee)*info.goodsAmount)}}</p>
+    <div class=""><img src="../assets/images/myGoods_wallet.png" alt="" class="myGoods_wallet"/>&nbsp;&nbsp;&nbsp;钱包剩余金额：￥<span class="ea5529">{{fmoney(info.residue)}}</span></div>
+</div>
+<div class="back_fff m_top height36 fff fonSml">
+    <div class="flex7 col_333">保证金：￥<span class="ea5529">{{fmoney(info.ownerDeposit)}}</span></div>
+    <div class="bgc_ea5529 flex3  text_center" (click)="showKeyboard()">发布货源</div>
+</div>
+</div>
+
+
+        <div class="box" style="display:none;" >
+          <div class="mui-content">
+            <table id="number_input" border="0" cellspacing="0" cellpadding="0">
+              <tbody>
+              <tr>
+                <td class="input-item"></td>
+                <td class="input-item"></td>
+                <td class="input-item"></td>
+                <td class="input-item"></td>
+                <td class="input-item"></td>
+                <td class="input-item"></td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="clearfix">
+              <span class="pull-right forgetPassword" (click)="pw()">忘记密码？</span>
+            </div>
+
+            <table id="keyboard" border="0" cellspacing="0" cellpadding="0">
+
+              <tbody>
+              <tr>
+                <td class="keyboard-number">1</td>
+                <td class="keyboard-number">2</td>
+                <td class="keyboard-number">3</td>
+              </tr>
+              <tr>
+                <td class="keyboard-number">4</td>
+                <td class="keyboard-number">5</td>
+                <td class="keyboard-number">6</td>
+              </tr>
+              <tr>
+                <td class="keyboard-number">7</td>
+                <td class="keyboard-number">8</td>
+                <td class="keyboard-number">9</td>
+              </tr>
+              <tr>
+                <td class="keboard-action" data-action="reset">清空</td>
+                <td class="keyboard-number">0</td>
+                <td class="keboard-action" data-action="cancel">删除</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>

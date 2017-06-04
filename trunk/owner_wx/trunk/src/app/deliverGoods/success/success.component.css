@@ -1,0 +1,33 @@
+img{
+    display: block;
+    height: 5rem;
+    margin: 20px auto;
+
+}
+span{
+    display: block;
+    text-align: center;
+    color: #000011;
+}
+input{
+    width: 6rem;
+    height: 2rem;
+    background: #ea5529;
+    color: #ffffff;
+    border-radius: 5px;
+    font-size: 0.75rem;
+
+}
+input:nth-child(2){
+    float: right;
+}
+.input{
+    width: 13rem;
+    height: 3rem;
+    margin: 30px auto;
+}
+.box{
+    height: 15rem;
+
+    padding-top: 20px;
+}

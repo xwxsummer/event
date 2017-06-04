@@ -1,0 +1,159 @@
+import { Component,OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { RouterModule,ActivatedRoute, Router } from '@angular/router';
+//http
+import { personalCenterService } from  './personalCenter.service';
+//照片
+import { ValidateMessage } from  '../fragment/validateMessage';
+//本地缓存
+import { LocalStorage } from '../local_storage';
+declare var $: any;
+declare var mui: any;
+
+@Component({
+  selector: 'app-personalCenter',
+  templateUrl: './personalCenter.component.html',
+  styleUrls: ['./personalCenter.component.css'],
+  providers:[ personalCenterService]
+
+})
+
+export class PersonalCenter implements OnInit{
+  public data;//查看用户信息
+  public isShow:boolean;//层显示
+  public message:string;//显示内容
+  public myAuthed:string;//显示内容
+  public ValidateMessage;//显示内容
+  constructor(
+    public router: Router,
+    public titleService: Title,
+    public localStorage: LocalStorage,
+    public service : personalCenterService
+  ){
+    this.ValidateMessage=new ValidateMessage();
+  }
+  //验证手机号码
+  checkPhone(checking){
+    if(sessionStorage['authed']==0){//尚未审核
+      this.message="尚未认证，请认证";
+      this.isShow=true;
+    }else if(sessionStorage['authed']==1){//审核失败
+      this.message="审核失败，请重新认证";
+      this.isShow=true;
+    }else if(sessionStorage['authed']==2){//审核通过
+      this.router.navigateByUrl(checking);
+    }else if(sessionStorage['authed']==3){//审核中
+      console.log(555555);
+      mui.toast('审核中，请等待',{ duration:'short', type:'div' });
+    }
+  }
+
+  ngOnInit(): void{
+    this.titleService.setTitle('个人中心');
+    localStorage['walletCode']=JSON.parse(localStorage["data"]).walletCode;
+    this.message="";
+    this.myAuthed="0";
+    this.isShow=false;
+    this.service.personalCenterInfo()
+      .subscribe(
+        data => {
+        if(data.code==0){
+          this.data=data.data;
+          console.log(this.data);//name
+          this.localStorage.set("myTouxiang",this.data.headImg);//存头像
+          localStorage["walletCode"]=data.data.walletCode;
+          if(this.data.name){
+          }else{
+            this.data.name=this.data.mobile;
+          }
+          if(this.data.name.length==11){
+            this.data.name=this.data.name.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+            }
+          if(this.data.headImg){
+            this.data.headImg=this.ValidateMessage.ValidateMessage+this.data.headImg;
+          }
+          if(data.msg!="success"){
+            mui.toast(data.msg);
+          }
+        }
+      }
+    );
+    if(sessionStorage['authed']==2){//判断有没有存anthed
+      this.myAuthed="2";
+    }else{
+      this.service.checkNOMobile()
+          .subscribe(
+              data => {
+            if(data.code==0){
+              sessionStorage['authed']=data.data.authed;
+              console.log(sessionStorage['authed']);
+              this.myAuthed=data.data.authed+"";
+            }
+          }
+      );
+    }
+  }
+  //跳到个人信息
+  personalInfo(){
+    this.router.navigateByUrl("personalCenter/PersonalInfo");
+  }
+  //跳到业务统计
+  yewutongji(){
+    this.checkPhone("personalCenter/Statistics");
+  }
+  //跳到货物明细
+  huwumingxi(){
+    this.checkPhone("personalCenter/Huwumingxi");
+  }
+  //跳到收货历史
+  receiveHistory(){
+    this.checkPhone("personalCenter/ReceiveHistory");
+  }
+
+  //跳到我的钱包
+  wallet(){
+
+    if(localStorage['walletCode']=="null"){
+        mui.toast("未创建钱包");
+    }else{
+      this.checkPhone("personalCenter/Wallet");
+    }
+}
+  //明细
+  detail(){
+    this.checkPhone("personalCenter/Detail");
+  }
+  //跳到员工管理
+  Management(){
+    this.checkPhone("personalCenter/Management");
+  }
+  //跳到我的消息
+  MyMessage(){
+    this.router.navigateByUrl("personalCenter/MyMessage");
+  }
+  //设置
+  Setting(){
+    this.router.navigateByUrl("personalCenter/Setting");
+  }
+  //跳到地址管理
+  AddressManage(){
+    this.checkPhone("personalCenter/AddressManage");
+  }
+  //意见反馈
+  OptionMind(){
+    this.router.navigateByUrl("personalCenter/OptionMind");
+  }
+
+
+  //取消认证
+  isCancel(){
+    this.isShow=false;
+  }
+  //去认证
+  myShow(){
+    this.isShow=false;
+    this.router.navigateByUrl("certification");
+  }
+
+
+}

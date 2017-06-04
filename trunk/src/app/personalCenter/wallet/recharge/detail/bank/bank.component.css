@@ -1,0 +1,21 @@
+.box{
+    background: #efeff4;
+}
+
+.box2 span{
+
+    color: #000000;
+}
+
+.box3{
+    height: 3rem;
+    background: #efeff4 url("/assets/images/jia.png") no-repeat left;
+    width: 90%;
+    background-size: 1rem;
+    margin: 0 auto;
+    border-bottom: 1px solid #CCCCCC;
+}
+.box3 span{
+    line-height: 3rem;
+    padding-left: 20px;
+}

@@ -1,0 +1,57 @@
+<!--未认证  -->
+<ul class="fonNormal back_fff col_333 p_b100" *ngIf="data?.authed==0">
+  <li class="clearfix" (click)="ChangeheadImg()"><span class="m_t20">头像</span><span class="pull-right">
+   <img src="../../assets/images/headImg.png" alt="" class="perCenterImg img" *ngIf="data?.headImg==null"/>
+    <img src="{{data?.headImg}}" alt="" class="perCenterImg img" *ngIf="data?.headImg!=null"/>
+    &nbsp;&nbsp;&nbsp;></span>
+  </li>
+  <li>姓名 <span class="pull-right" (click)="toCertifi()">{{data?.mobile}}&nbsp;&nbsp;&nbsp;></span></li>
+  <!--<li>性别 <span class="pull-right" (click)="toCertifi()">></span></li>-->
+  <li>登录账号<span class="pull-right" (click)="changePhone()">{{data?.mobile}}&nbsp;&nbsp;&nbsp;></span></li>
+  <li><img src="../assets/images/shimingRenzheng.png" alt="" class="shimingRenzheng"/>实名认证<span class="pull-right" (click)="goCertifi()"><span class="f89c3a">去认证</span>&nbsp;&nbsp;&nbsp;></span></li>
+</ul>
+<!--认证失败  -->
+<ul class="fonNormal back_fff col_333 p_b100" *ngIf="data?.authed==1">
+  <li class="clearfix" (click)="ChangeheadImg()"><span class="m_t20">头像</span><span class="pull-right">
+    <img src="../../assets/images/headImg.png" alt="" class="perCenterImg img" *ngIf="data?.headImg==null"/>
+    <img src="{{data?.headImg}}" alt="" class="perCenterImg img" *ngIf="data?.headImg!=null"/>
+    &nbsp;&nbsp;&nbsp;></span>
+  </li>
+  <li>姓名 <span class="pull-right" (click)="toCertifi()">{{data?.mobile}}&nbsp;&nbsp;&nbsp;></span></li>
+  <!--<li>性别 <span class="pull-right" (click)="toCertifi()">></span></li>-->
+  <li>登录账号<span class="pull-right" (click)="changePhone()">{{data?.mobile}}&nbsp;&nbsp;&nbsp;></span></li>
+  <li><img src="../assets/images/shimingRenzheng.png" alt="" class="shimingRenzheng"/>实名认证<span class="pull-right" (click)="goCertifi()"><span class="f89c3a">去认证</span>&nbsp;&nbsp;&nbsp;></span></li>
+</ul>
+<!--认证成功-->
+<ul class="fonNormal back_fff col_333 p_b100" *ngIf="data?.authed==2">
+  <!--*ngIf="data?.status==0"-->
+  <li class="clearfix" (click)="ChangeheadImg()"><span class="m_t20">头像</span><span class="pull-right">
+    <img src="../../assets/images/headImg.png" alt="" class="perCenterImg img" *ngIf="data?.headImg==null"/>
+    <img src="{{data?.headImg}}" alt="" class="perCenterImg img" *ngIf="data?.headImg!=null"/>
+    &nbsp;&nbsp;&nbsp;></span></li>
+  <li>姓名 <span class="pull-right col_a9">{{data?.name}}&nbsp;&nbsp;&nbsp;></span></li>
+  <!--<li>性别 <span class="pull-right col_a9">{{data?.sex}}&nbsp;&nbsp;&nbsp;></span></li>-->
+  <li>登录账号<span class="pull-right" (click)="changePhone()">{{data?.mobile}}&nbsp;&nbsp;&nbsp;></span></li>
+  <li><img src="../assets/images/shimingRenzheng.png" alt="" class="shimingRenzheng"/>实名认证<span class="pull-right" (click)="FinishCertif()"><span class="lv">已认证</span>&nbsp;&nbsp;&nbsp;></span></li>
+</ul>
+<!--审核中-->
+<ul class="fonNormal back_fff col_333 p_b100" *ngIf="data?.authed==3">
+  <li class="clearfix" (click)="ChangeheadImg()"><span class="m_t20">头像</span><span class="pull-right">
+    <img src="../../assets/images/headImg.png" alt="" class="perCenterImg img" *ngIf="data?.headImg==null"/>
+    <img src="{{data?.headImg}}" alt="" class="perCenterImg img" *ngIf="data?.headImg!=null"/>
+    &nbsp;&nbsp;&nbsp;></span>
+  </li>
+  <li>姓名 <span class="pull-right" (click)="toCertifi()">{{data?.mobile}}&nbsp;&nbsp;&nbsp;></span></li>
+  <!--<li>性别 <span class="pull-right" (click)="toCertifi()">></span></li>-->
+  <li>登录账号<span class="pull-right" (click)="changePhone()">{{data?.mobile}}&nbsp;&nbsp;&nbsp;></span></li>
+  <li><img src="../assets/images/shimingRenzheng.png" alt="" class="shimingRenzheng"/>实名认证<span class="pull-right"><span class="f89c3a">审核中</span>&nbsp;&nbsp;&nbsp;></span></li>
+</ul>
+<div id="contact_show" class="ceng_show clearfix col_333 fonSml" *ngIf="isShow">
+  <div class="text_center b-b ceng_top">{{message}}</div>
+  <div class="clearfix ea5529">
+    <div class="text_center contactUs_cancel pull-left b-r" id="contactUs_cancel" (click)="isCancel()">取消</div>
+    <div class="text_center contactUs_sure pull-right" (click)="myShow()">去认证</div>
+  </div>
+</div>
+<div id="contact_bg" class="bg" *ngIf="isShow"></div>
+

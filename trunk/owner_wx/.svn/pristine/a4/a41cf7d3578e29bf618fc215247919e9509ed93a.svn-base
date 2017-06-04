@@ -1,0 +1,26 @@
+<div class="box">
+    <div class="box_c">
+        <span>单号：</span>
+        <span>1234567891234567894</span>
+    </div>
+    <div class="box_c">
+        <span>类型：</span>
+        <span>提现</span>
+    </div>
+    <div class="box_c">
+        <span>支出：</span>
+        <span>1000:00</span>
+    </div>
+    <div class="box_c">
+        <span>时间：</span>
+        <span>2016-12-30 12:25:33</span>
+    </div>
+    <div class="box_c">
+        <span>状态：</span>
+        <span>成功</span>
+    </div>
+    <div class="box_c">
+        <span>余额：</span>
+        <span>1234567891234567894</span>
+    </div>
+</div>
