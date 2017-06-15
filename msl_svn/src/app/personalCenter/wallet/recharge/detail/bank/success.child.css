@@ -1,0 +1,14 @@
+.box2{
+    padding-top: 3rem;
+}
+.succe{
+    width: 5rem;
+}
+.box input{
+    display: block;
+    width: 80%;
+    margin: 20px auto;
+    color: #fff;
+    border-radius: 5px;
+    background: #ea5529;
+}

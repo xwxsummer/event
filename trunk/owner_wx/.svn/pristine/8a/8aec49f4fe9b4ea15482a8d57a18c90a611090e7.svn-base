@@ -1,7 +1,0 @@
-<div class="text_center">
-  <img src="../assets/images/finish_certifi.png" alt="" class="m_top50" width="70px"/>
-  <p class="text_center fonNormal col_333 m30">装车成功</p>
-  <div class="m0_auto text_center m30">
-    <div class="Success bgc_ea5529 fff" (click)="DetailsInfo()">完成</div>
-   </div>
-</div>

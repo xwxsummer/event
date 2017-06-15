@@ -1,0 +1,26 @@
+<div class="systemInfo b-b back_fff" *ngIf='data?.systemNotify!=null'>
+  <div class="systemImg posi_relative" >
+    <img src="../assets/images/systemInfo.png" class="systemImg_first" alt=""/>
+    <img src="../assets/images/red_point.png" alt="" class="systemImg_2 posi_abslotu"/>
+  </div>
+  <div class="systemTitle pL_10" (click)="SystemInfo()">
+    <div class="content">
+      <div class="fonSml col_333">{{data?.systemNotify.title}}</div>
+      <div>{{data?.businessMessage.create_time}}</div>
+    </div>
+    <p class="fon85">{{data?.systemNotify.content}} </p>
+  </div>
+</div>
+<div class="huodanInfo b-b back_fff" *ngIf='data?.businessMessage!=null'>
+  <div class="huodanImg posi_relative" >
+    <img src="../assets/images/huodaninfo.png" class="huodanImg_first" alt=""/>
+    <img src="../assets/images/red_point.png" alt="" class="huodanImg_2 posi_abslotu"/>
+  </div>
+  <div class="huodanTitle pL_10"  (click)="HuodanInfo()">
+    <div class="content">
+      <div class="fonSml col_333">{{data?.businessMessage.title}}</div>
+      <div>{{data?.businessMessage.create_time}}</div>
+    </div>
+    <p class="fon85">{{data?.businessMessage.content}}</p>
+  </div>
+</div>

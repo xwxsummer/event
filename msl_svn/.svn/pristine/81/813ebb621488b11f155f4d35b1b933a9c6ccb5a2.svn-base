@@ -1,0 +1,38 @@
+<div class="mui-scroll-wrapper">
+  <div class="mui-scroll">
+    <div class="back_fff">
+      <div class="text_center fff personTop">
+        <img src="../assets/images/headImg.png" alt="" class="perCenterImg img" (click)="personalInfo()" *ngIf="data?.headImg==null"/>
+        <img src="{{data?.headImg}}" alt="" class="perCenterImg img" (click)="personalInfo()" *ngIf="data?.headImg!=null"/>
+        <span class="fonNormal" (click)="personalInfo()" id="userName">{{data?.name}}</span>
+        <div class="text_center" *ngIf="myAuthed=='0'"><img src="../assets/images/unCertifi.png" alt=""/></div>
+        <div class="text_center" *ngIf="myAuthed=='1'"><img src="../assets/images/certifiFaild.png" alt=""/></div>
+        <div class="text_center" *ngIf="myAuthed=='2'"><img src="../assets/images/certifiSuccess.png" alt=""/></div>
+        <div class="text_center" *ngIf="myAuthed=='3'"><img src="../assets/images/checking.png" alt=""/></div>
+      </div>
+    </div>
+    <ul class="fonNormal back_fff col_333 p_b100">
+      <li (click)="yewutongji()"><img src="../assets/images/yewutongji.png" alt=""/>业务统计 <span class="pull-right">></span></li>
+      <li (click)="huwumingxi()"><img src="../assets/images/wuhuomingxi.png" alt=""/>货物明细 <span class="pull-right">></span></li>
+      <li (click)="receiveHistory()"><img src="../assets/images/shouhuolishi.png" alt=""/>收货历史 <span class="pull-right">></span></li>
+      <li (click)="wallet()"><img src="../assets/images/wodeqiangbao.png" alt=""/>我的钱包 <span class="pull-right">></span></li>
+      <li (click)="Management()"><img src="../assets/images/yuangongguanli.png" alt=""/>联系人管理 <span class="pull-right">></span></li>
+      <li (click)="MyMessage()"><img src="../assets/images/wodexiaoxi.png" alt=""/>我的消息 <span class="pull-right">></span></li>
+      <li (click)="AddressManage()"><img src="../assets/images/dizhiguanli.png" alt=""/>地址管理 <span class="pull-right">></span></li>
+      <li (click)="call()"><img src="../assets/images/kefuzhongxin.png" alt=""/>客服中心 <span class="pull-right">></span></li>
+      <li (click)="Setting()"><img src="../assets/images/zhezhi.png" alt=""/>设置 <span class="pull-right">></span></li>
+      <li (click)="OptionMind()"><img src="../assets/images/yijianfankui.png" alt=""/>意见反馈</li>
+      </ul>
+  </div>
+</div>
+
+
+<div id="contact_show" class="ceng_show clearfix col_333 fonSml" *ngIf="isShow">
+  <div class="text_center b-b ceng_top">{{message}}</div>
+  <div class="clearfix ea5529">
+    <div class="text_center contactUs_cancel pull-left b-r" id="contactUs_cancel" (click)="isCancel()">取消</div>
+    <div class="text_center contactUs_sure pull-right" (click)="myShow()">去认证</div>
+  </div>
+</div>
+<div id="contact_bg" class="bg" *ngIf="isShow"></div>
+

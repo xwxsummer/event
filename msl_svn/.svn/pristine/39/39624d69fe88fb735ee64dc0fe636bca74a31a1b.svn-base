@@ -1,0 +1,4 @@
+<div>
+<img src="../assets/images/saoyisao.png"
+ alt="" class="posi_abslotu posi_right transformY50" style="width: 28px;" (click)="scan()" />
+</div>

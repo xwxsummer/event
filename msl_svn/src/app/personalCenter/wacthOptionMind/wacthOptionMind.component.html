@@ -1,0 +1,30 @@
+<div class="input_org talkTop text_center fff fonSml">反馈记录</div>
+<div class="height_3 w100 talkPhone col_333 fonSml padding_17">手机号码:{{phone}}</div>
+<!--数据列表-->
+<div class="mui-scroll-wrapper">
+    <div class="mui-scroll">
+        <div class="talkHome watchtalkHome">
+            <div *ngFor="let site of data">
+                <div class="clearfix">
+                    <!--货主-->
+                    <div class="talkGoods pull-right posi_relative">
+                        <div *ngIf="site.type==1">
+                            <div class="m-t10">{{site?.createTime}}</div>
+                            <p class="back_fff col_333">{{site?.content}}</p>
+                        </div>
+                        <div class="contentImg pull-right" *ngIf="site.type==2">
+                            <div class="m-t10">{{site?.createTime}}</div>
+                            <img src="{{site.content}}" class="w100" alt=""/>
+                        </div>
+                        <img src="{{headImg}}" class="touxiang posi_abslotu transformY50 pos_right0" alt=""/>
+                    </div>
+                </div>
+            </div>
+            <!--<div *ngIf="uploading.noneIfno==1" style="margin-bottom: 40px;">-->
+                <!--<div class="text_center fonSml" *ngIf="!uploading.isLoading" id="loadingMore">{{uploading.loadingMore}}</div>-->
+                <!--<div class="text_center moreInfo" *ngIf="uploading.isLoading">正在加载 <img src="../assets/images/loading.jpg" alt=""/></div>-->
+            <!--</div>-->
+            <div class="text_center m-t3" *ngIf="uploading.noneIfno==2">暂聊天记录</div>
+        </div>
+    </div>
+</div>

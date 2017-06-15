@@ -1,0 +1,36 @@
+ <form #myForm="ngForm">
+<div class="padding16 b-b m-b10 back_fff">
+  <h3 class="height3 fonNormal col_333 b-b">车辆信息</h3>
+  <ul class="clearfix p_T10 p_b10">
+    <li class="detail_li pull-left">司机姓名：{{data?.driverName}}</li>
+    <li class="detail_li pull-left">{{data?.driverPhone}}</li>
+    <li class="detail_li pull-left">车牌号：{{data?.truckNo}}</li>
+    <li class="detail_li pull-left">载重：{{data?.truckLoad.toFixed(2)}}{{data?.goodsUnit}}</li>
+    <li class="detail_li pull-left">车型：{{data?.truckModel}}</li>
+  </ul>
+</div>
+<div class="padding16 b-b m-b10 back_fff">
+  <h3 class="height3 fonNormal col_333 b-b">货物信息</h3>
+  <ul class="p_T10">
+    <li class="">出发地：{{data?.sendAddress}}</li>
+    <li class="">发货单位：{{data?.sendCompany}}</li>
+    <li class="">收货单位：{{data?.receiveCompany}}</li>
+    <li class="">货物名称：{{data?.goodsName}}</li>
+    <li class="">运费单价：{{data?.freightPrice.toFixed(2)}}元/吨</li>
+    <li class="">货物价值：{{data?.goodsPrice.toFixed(2)}}元/吨</li>
+  </ul>
+ 
+    <ul class="input_ul clearfix">
+      <li class="pull-left">皮重：<input type="text" ngModel name="pizhong" required  (keyup.enter)="onKey1(values=myForm.value.pizhong)" (blur)="onKey1(values=myForm.value.pizhong)"/>&nbsp;吨&nbsp;</li>
+<li class="pull-left">&nbsp;毛重：<input type="text" ngModel name="maozhong" required (keyup.enter)="onKey2(values2=myForm.value.maozhong)" (blur)="onKey2(values2=myForm.value.maozhong)"/>&nbsp;吨</li>
+      <li class="pull-left">净重：<input type="text" [(ngModel)]="jingzhong" required name="jingzhong" readonly="readonly"  value="{{jingzhong}}"/>&nbsp;吨&nbsp;</li>
+      <li class="pull-left">&nbsp;运费：<input type="text" [(ngModel)]="price" required name="yunfei" readonly="readonly" value="{{price}}" />&nbsp;元</li>
+      <li class="pull-left textarea_li">备注：<textarea name="textarea" id="" cols="10" rows="3" ngModel name="beizhu"></textarea></li>
+    </ul>
+   
+<!--<div>{{myForm.value| json}}</div>-->
+<!--<p>{{values2-values}}</p>-->
+</div>
+<input type="button" value="确认装车" [disabled]="submitlag" class="zhuangche_sure" (click)="ZhuangcheSuccess(myForm.value)"/>
+ <!--<div class="zhuangche_sure text_center bgc_ea5529 fff fonSml" (click)="ZhuangcheSuccess(myForm.value)">确认装车</div>-->
+ </form>

@@ -1,0 +1,36 @@
+.yewotongji_flex{
+  flex: 1;
+  height: 2rem;
+  line-height: 2rem;
+}
+.touxiang{
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+.dis_flex{
+  display: flex;
+}
+.dis_flex>.flex1{
+  flex: 1;
+}
+.dis_flex>.flex9{
+  flex: 9;
+}
+
+.perTopSpan{
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  background-color: #333;
+  opacity: .5;
+  border-radius: 10px;
+  margin-bottom: 2px;
+}
+.perTopSpan img {
+  width: 15px;
+  vertical-align: middle;
+  margin-bottom: 2px;
+}
+

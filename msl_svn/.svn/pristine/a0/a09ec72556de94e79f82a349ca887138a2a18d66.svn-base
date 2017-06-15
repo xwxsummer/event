@@ -1,0 +1,26 @@
+<div class="box">
+    <div class="box2  back_fff b-b">
+        <div class="height_3 b-b col_333 clearfix box3_top">
+            <span class="height_3 pull-left pL_10">余额</span>
+            <span class="height_3 pull-right m-r10">{{fmoney(money.total)}}</span>
+        </div>
+        <div id="charts" >
+            <div id="main" style="width: 7rem;height:6rem;float: left;margin-top: 1.5rem"></div>
+                 <div class="money" style="width: 63%;height: 7rem;float: left;margin-top: 1.5rem;">
+                    <span style="line-height: 3rem"><span style="color:rgb(194, 53, 49)">冻结金额</span> ￥{{fmoney(money.frozen)}}</span><br/>
+                    <span><span style="color:rgb(47, 69, 84)">可提现金额</span> ￥{{fmoney(money.residue)}}</span><br/>
+                    <span (click)="detail()"style="float: right;padding-top: 1.5rem;color: #0000cc">查看明细</span><br/>
+                 </div>
+        </div>
+
+    </div>
+    <ul class="fonNormal back_fff col_333 p_b100 b-t">
+        <li (click)="recharge()">充值 <span class="pull-right">></span></li>
+       <!--// (click)="withdrawals()"-->
+        <li >提现 <span class="pull-right">></span></li>
+        <li (click)="mybank()">我的银行卡 <span class="pull-right">></span></li>
+        <li (click)="setPwd()" *ngIf="data?.pwd==0">设置交易密码<span class="pull-right">></span></li>
+        <li (click)="mondify()" *ngIf="data?.pwd==1">修改交易密码<span class="pull-right">></span></li>
+        <li>忘记交易密码<span class="pull-right">></span></li>
+    </ul>
+</div>

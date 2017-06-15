@@ -1,0 +1,54 @@
+.padding_left16{
+  padding-left: 1.6rem;
+}
+.padding_right16{
+  padding-right: 1.6rem;
+}
+/**取消*!/*/
+.mui-popover.mui-popover-action .mui-table-view {
+  margin: 0;
+  text-align: center;
+  color: #999;
+  border-radius: 0px;
+}
+.cancle_resuit{
+  background-color: rgba(204, 204, 204, 1);
+  height: 3rem;
+  line-height: 3rem;
+  color: #000;
+}
+.cancel_ul{
+  padding-top: 20px;
+}
+.cancel_li{
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  width: 40%;
+  display: inline-block;
+  margin-bottom: 10px;
+  height: 2.2rem;
+  line-height: .9rem;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #000;
+}
+/*.cancel_li:active{*/
+  /*background-color: red*/
+/*}*/
+.special {
+  border: 1px solid #ea5529;
+  color: #ea5529;
+}
+.mgGoodsList div{
+  line-height: 1.4rem
+
+}
+.cancel_p{
+  line-height:1.6rem ;
+}
+.bindFinish{
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 3rem;
+}

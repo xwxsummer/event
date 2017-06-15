@@ -1,4 +1,0 @@
-<label class="label"><input #oldPwd type="password" placeholder="请输入交易密码"/></label>
-<label class="label"><input #newPwd type="password" placeholder="请输入新交易密码"/></label>
-<label class="label"><input #newPwdChk (keyup)="checkPwd(newPwd.value,newPwdChk.value)" type="password"placeholder="确认新密码"/></label>
-<button style="background: #ea5529;color: #fff;" id="submit" disabled (click)="submit(oldPwd.value,newPwd.value)">保存</button>

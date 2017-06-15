@@ -1,0 +1,47 @@
+
+import { Component,OnInit } from '@angular/core';
+import { RouterModule,ActivatedRoute, Router } from '@angular/router';
+import { Observable }from 'rxjs/Observable';
+import { Subject }from 'rxjs/Subject';
+import { Title }from '@angular/platform-browser';
+import { personalCenterService } from  '../../personalCenter.service';
+declare var mui: any;
+declare var md5:any;
+declare var $:any;
+
+@Component({
+  selector: 'app-set-pwd',
+  templateUrl: './set-pwd.component.html',
+  styleUrls: ['./set-pwd.component.css']
+})
+
+export class SetPwdComponent implements OnInit {
+    constructor(
+        public router: Router,
+        public service:personalCenterService
+    ){}
+   checkPwd(pwd,conPwd){
+        console.log(pwd,conPwd);
+        if(pwd!==conPwd) {
+            mui.toast('两次输入密码不一致');
+            $('#submit').attr('disabled', 'true');
+        }else {
+            $('#submit').removeAttr('disabled');
+        }
+    }
+    submit(pwd){
+       //http://47.92.136.150:8301/payment-service/wallet/setPwd
+       this.service.setPwd(md5(pwd)).subscribe(
+        data=>{
+          if(data.code==0){
+            this.router.navigateByUrl("personalCenter/Wallet");
+          }else{
+            mui.alert(data.msg)
+          }
+        })
+    }
+    ngOnInit(): void{
+
+    }
+}
+

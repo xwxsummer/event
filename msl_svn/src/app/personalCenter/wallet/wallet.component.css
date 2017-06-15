@@ -1,0 +1,18 @@
+.box{
+    background: #efeff4;
+}
+.box2{
+    height: 11.7rem;
+    margin: 0 auto;
+    margin-bottom: 5px;
+}
+ul li{
+    margin: 0 auto;
+    width: 90%;
+    height: 3rem;
+    background: #fff;
+    color: #333;
+    line-height:3rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+

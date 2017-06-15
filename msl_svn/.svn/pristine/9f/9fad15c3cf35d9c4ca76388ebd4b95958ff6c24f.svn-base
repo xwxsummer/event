@@ -1,0 +1,181 @@
+
+
+/**
+ * Created by CLX on 2017/5/19.
+ */
+import{ FormControl }from'@angular/forms';
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+import  'rxjs/Rx';
+declare var mui: any;
+export class ValidateMessage{
+    constructor(
+
+    ){
+
+    }
+    //验证手机号码 1 成功  2失败
+    public validateMobile(mobile):number{
+        if(mobile){//手机号码不为空
+            if(mobile.length<11){
+                mui.toast("请填写正确手机号码",{ duration:'short', type:'div' });
+                return 2;
+            }else if(mobile.length==11){
+                let MOBILE_REGEXP =/^1[3|5|6|7|8]{1}[0-9]{9}$/;//手机正则
+                let flag=MOBILE_REGEXP.test(mobile) ?1: 2;
+                if(flag==1){
+                    return 1;
+                }else{
+                    mui.toast("请填写正确的手机号码",{ duration:'short', type:'div' });
+                    return 2;
+                }
+            }
+
+        }
+        else{//手机号码为空
+            mui.toast('手机号码不能为空，请填写正确的手机号码',{ duration:'short', type:'div' });
+        }
+
+    }
+    //验证验证码 1 成功  2失败
+    public validateCaptchaReg(captcha):number{
+        if(captcha){//验证码 不为空
+            if(captcha.length<4){
+                mui.toast("请填写正确验证码",{ duration:'short', type:'div' });
+                return 2;
+            }else if(captcha.length==4){
+                let MOBILE_REGEXP =/^[0-9]\d*$/;//验证码正则
+                let flag=MOBILE_REGEXP.test(captcha) ?1: 2;
+                if(flag==1){
+                    return 1;
+                }else{
+                    mui.toast("验证码不符合规则，请填写正确的验证码",{ duration:'short', type:'div' });
+                    return 2;
+                }
+            }
+        }
+        else{//验证码为空
+            mui.toast('验证码不能为空，请填写验证码',{ duration:'short', type:'div' });
+        }
+
+    }
+    //验证密码1 成功  2失败
+    public validatePsd(psd):number{
+        if(psd){//密码不为空
+            if(psd.length<6){
+                mui.toast("请填写正确密码",{ duration:'short', type:'div' });
+                return 2;
+            }else if(psd.length>=6){
+                let MOBILE_REGEXP =/^[a-zA-Z0-9_\.]+$/;//密码正则
+                let flag=MOBILE_REGEXP.test(psd) ?1: 2;
+                if(flag==1){
+                    return 1;
+                }else{
+                    mui.toast("密码不符合规则，请填写规则的密码",{ duration:'short', type:'div' });
+                    return 2;
+                }
+            }
+        }
+        else{//验证码为空
+            mui.toast('密码不能为空，请填写密码',{ duration:'short', type:'div' });
+        }
+
+    }
+    //验证姓名 1 成功  2失败
+    public validateName(name):number{
+        if(name){//姓名不为空
+            if(name.length<2){
+                mui.toast("请填写正确姓名",{ duration:'short', type:'div' });
+                return 2;
+            }else if(name.length>=2){
+                let MOBILE_REGEXP =/[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/;//姓名正则
+                let flag=MOBILE_REGEXP.test(name) ?1: 2;
+                if(flag==1){
+                    var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]")
+                    var rs = "";
+                    for (var i = 0; i < name.length; i++) {
+                        if(pattern.test(name)){
+                            mui.toast("含有非法字符",{ duration:'short', type:'div' });
+                            return 2;
+                        }else{
+                            return 1;
+                        }
+                    }
+                }else{
+                    mui.toast("姓名不符合规则，请填写真正的姓名",{ duration:'short', type:'div' });
+                    return 2;
+                }
+            }
+        }
+        else{//验证码为空
+            mui.toast('姓名不能为空，请填写姓名',{ duration:'short', type:'div' });
+        }
+
+    }
+    //验证身份证号码1 成功  2失败
+    public validateCardNo(cardNo):number{
+        if(cardNo){//身份证号码不为空
+            if(cardNo.length<18){
+                mui.toast("请填写正确身份证号码",{ duration:'short', type:'div' });
+                return 2;
+            }else if(cardNo.length==18){
+                let MOBILE_REGEXP =/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;//身份证号码正则
+                let flag=MOBILE_REGEXP.test(cardNo) ?1: 2;
+                if(flag==1){
+                    return 1;
+                }else{
+                    mui.toast("身份证号码不符合规则，请填写身份证号码",{ duration:'short', type:'div' });
+                    return 2;
+                }
+            }
+        }
+        else{//身份证号码为空
+            mui.toast('身份证号码不能为空，请填写身份证号码',{ duration:'short', type:'div' });
+        }
+
+    }
+    //验证统一信息代码 1 成功  2失败 [1-9A-GY]{1}[1239]{1}[1-5]{1}[0-9]{5}[0-9A-Z]{10}
+    public creditCode(groupCode):number{
+        if(groupCode){//公司统一社会信用代码
+            if(groupCode.length<18){
+                mui.toast("请输入正确公司统一社会信用代码",{ duration:'short', type:'div' });
+                return 2;
+            }else if(groupCode.length==18){
+                let MOBILE_REGEXP =/^[1-9A-GY]{1}[1239]{1}[1-5]{1}[0-9]{5}[0-9A-Z]{10}/;//验证统一信息代码
+                let flag=MOBILE_REGEXP.test(groupCode) ?1: 2;
+                if(flag==1){
+                    return 1;
+                }else{
+                    mui.toast("公司统一社会信用代码不符合规则，请填写公司统一社会信用代码",{ duration:'short', type:'div' });
+                    return 2;
+                }
+            }
+        }
+        else{//公司统一社会信用代码
+            mui.toast('公司统一社会信用代码不能为空，请填写公司统一社会信用代码',{ duration:'short', type:'div' });
+        }
+    }
+    //验证6位密码 1 成功  2失败 ^[0-9]{6}$
+    public validePsd(psd):number{
+        if(psd){//验证6位密码
+            if(psd.length<6){
+                mui.toast("请填写正确密码",{ duration:'short', type:'div' });
+                return 2;
+            }else if(psd.length==6){
+                let MOBILE_REGEXP =/^[0-9]{6}$/;//验证6位密码
+                let flag=MOBILE_REGEXP.test(psd) ?1: 2;
+                if(flag==1){
+                    return 1;
+                }else{
+                    mui.toast("请填写正确密码",{ duration:'short', type:'div' });
+                    return 2;
+                }
+            }
+        }
+        else{//公司统一社会信用代码
+            mui.toast('密码不能为空，请输入密码',{ duration:'short', type:'div' });
+        }
+    }
+
+    public ValidateMessage="http://clx-dev.oss-cn-beijing.aliyuncs.com/";
+}

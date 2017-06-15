@@ -1,0 +1,99 @@
+<div class="height36 b-b back_fff w100" style="position: fixed;">
+    <img src="../assets/images/goback.png" class="goback posi_abslotu posi_left transformY50" (click)="goBack()" alt=""/>
+    <img src="../assets/images/home.png" class="home posi_abslotu posi_right transformY50" (click)="goHome()" alt=""/>
+</div>
+<div class="myGoods_content back_fff m-b10 b-b b-t padding25">
+    <div class="height3 fonSml fon900 col_333 b-b pL_10">货源详细信息</div>
+    <div class="b-b">
+        <div class="col_333 pR_10 pL_10 m-b5 m-t10">
+            <span>{{data?.sendCity}}</span>
+            <div class="huwu_jian posi_relative">
+                <img src="../assets/images/jian.png" alt="" class="w100"/>
+            </div>
+            <span>{{data?.receiveCity}}（{{data?.distance.toFixed(2)}}公里）</span>
+              <span class="pull-right f7931e" >进行中</span>
+                <!--<span class="pull-right f7931e" *ngIf="data?.status==3">前往货源地</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==4">到达货源地</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==50">货主确认车辆</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==51">货主装车</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==52">司机确认装车</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==53">前往目的地</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==54">到达目的地</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==100">货主确认车辆</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==101">货主确认收货</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==102">司机确认收货</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==150">完成</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==151">评价完成 </span>
+                <span class="pull-right f7931e" *ngIf="data?.status==200">货主拒绝装车</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==210">货主取消</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==211">司机取消</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==212">客服取消</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==220">协商中</span>-->
+        </div>
+        <div class="pR_10 pL_10 m-b10 mgGoodsList">
+            <div>货物名称：{{data?.goodsName }}</div>
+            <div>货物剩余量：<span class="ea5529">{{data?.goodsResidue.toFixed(2) }}</span>/{{data?.goodsAmount.toFixed(2) }}吨</div>
+            <div>货物价值：{{data?.goodsPrice.toFixed(2) }}元/吨</div>
+            <div>运费单价：{{data?.freightPrice.toFixed(2) }}元/吨</div>
+            <div>装货时间：{{data?.loadTime}}</div>
+        </div>
+    </div>
+    <div class="pR_10 pL_10 myGoods_bottom clearfix">
+        <span class="pull-right" *ngIf="data?.publishTime!='0分钟'">{{data?.publishTime}}</span>
+        <span class="pull-right" *ngIf="data?.publishTime=='0分钟'">刚刚</span>
+    </div>
+</div>
+
+<div class="receipt padding16 back_fff b-t">
+    <div class="height3 fonSml fon900 col_333 b-b pL_10">接单司机</div>
+    <div class="box3_top clearfix">
+        <div class="pull-left pL_10 p_T10 text_center" style="width: 30%;">
+            <span class="a">
+                <img src="../../assets/images/headImg.png" alt="" class="headImg" *ngIf="data?.headImg==null"/>
+                <img src="{{data?.headImg}}" alt="" class="headImg" *ngIf="data?.headImg!=null"/>
+    </span>
+            <div class="text_center" style="margin-top: -17px;">
+                <span class="fff" style="background-color: #f7931e; font-size: 10px;">已认证</span>
+            </div>
+            <div class="col_333">{{data?.driverName}}</div>
+            </div>
+        <div class="re_r pull-left" style="width: 70%;">
+            <nav>车牌号：{{data?.truckNo }}
+                <span class="pull-right f7931e" *ngIf="data?.status==2">接单成功</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==3">前往货源地</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==4">到达货源地</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==50">货主确认车辆</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==51">货主装车</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==52">司机确认装车</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==53">前往目的地</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==54">到达目的地</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==100">货主确认车辆</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==101">货主确认收货</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==102">司机确认收货</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==150">完成</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==151">评价完成 </span>
+                <span class="pull-right f7931e" *ngIf="data?.status==200">货主拒绝装车</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==210">货主取消</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==211">司机取消</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==212">客服取消</span>
+                <span class="pull-right f7931e" *ngIf="data?.status==220">协商中</span>
+            </nav>
+            <nav>车型：{{data?.truckModel}}</nav>
+            <nav>载重：{{data?.truckLoad.toFixed(2)}}吨</nav>
+        </div>
+    </div>
+</div>
+
+<div class="goodsDetail b-b back_fff padding16 b-t m-t10 p_T10 p_b10">
+    <ul class="fon85 pL_10 pR_10">
+        <li>接单时间：{{data?.payTime}}</li>
+    </ul>
+</div>
+<div class="big">
+<div class="box">
+    <input type="button" *ngIf="isJudge" value="评价司机" (click)="Evaluation()"/>
+    <input type="button" value="联系司机" (click)="call(data.driverPhone);$event.stopPropagation();"/>
+    <input type="button" *ngIf="data.status==220" value="确认收货" (click)="Confirm(data.childNo)"/>
+    <input type="button" *ngIf="data.status==220" value="协商详情"/>
+</div>
+</div>

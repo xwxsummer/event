@@ -1,0 +1,145 @@
+import { Injectable } from '@angular/core';
+import { Http,Jsonp,URLSearchParams,Headers,Response,RequestOptions } from '@angular/http';
+import { RouterModule,ActivatedRoute,Router } from '@angular/router';
+import { Observable } from 'rxjs';
+// import 'rxjs/add/operator/map';
+// import  'rxjs/Rx';
+import { Api } from '../api'
+import { LocalStorage } from '../local_storage';
+import { Md5 } from "ts-md5/dist/md5";
+import { Ajax } from '../ajax';
+declare var mui: any;
+
+@Injectable()
+export class confirmGoodsService {
+    public local_Storage;
+    public userId:string;
+    public Contact: object;
+    public ajax: Ajax;
+   
+    
+    constructor(
+        public router: Router,
+        public localStorage: LocalStorage,
+        public http:Http
+    ){
+        this.ajax = new Ajax(this.http);
+        this.localStorage =new LocalStorage();
+        this.local_Storage=this.localStorage.getObject("data"); 
+    }
+    //确认收货页面取值
+    public getOrderDetailsByChildNo(childNo):Observable<any>{
+        return this.ajax.myget(Api.getOrderDetailsByChildNo+"?childNo="+childNo+"&userCode="+ this.local_Storage.walletCode)     
+    }
+    //http://47.92.136.150:8101/order-service/order/child/getOrderByChildNo?childNo=eewewwe&userId=124
+    //扫一扫进入确认收货页面,附带验证员工在不在列表中
+    // public getOrderByChildNo(childNo):Observable<any>{
+    //     return this.ajax.myget(Api.getOrderByChildNo+"?childNo="+childNo+"&userId="+ this.local_Storage.userId)     
+    // }
+    //获取司机状态
+    public getOrderChildByChildNo(childNo):Observable<any>{
+        return this.ajax.myget(Api.getOrderChildByChildNo+"?childNo="+childNo)      
+    }
+     //确认收货前，货主确认车辆信息
+    public ownerConfirmTruck(OrderNo,param):Observable<any>{
+        //mui.alert(OrderNo+param);
+        // alert(this.local_Storage.userId)
+         return this.ajax.myPut(Api.ownerConfirmTruck+"?userId="+this.local_Storage.userId+"&childNo="+OrderNo+"&param="+param,"")
+        .map((res:Response) => res);
+    }
+      //货主确认收货核对重量
+    public updateConfirmUnLoadByChildNo(myForms,imgList,data):Observable<any>{
+        let orderChildDTO={
+            "childNo": data.childNo,
+            "orderNo": data.orderNo,
+            "receiveRough":myForms.maozhong,
+            "receiveTare":myForms.pizhong,
+            "receiveNet":myForms.jingzhong,
+            "userId":this.local_Storage.userId,
+            "imageList": imgList,
+        };
+        return this.ajax.myPost(Api.updateConfirmUnLoadByChildNo,orderChildDTO)
+         .map((res:Response) => res);
+      }
+    //货主提交赔偿金
+    public compensation(myForm,dedList,data):Observable<any>{
+        let orderChildCompensationDTO={
+            "compensationRemark": myForm.spk,
+            "orderChildCompensationDTOItemList":dedList
+            }
+    return this.ajax.myPost(Api.compensation+"/"+data.childNo+"?userId="+this.local_Storage.userId,orderChildCompensationDTO);
+    }
+    //货主修改赔偿金
+     public compensationUpdata(myForm,dedList,data):Observable<any>{
+        let orderChildCompensationDTO={
+            "compensationRemark": myForm.spk,
+            "orderChildCompensationDTOItemList":dedList
+            }
+    return this.ajax.myPut(Api.compensation+"/"+data.childNo+"?userId="+this.local_Storage.userId,orderChildCompensationDTO);
+    }
+    //提交异常原因
+    public exception(myForms,imgList,data):Observable<any>{
+        let body = JSON.stringify(myForms);
+        let orderChildExceptionExceptionDTO = {
+            "childNo": data.childNo,
+            "compensationFee": 0,
+            "fromBy": this.local_Storage.userId,
+            "fromName": this.local_Storage.name,
+            "fromPhone": this.local_Storage.mobile,
+            "fromType": 1,
+            "imageList": imgList,
+            "reason": myForms.speaks,
+        };
+        return this.ajax.myPost(Api.exception,orderChildExceptionExceptionDTO) 
+                .map((res: Response) => res);
+      } 
+    //获取异常原因
+     public exception1(childNo):Observable<any>{
+        return this.ajax.myget(Api.exception+"/"+childNo) 
+      } 
+    //获取好评评价标签
+    public getSystemLabelByType4():Observable<any>{
+        return this.ajax.myget(Api.getSystemLabelByType+"?type=4")
+    }  
+    //获取差评评价标签
+    public getSystemLabelByType5():Observable<any>{
+        return this.ajax.myget(Api.getSystemLabelByType+"?type=5")
+    }  
+    //货主提交评价driver/evaluate/submitDriverEvaluate
+    public submitDriverEvaluate(forms,arr,data,type,time):Observable<any>{
+        console.log(forms)
+        console.log(type)
+        console.log(arr)
+        console.log(data)
+        console.log(time)
+        let att= JSON.parse(arr)
+        let evaluateDTO={
+              "comment": forms,
+              "evaluateLabelDTOList":att,
+              "fromId":  this.local_Storage.userId,
+              "headImg": data.headImg,
+              "labelNumDTOList": [{}],
+              "mobile": this.local_Storage.fromPhone,
+              "orderNo": data.childNo,
+              "time": time,
+              "type": type,
+              "userId":data.driverId,
+              "userName": this.local_Storage.name
+        };
+        return this.ajax.myPost(Api.submitDriverEvaluate,evaluateDTO)
+    }
+    //上传图片
+    public upBase64Image(base64FileList:any):Observable<any>{
+        let type:string = 'order';
+        let headers = new Headers();
+        headers.append('Content-Type','application/x-www-form-urlencoded');
+        return this.http.post(Api.base64Image,
+            `base64FileList=${encodeURIComponent(base64FileList)}&type=${type}`,
+            {headers : headers}
+            ) .map((res: Response) => res.json());
+    }
+    //查看评价
+    public getDriverEvaluateById(data):Observable<any>{
+        return this.ajax.myget(Api.getDriverEvaluateById+"?userId="+data+"&fromId="+this.local_Storage.userId)
+    }
+}

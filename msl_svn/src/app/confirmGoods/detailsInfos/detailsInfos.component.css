@@ -1,0 +1,83 @@
+.height3{
+  height: 3rem;
+  line-height: 3rem;
+}
+.padding16{
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  box-sizing: border-box;
+}
+.myGoods_content{
+  box-sizing: border-box;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  margin-bottom: 10px;
+}
+.huwu_jian{
+  width: 2.4rem;
+  display: inline-block;
+  vertical-align: bottom;
+}
+.myGoods_bottom{
+  height: 2.6rem;
+  line-height: 2.6rem;
+}
+
+.re_b{
+  height: 7rem;
+  display: flex;
+}
+.re_l{
+  width: 30%;
+  height: 7rem;
+  overflow:hidden;
+  zoom:1;
+}
+.re_l nav{
+  padding-left: 0.4rem;
+}
+.re_r{
+  padding-top: 10px;
+  flex: 1;
+}
+
+
+.box{
+  width:100%;
+  height: 2rem;
+  margin: 2rem auto;
+  margin-bottom: 2rem;
+}
+.box input{
+  background: #ea5529;
+  width: 20%;
+  color: #ffffff;
+  border-radius: 8px;
+  height: 2rem;
+  line-height: 2rem;
+  float: right;
+  margin-left: 10px;
+  border: 1px soild #ffffff;
+
+}
+.box input:nth-child(1){
+  margin-right: 10px;
+}
+.headImg{
+  width:55px;
+  height:55px;
+  border-radius: 50%;
+}
+.order{
+  margin-left: 5px;
+  background-color: #eaa037;
+  color:white;
+  width: 45px;
+  height: 16px;
+  font-size: 12px;
+  line-height: 16px;
+  margin-top:-8px;
+}
+.driverName{
+  margin-left:8px;
+}

@@ -1,0 +1,41 @@
+ul li{
+  line-height: 1.6rem;
+}
+.mui-radio input[type='radio']:before, .mui-checkbox input[type='checkbox']:before{
+  font-size: 20px;
+}
+.mui-radio.mui-left input[type='radio'], .mui-checkbox.mui-left input[type='checkbox']{
+  left: 0px;
+}
+.mui-input-row label{
+  padding: 0px;
+  padding-left: 30px;
+}
+.mui-radio, .mui-checkbox{
+  width: 60%;
+  display: inline-block;
+}
+.box2{
+  height: 2.5rem;
+  border-bottom: 1px solid #E5E5E5;
+  background: #FFFFFF;
+}
+.box2 .img1{
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  float: right;
+  margin-top: 0.5rem;
+}
+.box2 .img2{
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  float: left;
+  margin-top: 0.5rem;
+}
+
+
+
+
+

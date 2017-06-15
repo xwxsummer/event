@@ -1,0 +1,35 @@
+<router-outlet></router-outlet>
+<div class="cir_half transformX50 back_fff"></div>
+<!--&lt;!&ndash;审核中&ndash;&gt;-->
+<div class="back_fff">
+    <div class="bgc_main_lab clearfix w100 back_fff">
+        <div class=" market_nav text_center pull-left" (click)="MarketInfo('marketInfo')">
+            <img src="{{marketInfoImg}}" alt="" class="market_nav_img"/>
+            <div class="{{marketInfo}}">市场信息</div>
+        </div>
+        <div class="market_nav text_center pull-left" (click)="MyGoods('MyGoods')"><img src="{{myGoodsImg}}" alt="" class="market_nav_img"/>
+            <div class="{{myGoods}}">我的货源</div>
+        </div>
+        <div class="market_nav text_center pull-left posi_relative">
+            <div class="deliver_box posi_abslotu transformX50">
+                <img src="../assets/images/deliver_btn.png" alt="" class="deliver_btn" (click)="toDeliverGoods()"/>
+            </div>
+        </div>
+        <div class="market_nav text_center pull-left"  (click)="GoodsReceipt('GoodsReceipt')"><img src="{{goodsReceiptImg}}" alt="" class="market_nav_img"/>
+            <div class="{{goodsReceipt}}">我的收货</div>
+        </div>
+        <div class="market_nav text_center pull-left" (click)="PersonalCenter('PersonalCenter')"><img src="{{personalCenterImg}}" alt="" class="market_nav_img"/>
+            <div class="{{personalCenter}}">个人中心</div>
+        </div>
+    </div>
+</div>
+
+<div id="contact_show" class="ceng_show clearfix col_333 fonSml" *ngIf="isShow">
+    <div class="text_center b-b ceng_top">{{message}}</div>
+    <div class="clearfix ea5529">
+        <div class="text_center contactUs_cancel pull-left b-r" id="contactUs_cancel" (click)="isCancel()">取消</div>
+        <div class="text_center contactUs_sure pull-right" (click)="myShow()">去认证</div>
+    </div>
+</div>
+<div id="contact_bg" class="bg" *ngIf="isShow"></div>
+

@@ -1,0 +1,35 @@
+<div class="input_org talkTop text_center fff fonSml">意见反馈
+<span class="posi_abslotu pos_right0 transformY50 right17" (click)="WacthOptionMind()">查看记录</span>
+</div>
+<div class="height_3 w100 talkPhone col_333 fonSml padding_17">手机号码:{{phone}}</div>
+<div class="mui-scroll-wrapper">
+    <div class="mui-scroll">
+        <div class="talkHome">
+            <div *ngFor="let site of data">
+                <div class="clearfix">
+                    <!--货主-->
+                    <div class="talkGoods pull-right posi_relative">
+                        <div *ngIf="site.type==1">
+                            <div class="m-t10">{{site?.createTime}}</div>
+                            <p class="back_fff col_333">{{site?.content}}</p>
+                        </div>
+                        <div class="contentImg pull-right" *ngIf="site.type==2">
+                            <div class="m-t10">{{site?.createTime}}</div>
+                            <img src="{{site.content}}" class="w100" alt=""/>
+                        </div>
+                        <img src="{{headImg}}" class="touxiang posi_abslotu transformY50 pos_right0" alt=""/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="talkBottom w100 b-t back_fff">
+    <div class="upload text_center">
+        <span class="mui-icon mui-icon-plus m-r10 m-l10"></span>
+        <input type="file" id="handChoose" accept="image/*" multiple>
+    </div>
+    <input type="text" [(ngModel)]="inputValue" style="padding-left: 30px;"/>
+    <span class="m-r10 fonSm" [class.col6bde42]="inputValue" (click)="faSong()">发送</span>
+</div>

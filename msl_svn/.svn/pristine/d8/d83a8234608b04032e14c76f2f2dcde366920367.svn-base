@@ -1,0 +1,54 @@
+<!--于婷-->
+<div class="goodsTop height36 back_fff">
+   <div class="text_center" [class.special]="tablecontent[i]" *ngFor="let content of contents;let i=index" (click)="orderData(i,content.status)">{{content.content}}</div>
+</div>
+<div class="mui-scroll-wrapper m-t25">
+      <div class="mui-scroll" id="info">
+        <!--全部-->
+        <div class="Lists f9f9fb b-t b-b" (click)="receiptDetails(site.childNo)" *ngFor="let site of data">
+          <div class="col_333 fon900 height36 back_fff padding17">
+            <img src="{{site.headImg}}" class="touxiang" alt="" (click)="driverdetails(site.driverId);$event.stopPropagation();"/>
+            &nbsp;&nbsp;<span class="fonSml">{{site.driverName}}</span>&nbsp;&nbsp;
+            <span class="perTopSpan font12 fff"><img src="../assets/images/certifiSuccess.png" alt=""/></span>
+            <span class="pull-right ea5529" *ngIf="site.status==2">接单成功</span>
+            <span class="pull-right ea5529" *ngIf="site.status==3">前往货源地</span>
+            <span class="pull-right ea5529" *ngIf="site.status==4">到达货源地</span>
+            <span class="pull-right ea5529" *ngIf="site.status==50">货主确认车辆</span>
+            <span class="pull-right ea5529" *ngIf="site.status==51">货主装车</span>
+            <span class="pull-right ea5529" *ngIf="site.status==52">司机确认装车</span>
+            <span class="pull-right ea5529" *ngIf="site.status==53">前往目的地</span>
+            <span class="pull-right ea5529" *ngIf="site.status==54">到达目的地</span>
+            <span class="pull-right ea5529" *ngIf="site.status==100">货主确认车辆</span>
+            <span class="pull-right ea5529" *ngIf="site.status==101">货主确认收货</span>
+            <span class="pull-right ea5529" *ngIf="site.status==102">司机确认收货</span>
+            <span class="pull-right ea5529" *ngIf="site.status==150">完成</span>
+            <span class="pull-right ea5529" *ngIf="site.status==151&&site.driverEvaluate==1&&site.ownerEvaluate!=1">货主评价完成</span>
+            <span class="pull-right ea5529" *ngIf="site.status==151&&site.ownerEvaluate==1&&site.driverEvaluate!=1">司机评价完成</span>
+            <span class="pull-right ea5529" *ngIf="site.status==151&&site.ownerEvaluate==1&&site.driverEvaluate==1">评价完成</span>
+            <span class="pull-right ea5529" *ngIf="site.status==200">货主拒绝装车</span>
+            <span class="pull-right ea5529" *ngIf="site.status==210">货主取消</span>
+            <span class="pull-right ea5529" *ngIf="site.status==211">司机取消</span>
+            <span class="pull-right ea5529" *ngIf="site.status==212">客服取消</span>
+            <span class="pull-right ea5529" *ngIf="site.status==220">协商中</span>
+          </div>
+          <div class="dis_flex padding17 b-t b-b">
+            <ul class="clearfix fon85">
+              <li class="">车牌号：{{site?.truckNo}}</li>
+              <li class="">载重：{{site?.truckLoad.toFixed(2)}}吨</li>
+              <li class="">车型：{{site?.truckModel}}</li>
+              <li class="">实际载货：{{site?.sendNet.toFixed(2)}}吨</li>
+            </ul>
+            <div><span class="col_999">></span></div>
+          </div>
+          <div class="jiedanshu_bottom back_fff padding17">
+            <span class="jiedanshu_contact pull-right text_center" (click)="trajectoryMap(site.childNo)" *ngIf="site.status==2||site.status==3||site.status==4||site.status==50||site.status==51||site.status==52||site.status==53||site.status==54||site.status==100||site.status==101||site.status==102||site.status==150||site.status==151">轨迹查询</span>
+            <span class="jiedanshu_contact pull-right text_center" (click)="call(site.driverPhone);$event.stopPropagation();">联系司机</span>
+          </div>
+        </div>
+        <!--<div *ngIf="noneIfno==1">-->
+          <!--<div (click)="moreInfo()" class="text_center m-b10 m-t10 fon85" *ngIf="!isLoading" id="loadingMore">{{loadingMore}}</div>-->
+          <!--<div (click)="moreInfo()" class="text_center m-b10 m-t10 moreInfo fon85" *ngIf="isLoading">正在加载 <img src="../assets/images/loading.jpg" alt=""/></div>-->
+        <!--</div>-->
+        <div class="text_center m-t3" *ngIf="noneIfno==2">暂无该信息</div>
+      </div>
+    </div>

@@ -1,0 +1,11 @@
+ul li{
+  padding-right: 1.6rem;
+  padding-left: 1.6rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+span{
+  margin-top: 13px;
+  font-size: 1.3rem;
+}

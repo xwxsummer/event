@@ -1,0 +1,12 @@
+<div class="height36 b-b back_fff w100" style="position: fixed;">
+    <img src="../assets/images/goback.png" class="goback posi_abslotu posi_left transformY50" (click)="goBack()" alt=""/>
+    <img src="../assets/images/home.png" class="home posi_abslotu posi_right transformY50" (click)="goHome()" alt=""/>
+</div>
+
+<div class="conver">
+   <ul class="mui-table-view back_fff cancel_ul">
+        <li class="mui-table-view-cell cancel_li" *ngFor="let text of arr">{{text}}</li>
+          <p class="speak">{{speak}}</p><br/>
+          <!--<p class="speak">评价时间：{{times}}</p>-->
+   </ul> 
+</div>

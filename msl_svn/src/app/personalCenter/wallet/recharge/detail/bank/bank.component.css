@@ -1,0 +1,14 @@
+.box2 span{
+    color: #333;
+}
+.box3{
+    height: 3rem;
+    background: #efeff4 url("/assets/images/jia.png") no-repeat left;
+    width: 90%;
+    background-size: 1rem;
+    margin: 0 auto;
+}
+.box3 span{
+    line-height: 3rem;
+    padding-left: 20px;
+}

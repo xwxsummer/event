@@ -1,0 +1,19 @@
+<div class="box">
+    <div class="box2 back_fff b-b">
+        <div class="box3 b-b">
+            <div class="bank col_333">
+                <span class="bank_h"><img src="../../assets/images/bank.png" alt=""/></span>
+                <span>农业银行</span>
+                <span>（11111111******0123）</span>
+                <span (click)="bank()">></span>
+            </div>
+
+        </div>
+        <label class=""><div class="input_org" style="width: 40%;display: inline-block">金额（￥）</div>
+            <input class="input_org pull-right" type="number" name="money" [(ngModel)]="myMoeny" #money="ngModel" placeholder="请输入充值金额"/>
+
+            <!--<input style="width: 50%;height: 2.5rem;border: none;font-size: 0.75rem" type="text" value="请输入充值金额" onfocus="if(value=='请输入充值金额') {value=''}" onblur="if (value=='') {value='请输入充值金额'}"/>-->
+        </label>
+    </div>
+    <input id="input" class="bindFinish text_center fonSml height36 m0_auto m-t3" type="button" value="确&nbsp;&nbsp;&nbsp;认" (click)="SuccessChild()"/>
+</div>

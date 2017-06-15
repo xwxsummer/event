@@ -1,0 +1,55 @@
+import { Component,OnInit } from '@angular/core';
+import { RouterModule,ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { confirmGoodsService } from '../confirmGoods.service';
+declare var mui: any;
+
+
+@Component({
+  selector: 'app-evaluationDetails',
+  templateUrl: './evaluationDetails.component.html',
+  styleUrls: ['./evaluationDetails.component.css']
+
+})
+
+export class EvaluationDetails implements OnInit{
+    // public arr = JSON.parse(sessionStorage.getItem("1"));
+    // public speak = sessionStorage.getItem("2").replace(/"/g, " ")
+    // public times = sessionStorage.getItem("3")
+    public data;
+    public arrList;
+  constructor(
+    public router: Router,
+    public titleService: Title,
+    public service: confirmGoodsService,
+    public activatedRoute: ActivatedRoute
+  ){
+  }
+  ngOnInit(): void{
+    this.titleService.setTitle('查看评价');
+    let driverId = window.location.href.split("driverId=")[1].split("&")[0];
+    console.log("司机ID："+driverId);
+    //let driverId = 136;
+    //http://192.168.1.230:8001/user-service/driver/evaluate/getDriverEvaluateById?userId=136&fromId=191
+    this.service.getDriverEvaluateById(driverId)
+      .subscribe(data => {
+        if(data.code==0){
+          this.data = data.data;
+          console.log(data.data);
+          for(var i=0,len=this.data.evaluateLabelDTOList.length;i<len;i++){
+            this.arrList.push(this.data.evaluateLabelDTOList[i].label)
+          }
+        }else{
+          mui.alert(data.msg);
+        }
+      }); 
+    }
+  //返回上一页
+    goBack(){
+        window.history.go(-1);
+    }
+    //返回主页
+    goHome(){
+        this.router.navigateByUrl("market/MarketInfo?info=marketInfo");
+    }
+}

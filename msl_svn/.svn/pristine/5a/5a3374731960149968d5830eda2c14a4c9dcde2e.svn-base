@@ -1,0 +1,29 @@
+<div *ngIf="flag==1">
+    <div class="height_3 padding20">请输入相关银行卡信息验证身份</div>
+    <div class="padding20 b-b back_fff posi_relative">
+        <div class="height_2"><span class="">选择银行卡</span></div>
+        <input type="text" class="height_3 fonNormal col_333" name="card" #card="ngModel" [(ngModel)]="cardInfo" readonly/>
+        <span class="fonBig posi_abslotu transformY50 posi_right" (click)="changeFlag()">></span>
+    </div>
+    <div class="padding20 b-b back_fff posi_relative">
+        <div class="height_2"><span class="">银行卡号</span></div>
+        <input type="text" class="height_3 fonNormal col_333" name="card1" #card1="ngModel" [(ngModel)]="cardNo"/>
+        </div>
+    <div class="padding20 b-b back_fff posi_relative">
+        <div class="height_2"><span class="">身份证号</span></div>
+        <input type="text" class="height_3 fonNormal col_333" name="card2" #card2="ngModel" [(ngModel)]="idCard"/>
+    </div>
+</div>
+
+
+
+<div class="box" *ngIf="flag==2">
+    <ul class="mui-table-view mui-table-view-radio">
+        <li class="mui-table-view-cell" *ngFor="let site of data;let i=index">
+            <span class="mui-navigate-right"><span>site.bank</span>&nbsp;<span>site.dayMax</span>&nbsp;<span>（site.cardNo）</span></span>
+        </li>
+    </ul>
+    <div class="box3 b-b height_3" >
+        <span class="padding20">添加银行卡</span>
+    </div>
+</div>

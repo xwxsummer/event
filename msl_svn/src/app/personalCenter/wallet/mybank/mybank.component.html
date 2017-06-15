@@ -1,0 +1,91 @@
+<div class="box p_T10" *ngIf="isShow==1">
+    <div class="bank m-b10 m0_auto" *ngFor="let site of data" (click)="manangeCard(site)">
+        <div class="img"></div>
+        <span *ngIf="site.type==1">{{site.bank }}<br/>借记卡</span>
+        <span *ngIf="site.type==2">{{site.bank }}<br/>信用卡</span>
+        <div class="number">{{site.cardNo}}</div>
+    </div>
+    <div class="add b-b"  (click)="addBank()">
+        <span>添加银行卡</span>
+    </div>
+</div>
+
+<form #Form="ngForm" name="submitForm" action="" role="form" *ngIf="isShow==2">
+    <!--<input class="input_org" required type="tel" name="phone" placeholder="请输入手机号码" [(ngModel)]="user.mobile" #phone="ngModel" minlength="11" maxlength="11" pattern="^1[3|5|6|7|8]{1}[0-9]{9}$"/>-->
+    <div class="posi_relative">
+        <input class="input_org" type="text" [(ngModel)]="saveDTO.name" name="yzm1" id="userName" placeholder="持卡人姓名" readonly="true" required/>
+        <div class="posi_abslotu col_333 posi_left transformY50 fonSml">持卡人</div>
+    </div>
+    <div class="posi_relative">
+        <input class="input_org" type="tel" [(ngModel)]="saveDTO.cardNo" name="cardNo" id="cardNo" placeholder="仅支持绑定银行卡、借记卡" minlength="16" maxlength="19" required/>
+        <div class="posi_abslotu col_333 posi_left transformY50 fonSml">银行卡号</div>
+    </div>
+    <div class="m0_auto" style="width: 80%;">
+        <input type="submit" class="bindFinish text_center fff fonSml fon900" id="submit" value="完&nbsp;&nbsp;&nbsp;成" [disabled]="!Form.form.valid" (click)="submitForm()"/>
+    </div>
+    </form>
+
+<!--           银行卡详情                           -->
+<div class="box p_T10" *ngIf="isShow==3">
+    <div class="bank m-b10 m0_auto">
+        <div class="img"></div>
+        <span *ngIf="cardData.type==1">{{cardData.bank }}<br/>借记卡</span>
+        <span *ngIf="cardData.type==2">{{cardData.bank }}<br/>信用卡</span>
+        <div class="number">{{cardData.cardNo}}</div>
+    </div>
+    <div class="payCard fonSml col_333">银行卡支付限额 <span class="pull-right" (click)="manageCard()">管理</span></div>
+    <div class="bank1 clearfix">
+        <span class="pull-left">单笔限额</span>
+        <span class="pull-right">￥{{cardData.singleMax.toFixed(2)}}</span>
+    </div>
+    <div class="bank1 clearfix">
+        <span class="pull-left">每日限额</span>
+        <span class="pull-right">￥{{cardData.dayMax.toFixed(2)}}</span>
+    </div>
+</div>
+<app-showCeng [message]="message" (outer)="cengShow($event)" *ngIf="showTrue"></app-showCeng>
+<div class="box mui-popover" >
+    <div class="mui-content">
+        <table id="number_input" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+            <tr>
+                <td class="input-item"></td>
+                <td class="input-item"></td>
+                <td class="input-item"></td>
+                <td class="input-item"></td>
+                <td class="input-item"></td>
+                <td class="input-item"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="clearfix">
+            <span class="pull-right forgetPassword" (click)="pw()">忘记密码？</span>
+        </div>
+
+        <table id="keyboard" border="0" cellspacing="0" cellpadding="0">
+
+            <tbody>
+            <tr>
+                <td class="keyboard-number">1</td>
+                <td class="keyboard-number">2</td>
+                <td class="keyboard-number">3</td>
+            </tr>
+            <tr>
+                <td class="keyboard-number">4</td>
+                <td class="keyboard-number">5</td>
+                <td class="keyboard-number">6</td>
+            </tr>
+            <tr>
+                <td class="keyboard-number">7</td>
+                <td class="keyboard-number">8</td>
+                <td class="keyboard-number">9</td>
+            </tr>
+            <tr>
+                <td class="keboard-action" data-action="reset">清空</td>
+                <td class="keyboard-number">0</td>
+                <td class="keboard-action" data-action="cancel">删除</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

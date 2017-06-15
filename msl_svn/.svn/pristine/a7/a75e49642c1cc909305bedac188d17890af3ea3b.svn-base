@@ -1,0 +1,116 @@
+/**
+ * by于婷
+ *
+ * ******/
+import { Component,OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { RouterModule,ActivatedRoute, Router } from '@angular/router';
+declare var mui: any;
+//http
+import { personalCenterService } from  '../../../personalCenter.service';
+import { blackList } from  '../addBlackList';
+@Component({
+  selector: 'app-blacklist',
+  templateUrl: './driverdetails.component.html',
+  styleUrls: ['./driverdetails.component.css']
+})
+
+export class Driverdetails implements OnInit{
+  public blackList:blackList;
+  public isBlack:boolean;//黑名单
+  public data;
+  public starImg=[];//星数
+  public haoping:number;//好评率
+  public userId:string;
+  public nowYear:number;//当前年
+  public driverAge:number;//驾龄
+
+  constructor(
+    public router: Router,
+    public titleService: Title,
+    public routeInfo:ActivatedRoute,//页面间传值
+    public service : personalCenterService
+  ){
+    this.blackList=new blackList();
+  }
+  ngOnInit(): void{
+    this.titleService.setTitle('司机详情');
+    var date=new Date;
+    this.nowYear=date.getFullYear();
+    this.userId=this.routeInfo.snapshot.queryParams["id"];//黑名单id
+    this.blackList.blackId=this.routeInfo.snapshot.queryParams["id"];//黑名单id
+    //查询司机详情
+    this.service.carUserInfo(this.userId)
+        .subscribe(
+            data => {
+          if(data.code==0){//成功
+            this.data=data.data;
+            console.log(data.data);
+            this.blackList.name=this.data.name;
+            this.blackList.phone=this.data.phone;
+            this.haoping=(this.data.goodTime)/(this.data.evaluateCount);
+            if(this.data.headImg){
+              this.data.headImg=this.data.domain+this.data.headImg;
+            }else{
+              this.data.headImg="../assets/images/myDriver.png";
+            }
+            let dateTime = new Date(this.data.licenseTime);
+            this.driverAge = this.nowYear-dateTime.getFullYear();
+           if(!this.haoping){
+              this.haoping=100;
+            }
+            for(let i=0;i<this.data.star;i++){
+              this.starImg.push("../../../../../assets/images/xing.png");
+            }
+          }
+        }
+    );
+    //查看是否是黑名单
+    this.service.isBlackList(this.blackList.blackId)
+        .subscribe(
+            data => {
+          if(data.code==0){//成功
+            if(data.data=="1"){
+              this.isBlack=true;
+            }else{
+              this.isBlack=false;
+            }
+          }
+
+        }
+    );
+
+  }
+  //移除黑名单 根据司机id
+  removeBlackList(mobile){
+    this.isBlack=false;
+    this.service.removeByDriverId(this.blackList.blackId)
+        .subscribe(
+            data => {
+          if(data.code==0){//成功
+            }else{
+            mui.toast(data.msg,{ duration:'short', type:'div' });
+          }
+        }
+    );
+  }
+  //添加黑名单
+  addBlackList(mobile){
+    this.isBlack=true;
+    this.blackList.phone=mobile;
+    this.service.addBlackList(this.blackList)
+        .subscribe(
+            data => {
+          if(data.code==0){//成功
+          }else{
+            mui.toast(data.msg,{ duration:'short', type:'div' });
+          }
+        }
+    );
+  }
+
+  See(){
+    this.router.navigateByUrl("personalCenter/See");
+  }
+
+}

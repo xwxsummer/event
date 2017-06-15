@@ -1,0 +1,15 @@
+<div class="height36 b-b col_333 fonSml back_fff padding_left16">需支付违约金：<span class="ea5529">{{myMoney}}</span>元</div>
+<div class="m-t10 padding_left16 back_fff padding_right16 col_333">
+  <div class="fonSml b-b height36">选择取消原因</div>
+  <div>
+    <ul class="mui-table-view back_fff cancel_ul">
+      <li class="mui-table-view-cell cancel_li" [class.special]="AdditionalTip[i]" *ngFor="let siteRefuse of dataRefuse;let i=index" (click)="myGoods_cancle0(i,siteRefuse?.name)">{{siteRefuse?.name}}</li>
+</ul>
+  </div>
+</div>
+
+<div class="m-t10 back_fff padding_left16 p_T10 p_b10 padding_right16">
+  <h3 class="ea5529 fonSml">温馨提示</h3>
+  <p class="fon85 cancel_p m-t10 ea5529">此赔偿金额仅供参考，最终结果以实际支付为准。</p>
+</div>
+<div class="bindFinish text_center fff fonSml" (click)="sureCancel()">确认取消订单</div>

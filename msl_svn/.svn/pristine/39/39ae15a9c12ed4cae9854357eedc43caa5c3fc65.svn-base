@@ -1,0 +1,14 @@
+<div class="height36 b-b back_fff w100 posi_relative">
+    <img src="../assets/images/goback.png" class="goback posi_abslotu posi_left transformY50" (click)="goBack()" alt=""/>
+    <img src="../assets/images/home.png" class="home posi_abslotu posi_right transformY50" (click)="goHome()" alt=""/>
+</div>
+<div class="padding16 back_fff b-b m-b10">
+  <div class="height3 fonSml fon900 col_333 b-b pL_10 m-b10">拒绝原因：</div>
+  <p class="pL_10 p_b10 fon85">{{data?.remark}}</p>
+</div>
+<div class="padding16 back_fff b-b m-b10">
+  <div class="height3 fonSml fon900 col_333 pL_10 m-b10 b-b">图片详情：</div>
+  <div class="m-t20 m-b20">
+    <img src="{{img}}" *ngFor="let img of imgListNew " class="refuseImg"/>
+  </div>
+</div>

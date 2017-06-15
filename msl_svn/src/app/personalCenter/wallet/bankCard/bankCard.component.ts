@@ -1,0 +1,99 @@
+/**
+ * Created by CLX on 2017/6/13.
+ */
+import { Component,OnInit } from '@angular/core';
+import { RouterModule,ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+//本地缓存
+import { LocalStorage } from '../../../local_storage';
+//验证
+import { ValidateMessage } from '../../../fragment/validateMessage';
+//http
+import { personalCenterService } from  '../../personalCenter.service';
+declare var mui: any;
+@Component({
+    selector: 'app-bankCard',
+    templateUrl: './bankCard.component.html',
+    styleUrls: ['./bankCard.component.css']
+})
+
+export class BankCard implements OnInit{
+    public ValidateMessage;//验证验证码
+    public submitlag:boolean;//表单是否可以提交
+    public walletCode:number;//
+    public data=[];//
+    public mybank;//
+    public cardInfo:string;//银行卡信息
+    public cardNo:string;//银行卡号
+    public idCard:string;//身份证号
+    public flag:number;//判断显示哪个
+    constructor(
+        public router: Router,
+        public routeInfo:ActivatedRoute,//页面间传值
+        public localStorage: LocalStorage,
+        public titleService: Title,
+        public service : personalCenterService
+    ){
+        this.ValidateMessage = new ValidateMessage();
+
+    }
+    ngOnInit(): void{
+        this.titleService.setTitle('身份验证');
+       this.submitlag=false;
+       this.cardInfo="";
+       this.flag=1;
+        this.walletCode=parseFloat(this.localStorage.get("walletCode"));
+        //查询银行卡列表walletCode
+        this.service.bankCardFindList(this.walletCode)
+            .subscribe(data=>{
+                if(data.code==0){//成功
+                    this.data=data.data;
+                    console.log(this.data);
+                    for(let i=0;i<this.data.length;i++){
+                        if(this.data[i].type==1){//this.cardInfo=this.cardInfo+"借记卡";
+                            this.data[i].dayMax="借记卡";
+                        }else{
+                            this.data[i].dayMax="信用卡";
+                        }
+                    }
+                    this.mybank=this.data[0];
+                    if(this.data[0].bank){
+                        this.cardInfo=this.data[0].bank;
+                    }
+                    if(this.mybank.type==1){//this.cardInfo=this.cardInfo+"借记卡";
+                        this.cardInfo=this.cardInfo+"借记卡";
+                    }else{
+                        this.cardInfo=this.cardInfo+"信用卡";
+                    }
+                    this.cardInfo=this.cardInfo+"(尾号"+this.data[0].cardNo +")";
+
+                }
+            });
+    }
+    //更多
+    changeFlag(){
+        this.flag=2;
+    }
+    submitForm() {
+        //验证码walletCheckMobile
+        //if(this.ValidateMessage.validateCaptchaReg(this.myCaptcha)==1){
+        // this.submitlag=true;
+        //this.service.walletCheckMobile(localStorage['walletCode'],this.myCaptcha)
+        //    .subscribe(
+        //        data => {
+        //            this.submitlag=true;
+        //        if(data.code==0){
+        //            //this.router.navigateByUrl("personalCenter/ChangePhoneTrue?captcha="+this.change.captcha+"&setting="+this.setting);
+        //        }else{
+        //            mui.toast(data.msg,{ duration:'short', type:'div' });
+        //
+        //        }
+        //    }
+        //);
+        //
+        //  }
+        this.router.navigateByUrl("personalCenter/ChangePhoneTrue?captcha=");
+
+    }
+
+}

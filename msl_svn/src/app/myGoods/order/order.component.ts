@@ -1,0 +1,249 @@
+import { Component,OnInit } from '@angular/core';
+import { RouterModule,ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { myGoodsService } from '../myGoods.service';
+import { uploading } from '../../fragment/uploading';
+declare var mui: any;
+declare var $: any;
+
+@Component({
+  selector: 'app-order',
+  templateUrl: './order.component.html',
+  styleUrls: ['./order.component.css']
+
+})
+
+export class Order implements OnInit{
+  public data;
+  public myShow:boolean;//层显示
+  public myMoney:string;//赔偿金额
+  public childNo:string;//子订单号码
+  public cancelReason:string;//取消原因
+  public dataRefuse=[];//取消原因
+  public searchValue:string;//搜索框值
+  public node;//元素
+  public uploading:uploading;//点击加载更多
+  public isSearch:boolean;//是否是搜索
+  AdditionalTip = [false,false,false,false];//取消原因
+
+  constructor(
+    public router: Router,
+    public titleService: Title,
+    public routeInfo: ActivatedRoute,//页面传值
+    public service : myGoodsService
+  ){
+    this.uploading=new uploading(1,false,3,"");
+
+  }
+  //刷新页面
+  uploadInfo(){
+    this.uploading.page=1;
+    //查询货源列表
+    this.service.getOrderChildListByParam(this.routeInfo.snapshot.queryParams["number"],this.uploading.page)
+        .subscribe(
+            data => {
+              $('.mui-scroll-wrapper').css('margin-top',"3.3rem");//设置距顶部高度
+              if(data.code==0){//成功
+            this.data=data.data;
+            if(this.data.length==0){
+              this.uploading.noneIfno=2;
+            }else{
+              this.uploading.noneIfno=1;
+              this.uploading.page=this.uploading.page+1;
+            }
+            for(let i=0;i<this.data.length;i++){//
+              if(this.data[i].headImg){
+                this.data[i].headImg=this.data[i].domain+this.data[i].headImg;
+              }else{
+                this.data[i].headImg="../assets/images/myDriver.png";
+              }
+            }
+          }
+        }
+    );
+  }
+  ngOnInit(): void{
+    let self = this;
+    this.titleService.setTitle('接单查询');
+    this.myShow=false;
+    this.myMoney="";
+    this.childNo="";
+    this.isSearch=true;
+    this.searchValue="";
+    //货物单号
+    mui('.mui-scroll-wrapper').scroll({
+      deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+    });
+    this.uploadInfo();
+    //获取取消原因
+    this.service.getSystemLabelByType(2)
+        .subscribe(data=>{
+          if(data.code==0){//成功
+            this.dataRefuse=data.data;
+          }else{
+            mui.toast(data.msg,{ duration:'short', type:'div' });
+          }
+        });
+    $('.mui-scroll-wrapper').on('touchend',function(){
+      let viewH =$(this).height(),//内容可见高度
+          contentH =$(this).get(0).scrollHeight,//滚动当前距底部高度
+          totalHeight =$(this).children().height(),//内容总高度
+          scrollTop =$(this).scrollTop();//滚动高度
+      if(contentH - viewH - scrollTop <= 80) { //到达底部100px时,加载新内容
+        //if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
+        // 这里加载数据..
+        self.moreInfo();
+      }else if(contentH-totalHeight >= 180){
+        self.uploadInfo();
+        $('<div>').attr('class','mui-pull-loading mui-icon mui-spinner').attr('style','display:block;margin: 30px auto -10px;').insertBefore('.mui-scroll');//.mui-scroll>.data:first-of-type'
+        setTimeout(()=>{
+          $('.mui-pull-loading').remove();
+          mui.toast('刷新成功');
+        },1000);
+
+      }
+
+    });
+
+  }
+  //取消原因清空
+  clearResult(){
+    for(let s=0;s<this.AdditionalTip.length;s++){
+      this.AdditionalTip[s]=false;
+    }
+  }
+  //我的收货详情
+  sourceInfo(childNo) {
+    this.router.navigateByUrl("goodsReceipt/ReceiptDetails/"+childNo);
+
+  }
+  //取消原因
+  activate(status,childNo,goodsResidue){
+    this.childNo=childNo+"";
+    this.node=mui(event.target)[0].parentNode.parentNode;
+    //《货主端》根据子单编号获取取消子订单的赔偿金
+    this.service.compensationOwnerCancel(childNo)
+        .subscribe(
+            data => {
+          if(data.code==0){//成功
+            if(data.data.compensationFee==0){
+              mui('#sheet1').popover('toggle');
+            }else{
+              this.myMoney=data.data.compensationFee;
+              this.myShow=true;
+            }
+            }else{
+            mui.toast(data.msg,{ duration:'short', type:'div' });
+          }
+          });
+  }
+  //搜索
+  search(){
+    if(this.searchValue.length!=0&&this.searchValue.length>=2){
+      //司机姓名或者车牌号码
+      this.service.getOrderChildListByParamFlag(this.routeInfo.snapshot.queryParams["number"],this.searchValue)
+          .subscribe(
+              data => {
+            if(data.code==0){//成功
+              this.data=data.data;
+              for(var r=0;r<this.data.length;r++){
+                if(this.data[r].headImg){
+                  this.data[r].headImg=this.data[r].domain+this.data[r].headImg;
+                }else{
+                  this.data[r].headImg="../assets/images/myDriver.png";
+                }
+              }
+
+            }else{
+              mui.toast(data.msg,{ duration:'short', type:'div' });
+            }
+          }
+      );
+    }
+  }
+  //点击加载更多
+  moreInfo(){
+    this.uploading.isLoading=true;
+    //查询接单详情
+    if(this.searchValue.length!=0){
+      $("#loadingMore").hide();
+    }else{
+      this.service.getOrderChildListByParam(this.routeInfo.snapshot.queryParams["number"],this.uploading.page)
+          .subscribe(data=>{
+            if(data.code==0){//成功
+              this.uploading.isLoading=false;
+              if(data.data.length==0){
+                this.uploading.loadingMore="已经到底了";
+              }else{
+                this.uploading.loadingMore="";
+                for(var i=0;i<data.data.length;i++){
+                  if(data.data[i].headImg){
+                    data.data[i].headImg=data.data[i].domain+data.data[i].headImg;
+                  }else{
+                    data.data[i].headImg="../assets/images/myDriver.png";
+                  }
+                  this.data.push(data.data[i]);
+                }
+                this.uploading.page=this.uploading.page+1;
+              }
+            }else{
+              mui.toast(data.msg,{ duration:'short', type:'div' });
+            }
+          });
+    }
+
+  }
+  //点击确认
+  isShow(){
+    this.myShow=false;
+    //赔偿金额
+    this.router.navigateByUrl("myGoods/CancelGoods?money="+this.myMoney+"&childNo="+this.childNo+"&number="+this.routeInfo.snapshot.queryParams["number"]);
+  }
+  //点击取消
+  isCancel(){
+    this.myShow=false;
+  }
+  //查看司机详情
+  driverdetails(driverId){
+    this.router.navigateByUrl("personalCenter/Driverdetails?id="+driverId);
+  }
+  //点击取消
+  goodsRefuse(){
+    mui('#sheet1').popover('hide');
+    this.clearResult();
+    this.cancelReason="";
+  }
+  //点击确认取消
+  goodsCancle(){
+    if(this.cancelReason){  ////《货主端》根据子单编号取消子订单, 返回赔偿金额
+      this.goodsRefuse();
+      this.service.orderChildOwnerCancel(this.childNo,this.cancelReason)
+          .subscribe(data=>{
+            if(data.code==0){//成功
+              this.clearResult();
+              this.node.remove();
+              mui.toast("取消成功",{ duration:'short', type:'div' });
+            }else{
+              mui.toast(data.msg,{ duration:'short', type:'div' });
+            }
+          });
+    }else{
+      mui.toast("请选择取消原因",{ duration:'short', type:'div' });
+    }
+
+  }
+//点击取消
+  myGoods_cancle0(index,refuseName){
+    this.cancelReason=refuseName;
+    this.clearResult();//取消原因清空
+    this.AdditionalTip[index]=true;
+  }
+  //轨迹查询
+  trajectoryMap(childNo){
+    this.router.navigateByUrl("trajectoryMap/"+childNo);
+  }
+  //打电话
+  call(phoneNumber){
+    window.open('tel:'+phoneNumber);
+  }
+}

@@ -1,0 +1,19 @@
+
+<form name="submitForm">
+    <div class="posi_relative">
+        <input type="tel" class="input_org padding_17 col_333 back_fff fonSml" name="phone" placeholder="请输入手机号码" [(ngModel)]="getAddress.phone" #phone="ngModel" value="" maxlength="11"/>
+    </div>
+    <input type="text" class="input_org padding_17 col_333 back_fff fonSml" name="name" placeholder="请输入姓名" [(ngModel)]="getAddress.name" #name="ngModel"/>
+    <input type="text" class="input_org padding_17 col_333 back_fff fonSml" value="" name="company" placeholder="请输入公司名称" [(ngModel)]="getAddress.company" #company="ngModel"/>
+    <div class="input_org town padding_17 col_333 back_fff fonSml posi_relative">{{ getAddress?.address ? getAddress?.province + getAddress?.city + getAddress?.county + getAddress?.town + getAddress?.address.split(' ')[0] : '请选择地址' }}<span style="float: right;position: absolute;right: 0.8rem;top: .8rem;" class="mui-icon mui-icon-arrowright " (click)="selectAddress()"></span></div>
+    <textarea name="address" #address cols="30" rows="3" class="padding_17" placeholder="请输入详细地址">{{getAddress.address ? getAddress.address.split(' ')[1] : ''}}</textarea>
+    <div class="input_org padding_17 col_333 back_fff fonSml b-t">设为默认地址
+        <div class="mui-switch mui-switch-mini"  id="mySwitch" style="margin-top: .6rem;">
+            <div class="mui-switch-handle"></div>
+        </div>
+    </div>
+    <div class="m0_auto" style="width: 80%">
+        <input type="submit" class="text_center bindFinish fff fonSml fon900" value="保&nbsp;&nbsp;&nbsp;存" (click)="submitForm(address.value)" [disabled]="submitlag"/>
+    </div>
+
+</form>

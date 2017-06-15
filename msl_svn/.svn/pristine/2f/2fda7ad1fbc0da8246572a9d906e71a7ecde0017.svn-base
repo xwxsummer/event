@@ -1,0 +1,36 @@
+.padding16{
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  box-sizing: border-box;
+}
+ul{
+  padding-bottom: 10px;
+}
+
+.goodsDetail ul li{
+  margin-bottom: 8px;
+}
+.jian{
+  width: 2.4rem;
+}
+.deliverGoods_bottom{
+  display: block;
+}
+
+.details_btn{
+  margin-right:20px;
+  background-color: #ea5529;
+  border-radius: 8px;
+  line-height: 2.5rem;
+  height: 2.5rem;
+  color: #fff;
+  width: 5rem;
+}
+.bgc_ea5529{
+  background-color: #ea5529;
+  width: 7rem;
+}
+.m_top{
+  margin-top: 30px;
+}
+

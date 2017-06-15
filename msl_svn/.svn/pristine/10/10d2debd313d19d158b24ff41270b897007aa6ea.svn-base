@@ -1,0 +1,104 @@
+<div style="background: #FFFFFF" class="mui-content">
+    <div id="slider" class="mui-slider mui-fullscreen">
+        <div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+            <div class="mui-scroll">
+
+                <a class="mui-control-item" data-index="0">全部</a>
+                <a class="mui-control-item" data-index="1">支出</a>
+                <a class="mui-control-item" data-index="2">收入</a>
+                <img src="../../assets/images/rili.png" alt="" (click)="showMsg3 ()" />
+                <!--<div id="popover" class="mui-popover">-->
+                    <!--<ul class="mui-table-view">-->
+                        <!--<li class="mui-table-view-cell"><a href="#">Item1</a></li>-->
+                        <!--<li class="mui-table-view-cell"><a href="#">Item2</a></li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="mui-slider-group">
+
+
+
+            <div class="mui-slider-item mui-control-content">
+                <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                        <!--///////////////////////全部2///////////////////////-->
+                        <div class="box2" *ngFor="let item of list" >
+                            <p style="display:none;" class="month list{{item.createTime | date:'yyyyMM' }}" >{{item.createTime | date:'yyyy年M月' }}</p>
+                            <div class="b-b box3" (click)="DetailChild()">
+                                <div class="box4">
+                                    <span style="color: #000" *ngIf="item.type == 1">充值</span>
+                                    <span style="color: #000" *ngIf="item.type == 2">支出</span>
+                                    <span style="color: #000" *ngIf="item.type == 3">收入</span>
+                                    <span style="color: #000" *ngIf="item.type == 4">提现</span>
+                                    <span style="color: #000" *ngIf="item.type == 5">退款</span>
+                                    <span>{{item.createTime | date:'M月d日' }}</span>
+                                </div>
+                                <div class="box5">
+                                    <span>{{item.figure}}</span>
+                                    <span style="color: #f7931e" *ngIf="item.status == 0" >失败</span>
+                                    <span style="color: #f7931e" *ngIf="item.status == 1" >进行中</span>
+                                    <span style="color: #f7931e" *ngIf="item.status == 2" >成功</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--111111111111111111111111111111111111111111111111支出-->
+            <div class="mui-slider-item mui-control-content">
+                <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                      <div class="box2" *ngFor="let item of expendList" >
+                          <p style="display:none;" class="month expendList{{item.createTime | date:'yyyyMM' }}" >{{item.createTime | date:'yyyy年M月' }}</p>
+                          <div class="box3 b-b" (click)="DetailChild()">
+                              <div class="box4">
+                                  <span style="color: #000" *ngIf="item.type == 1">充值</span>
+                                  <span style="color: #000" *ngIf="item.type == 2">支出</span>
+                                  <span style="color: #000" *ngIf="item.type == 3">收入</span>
+                                  <span style="color: #000" *ngIf="item.type == 4">提现</span>
+                                  <span style="color: #000" *ngIf="item.type == 5">退款</span>
+                                  <span>{{item.createTime | date:'M月d日' }}</span>
+                              </div>
+                              <div class="box5">
+                                  <span>{{item.figure}}</span>
+                                  <span style="color: #f7931e" *ngIf="item.status == 0" >失败</span>
+                                  <span style="color: #f7931e" *ngIf="item.status == 1" >进行中</span>
+                                  <span style="color: #f7931e" *ngIf="item.status == 2" >成功</span>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <!-- -----------------------收入---------------------------->
+            <div class="mui-slider-item mui-control-content">
+                <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                      <div class="box2" *ngFor="let item of incomeList" >
+                          <p style="display:none;" class="month incomeList{{item.createTime | date:'yyyyMM' }}" >{{item.createTime | date:'yyyy年M月' }}</p>
+                          <div class="box3 b-b" (click)="DetailChild()">
+                              <div class="box4">
+                                  <span style="color: #000" *ngIf="item.type == 1">充值</span>
+                                  <span style="color: #000" *ngIf="item.type == 2">支出</span>
+                                  <span style="color: #000" *ngIf="item.type == 3">收入</span>
+                                  <span style="color: #000" *ngIf="item.type == 4">提现</span>
+                                  <span style="color: #000" *ngIf="item.type == 5">退款</span>
+                                  <span>{{item.createTime | date:'M月d日' }}</span>
+                              </div>
+                              <div class="box5">
+                                  <span>{{item.figure}}</span>
+                                  <span style="color: #f7931e" *ngIf="item.status == 0" >失败</span>
+                                  <span style="color: #f7931e" *ngIf="item.status == 1" >进行中</span>
+                                  <span style="color: #f7931e" *ngIf="item.status == 2" >成功</span>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

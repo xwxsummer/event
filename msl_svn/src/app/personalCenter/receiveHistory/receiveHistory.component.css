@@ -1,0 +1,85 @@
+.goodsTop {
+  display: flex;
+
+}
+.goodsTop div{
+  flex: 1;
+  padding-bottom: 1px;
+  border-bottom: 1px solid #e5e5e5;
+}
+.goodsTop .special{
+  padding-bottom: 0px;
+  border-bottom: 2px solid #ea5529;
+  color: #ea5529;
+
+}
+
+.Lists{
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+.Lists:first-child{
+  margin-top: 5px;
+}
+.touxiang{
+  width: 2.4rem;
+  vertical-align: middle;
+  border-radius: 50%;
+  margin-bottom: 3px;
+}
+
+.perTopSpan img {
+  width: 4rem;
+  vertical-align: middle;
+  margin-bottom: 3px;
+}
+.dis_flex{
+  display: flex;
+}
+.dis_flex ul{
+  flex: 9;
+}
+.dis_flex ul li{
+  width: 50%;
+  line-height: 1.5rem;
+}
+.padding17{
+  padding-left: 1.7rem;
+  padding-right: 1.7rem;
+}
+.dis_flex>div{
+  flex: 1;
+  padding-top: 30px;
+  box-sizing: border-box;
+}
+.dis_flex>div>span{
+  font-size: 2rem;
+}
+.font12{
+  font-size: 12px;
+}
+
+.jiedanshu_bottom{
+  height: 2.2rem;
+  line-height: 2.2rem;
+}
+
+.jiedanshu_contact{
+  height: 1.6rem;
+  line-height: 1.6rem;
+  border: 1px solid #4bbcbd;
+  color: #4bbcbd;
+  border-radius: 10px;
+  width: 4.7rem;
+  margin-top: 0.3rem;
+  margin-left: 5px;
+}
+
+.moreInfo{
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+.moreInfo img {
+  width: 20px;
+  vertical-align: middle;
+}

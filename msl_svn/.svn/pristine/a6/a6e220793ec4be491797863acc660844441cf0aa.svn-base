@@ -1,0 +1,8 @@
+<div class="mima b-b back_fff">
+    <label>新密码</label>&nbsp;&nbsp;&nbsp;&nbsp;
+    <input #pwd maxlength="6" type="password" placeholder="请输入6位数字交易密"/>
+</div>
+<div class="mima"><label>确认密码</label><input #conPwd maxlength="6" type="password" placeholder="确认密码" (blur)="checkPwd(pwd.value,conPwd.value)"/></div>
+
+
+<button style="background: #ea5529;color: #fff;" id="submit" disabled  (click)="submit(pwd.value)">保存</button>

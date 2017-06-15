@@ -1,0 +1,391 @@
+import { Injectable } from '@angular/core';
+import { Http,Jsonp,URLSearchParams,Headers,Response } from '@angular/http';
+import { RouterModule,ActivatedRoute,Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+import  'rxjs/Rx';
+import { Api } from '../api';
+import { Ajax } from '../ajax';
+//本地缓存
+import { LocalStorage } from '../local_storage';
+//md5 加密
+import { Md5 } from "ts-md5/dist/md5";
+
+declare var mui: any;
+@Injectable()
+export class personalCenterService{
+  public local_Storage;
+  public userId:string;//用户id :string
+  public ajax: Ajax;
+  public walletcode:number;
+  constructor(
+    public router: Router,
+    public localStorage: LocalStorage,
+    public http: Http
+  ){
+    this.ajax = new Ajax(this.http);
+    this.walletcode =JSON.parse(localStorage.get("data")).walletcode;
+  }
+
+
+  //查询个人信息
+  public personalCenterInfo():Observable<any>{
+    return this.ajax.myget(Api.myself+'?userId='+this.localStorage.getObject("data").userId);
+
+  }
+  //修改个人信息
+  public changePersonalCenterInfo(value):Observable<any>{
+    let params = new URLSearchParams();
+    params.set("userId",this.localStorage.getObject("data").userId+"");
+    params.set("type","headImg");
+    params.set("value",value);
+    return this.ajax.myPut(Api.myself,params);
+
+  }
+//上传图片
+  public upBase64Image(base64FileList:string):Promise<any>{
+    let type:string = 'user';
+    let headers = new Headers();
+    headers.append('Content-Type','application/x-www-form-urlencoded');
+    return this.http.post(Api.base64Image,
+        `base64FileList=${encodeURIComponent(base64FileList)}&type=${type}`,
+        {headers : headers}
+    ).toPromise();
+  }
+  //头像图片上传图片
+  public upBase64ImageHead(base64FileList:string,fixFileName:string):Promise<any>{
+    let type:string = 'user';
+    let headers = new Headers();
+    headers.append('Content-Type','application/x-www-form-urlencoded');
+    return this.http.post(Api.base64Image,
+        `base64FileList=${encodeURIComponent(base64FileList)}&type=${type}`,
+        {headers : headers}
+    ).toPromise();
+  }
+  //查看认证信息接口
+  public getAuthMessage():Observable<any>{
+    this.userId=this.localStorage.getObject("data").userId+"";
+    return this.ajax.myget(Api.getAuthMessage+'?userId='+this.userId);
+  }
+  //修改认证信息接口
+  public updateAuthMessage(authInfoDTO):Observable<any>{
+    return this.ajax.myPut(Api.updateAuthMessage,authInfoDTO);
+   }
+//取消原因
+  public getSystemLabelByType(type):Observable<any>{
+    return this.ajax.myget(Api.getSystemLabelByType+"?type="+type);
+  }
+
+  //设置中的修改手机号码
+  public changMobileTrue(data,setting):Observable<any>{
+    this.local_Storage=this.localStorage.getObject("data");
+    this.local_Storage.mobile=data.newMobile;
+    return this.ajax.myPost(Api.changeMobile,data);
+  }
+  //设置中的修改密码
+  public changPsw(data):Observable<any>{
+    data.userId=this.localStorage.getObject("data").userId+"";
+    data.oldPwd=Md5.hashStr(data.oldPwd)+"";
+    data.newPwd=Md5.hashStr(data.newPwd)+"";
+    let params = new URLSearchParams();
+    params.set("userId",data.userId);
+    params.set("oldPwd",data.oldPwd);
+    params.set("newPwd",data.newPwd);
+    params.set("platform","3");
+    return this.ajax.myPost(Api.changePwd,params);
+  }
+  //用户验证码 有权限
+  public captcha(mobile):void{
+    let params = new URLSearchParams();
+    params.set("mobile",mobile);
+    params.set("type","1");  //修改手机号码验证码  1
+    this.ajax.myPost(Api.captcha,params)
+      .subscribe(
+        data => {
+        if(data.code==0){//未注册
+          mui.toast("验证码已发送到您的手机</br>请注意查收",{ duration:'short', type:'div' });
+        }else{
+          mui.toast(data.msg,{ duration:'short', type:'div' });
+        }
+      });
+  }
+  /*
+  * 地址管理findDefault
+  * */
+  //查询收/发货地址
+  public addressFindList(type):Observable<any>{
+    this.userId=this.localStorage.getObject("data").userId+"";
+    console.log(this.localStorage.getObject("data").mobile);
+    console.log(this.userId);
+    let params = new URLSearchParams();
+    params.set("userId","67");
+    params.set("type",type);  //type 1发货   type 2收获
+    return this.ajax.myget(Api.addreFindList+"?userId="+this.userId+"&type="+type)
+}
+  //设置默认收/发货地址
+  public addressSetDefault(id,type):void{
+    this.userId=this.localStorage.getObject("data").userId+"";
+    let params = new URLSearchParams();
+    params.set("userId",this.userId);
+    params.set("id",id);//地址ID
+    params.set("type",type);  //1发货  2收货
+    this.ajax.myPut(Api.addreSetDefault,params)
+      .subscribe(
+        data => {
+        if(data.code==0){//未注册
+          mui.toast("设置默认地址成功",{ duration:'short', type:'div' });
+         }else{//设置默认收发货地址没有成功
+          mui.toast(data.msg,{ duration:'short', type:'div' });
+        }
+      });
+  }
+
+  //删除收/发货地址
+  public deleteAddress(id):Observable<any>{
+    this.userId=this.localStorage.getObject("data").userId+"";
+    return this.ajax.myDelete(Api.deleteAddres+"?userId="+this.userId+"&id="+id);
+    }
+
+  //根据ID查询地址
+  public getAddress(id):Observable<any>{
+
+    this.userId=this.localStorage.getObject("data").userId+"";
+        return this.ajax.myget(Api.getAddres+"?userId="+this.userId+"&id="+id);
+
+  }
+  //修改收/发货地址
+  public putAddress(address):Observable<any>{
+    return this.ajax.myPut(Api.putAddres,address);
+  }
+  //添加收/发货地址
+  public addAddress(address):Observable<any>{
+    address.userId=this.localStorage.getObject("data").userId;
+    return this.ajax.myPost(Api.putAddres,address);
+  }
+
+  //查询黑名单
+  public blacklist():Observable<any>{
+    return this.ajax.myget(Api.blacklist+"?userId="+this.localStorage.getObject("data").userId);
+  }
+  //查询司机端详情
+  public carUserInfo(userId):Observable<any>{
+    return this.ajax.myget(Api.carUserInfo+"?userId="+userId);
+  }
+  //移除黑名单
+  public removeBlackList(id):Observable<any>{
+    this.userId=this.localStorage.getObject("data").userId;
+    return this.ajax.myDelete(Api.removeBlackList+"?userId="+this.userId+"&id="+id);
+  }
+  //移除黑名单 根据司机id
+  public removeByDriverId(driverId):Observable<any>{
+    this.userId=this.localStorage.getObject("data").userId;
+    return this.ajax.myDelete(Api.removeByDriverId+"?userId="+this.userId+"&driverId="+driverId);
+  }
+  //查看是否为黑名单
+  public isBlackList(id):Observable<any>{
+    this.userId=this.localStorage.getObject("data").userId;
+    return this.ajax.myget(Api.isBlackList+"?userId="+this.userId+"&driverId="+id);
+  }
+
+  //添加黑名单
+  public addBlackList(blackList):Observable<any>{
+    blackList.userId=this.localStorage.getObject("data").userId;
+    return this.ajax.myPost(Api.removeBlackList,blackList);
+  }
+
+  //获取员工列表
+  public Management():Observable<any>{
+    this.userId=this.localStorage.getObject("data").userId+"";
+  return this.ajax.myget(Api.getOwnerStaffMessage+"?page=1&userId="+this.userId+"&pageSize=10");
+
+
+}
+  //删除员工列表
+  public deleteOwnerStaff(staffId):Observable<any>{
+    this.userId=this.localStorage.getObject("data").userId;
+    return this.ajax.myDelete(Api.deleteOwnerStaff+'?userId='+this.userId+'&staffId='+staffId);
+
+   }
+   //货主端》根据收货人id查询收货列表
+  public getOrderChildListByReceiveId(staffId):Observable<any>{
+    this.userId=this.localStorage.getObject("data").userId;
+    return this.ajax.myget(Api.getOrderChildListByReceiveId+'?page=1&receiveId='+staffId);
+
+   }//货主端》根据fa货人id查询fa货列表
+  public mygetOrderChildListBySendId(staffId):Observable<any>{
+    this.userId=this.localStorage.getObject("data").userId;
+    return this.ajax.myget(Api.mygetOrderChildListBySendId+'?sendId='+staffId);
+
+   }
+
+//验证手机号
+  public checkMobile(mobile):Observable<any>{
+   return this.ajax.myget(Api.checkMobile+'?mobile='+mobile);
+  }
+  //验证手机号 不传手机号码
+  public checkNOMobile():Observable<any>{
+    return this.ajax.myget(Api.checkMobile+'?mobile='+this.localStorage.getObject("data").mobile);
+  }
+
+  //添加员工
+  public submitOwnerStaff(OwnerStaffDTO):Observable<any>{
+    OwnerStaffDTO.userId=this.localStorage.getObject("data").userId;
+    return this.ajax.myPost(Api.submitOwnerStaff,OwnerStaffDTO);
+  }
+
+  //添加意见反馈
+  public addFeedBack(content,type:string):Observable<any>{
+    this.userId=this.localStorage.getObject("data").userId;
+    let params = new URLSearchParams();
+    params.set("userId",this.userId);
+    params.set("mobile",this.localStorage.getObject("data").mobile);
+    params.set("type",type);
+    params.set("content",content);
+    return this.ajax.myPost(Api.addFeedBack,params);
+  }
+  //查询意见反馈
+  public optionFindList(page):Observable<any>{
+    this.userId=this.localStorage.getObject("data").userId;
+    return this.ajax.myget(Api.optionFindList+"?userId="+this.userId+"&page="+page+"&pageSize=10");
+  }
+
+  /*
+  * 业务统计
+  * */
+  //获取订单次数
+  public countOrders(beginTime,endTime):Observable<any>{
+    return this.ajax.myget(Api.countOrders+"?userId="+this.localStorage.getObject("data").userId+"&beginTime="+beginTime+"&endTime="+endTime);
+
+  }
+  //查询已完成的货单列表countPublishOrder
+  public countPublishOrder(beginTime,endTime,page):Observable<any>{
+    return this.ajax.myget(Api.countPublishOrder+"?userId="+this.localStorage.getObject("data").userId+"&beginTime="+beginTime+"&endTime="+endTime+"&page="+page+"&pageSize=10");
+  }
+  //已经接单的数目列表
+  public countOrderChildsToList(beginTime,endTime,status,page):Observable<any>{
+    return this.ajax.myget(Api.countOrderChildsToList+"?userId="+this.localStorage.getObject("data").userId+"&beginTime="+beginTime+"&endTime="+endTime+"&status="+status+"&page="+page+"&pageSize=10");
+  }
+  // 已经运送的货物数量列表，已支付运费的列表
+  public countCompleteOrderToList(beginTime,endTime,page):Observable<any>{
+     return this.ajax.myget(Api.countCompleteOrderToList+"?userId="+this.localStorage.getObject("data").userId+"&beginTime="+beginTime+"&endTime="+endTime+"&page="+page+"&pageSize=10");
+
+  }
+    // 《货主端》根据货主id获取各种订单的次数GET
+  public getOrderChildListByOwnerIdChild(beginTime,endTime):Observable<any>{
+      return this.ajax.myget(Api.getOrderChildListByOwnerIdChild+"?userId="+this.localStorage.getObject("data").userId+"&beginTime="+beginTime+"&endTime="+endTime);
+  }
+//根据主单编号取消主单剩余货源this.localStorage.getObject("data").userId
+  public cancelInfoByMainOrder(OrderNo,cancelReason):Observable<any>{
+    return this.ajax.myPut(Api.cancelInfoByMainOrder+OrderNo+"?userId="+this.localStorage.getObject("data").userId+"&cancelReason="+cancelReason,null);
+  }
+  // 货源明细 //收货历史
+  public getOrderChildListByParam(orderInfoTermDTO){
+    orderInfoTermDTO.pageSize=10;
+    orderInfoTermDTO.receiveId=this.localStorage.getObject("data").userId;
+      return this.ajax.myPost(Api.getOrderChildListByParam,orderInfoTermDTO);
+  }
+  // 货源明细
+  public getOrderInfoListByParam(orderInfoTermDTO){
+    orderInfoTermDTO.userId=this.localStorage.getObject("data").userId;
+    orderInfoTermDTO.pageSize=10;
+      return this.ajax.myPost(Api.getOrderInfoListByParam,orderInfoTermDTO);
+  }
+  //钱包余额
+  public wallet(userCode:Number):Observable<any>{
+    return this.ajax.myget(Api.wallet+"?userCode="+userCode);
+  }
+
+  //查询银行卡列表
+  public bankCardFindList(userCode:Number):Observable<any>{
+    return this.ajax.myget(Api.bankCardFindList+"?userCode="+userCode);
+  }
+  //添加银行卡
+  public addbankCard(saveDTO):Observable<any>{
+
+    //saveDTO.bankCode="CMB";
+    //return this.ajax.myget(Api.wallet+"?userCode="+userCode);
+    //return this.ajax.myPost(Api.bankCardFindList,saveDTO);
+    return this.ajax.myPost(Api.addbankCard,saveDTO);
+  }
+  //移除银行卡
+  public unBinding(walletCode,id,psd):Observable<any>{
+    //saveDTO.bankCode="CMB";
+    let params = new URLSearchParams();
+    params.set("userCode",walletCode);
+    params.set("id",id);
+    psd=Md5.hashStr(psd)+"";
+    params.set("pwd",psd);
+    return this.ajax.myPut(Api.unBinding,params);
+  }
+  //重置秘密第一步
+  public walletCheckMobile(walletCode,captcha):Observable<any>{
+    let params = new URLSearchParams();
+    params.set("userCode",walletCode);
+    params.set("captcha",captcha);
+    return this.ajax.myPost(Api.walletCheckMobile,params);
+  }
+
+
+  //查询收支详情
+  //public tradeList():Observable<any>{
+  //
+  //}
+
+  //查询收支明细
+  public tradeFindList(userCode:Number,fund:string):Observable<any>{
+    let UserCode = "?userCode="+userCode;
+    let Fund = fund? "&fund="+ fund :'';
+    return this.ajax.myget(Api.findList+UserCode+Fund);
+  }
+//按日期查询收支明细
+  public findDateList(date:string,fund:string,type:number):Observable<any>{
+      let data = {
+          date,
+          "page": 1,
+          "pageSize": 10,
+          "type": 1,
+          "userCode": localStorage['walletCode']
+      };
+      if(fund)data['fund']=fund;
+      return this.ajax.myPost(Api.findDateList,data).map((res: Response) => res);
+  }
+  //修改交易密码
+  public changePwd(oldPwd:string,newPwd:string):Observable<any>{
+    let headers = new Headers();
+    //headers.append('Content-Type','application/x-www-form-urlencoded');
+    let data = {
+      oldPwd,
+      newPwd,
+      "userCode": localStorage['walletCode']
+    };
+    let params = new URLSearchParams();
+    Object.keys(data).forEach(key=>params.set(key,data[key]));
+    return this.ajax.myPut(Api.mychangePwd,params
+        //{headers : headers}
+    ).map((res: Response) => res)
+  }
+  //设置交易密码
+  public setPwd(pwd:String):Observable<any>{
+    let data= {
+      pwd,
+      "userCode":localStorage['walletCode']
+    }
+    let params = new URLSearchParams();
+    Object.keys(data).forEach(key=>params.set(key,data[key]));
+    return this.ajax.myPut(Api.setPwd,params).map((res:Response)=>res)
+  }
+ //http://192.168.1.231:8200/message-service/newestSystemMessage?receiver=4411135645456466&receiverRole=driver
+ //获取最新系统消息, 系统通知和业务通知各一条
+ public newestSystemMessage():Observable<any>{
+    return this.ajax.myget(Api.newestSystemMessage+'?receiver='+this.localStorage.getObject("data").userId+'&receiverRole=owner');
+  }
+ //获取系统消息列表
+ //http://192.168.1.231:8200/message-service/messages?receiver=124&receiverRole=owner&type=-1&lastId=12&pageSize=5
+ public messages1(id):Observable<any>{
+   return this.ajax.myget(Api.messages+'?receiver='+this.localStorage.getObject("data").userId+'&receiverRole=owner'+'&type=-1'+'&lastId='+id+'&pageSize=5')
+ }
+ //获取业务列表 
+  public messages0(id):Observable<any>{
+   return this.ajax.myget(Api.messages+'?receiver='+this.localStorage.getObject("data").userId+'&receiverRole=owner'+'&type=0'+'&lastId='+id+'&pageSize=5')
+ }
+}

@@ -1,0 +1,46 @@
+.touxiang{
+  vertical-align: middle;
+  display: inline-block;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+.dis_flex{
+  display: flex;
+}
+.dis_flex>.flex1{
+  flex: 2;
+}
+.dis_flex>.tel{
+  flex: 1;
+}
+.dis_flex>.tel img{
+  width: 1.5rem;
+  margin-top: 30px;
+}
+.dis_flex>.flex9{
+  flex: 9;
+  padding-left: 1.1rem;
+  padding-top: 1.1rem;
+}
+
+.perTopSpan{
+  margin-bottom: 2px;
+}
+.perTopSpan img {
+  width: 4rem;
+  vertical-align: middle;
+  margin-bottom: 2px;
+}
+ul li{
+  width: 6rem;
+  height: 1.8rem;
+  line-height: 1.8rem;
+  border-radius: 7px;
+}
+.border_lan{
+  border: 1px solid #4bbcbd;
+}
+.border_ea5529{
+  border: 1px solid #ea5529;
+}

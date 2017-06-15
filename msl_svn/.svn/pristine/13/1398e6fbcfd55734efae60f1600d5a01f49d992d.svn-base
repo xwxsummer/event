@@ -1,0 +1,85 @@
+<div class="mui-scroll-wrapper">
+  <div class="mui-scroll">
+    <app-passCertifi *ngIf="certifi=='1'"></app-passCertifi>
+    <form #Form="ngForm" name="submitForm" class="col_333">
+      <div class="posi_relative">
+        <input class="input_org" type="text" name="personalName" [(ngModel)]="authInfoDTO.name" placeholder="请输入真实姓名"  maxlength="10" value="" id="personalName"/>
+        <span class="mui-icon mui-icon-closeempty posi_abslotu transformY50 pos_right0 pos_right1r" *ngIf="authInfoDTO.name" (click)="ValueNone('name')" id="chaIonic1"></span>
+      </div>
+      <div class="posi_relative">
+        <input class="input_org" type="text" name="job" [(ngModel)]="authInfoDTO.title" placeholder="请输入公司职位" value="" *ngIf="authInfoDTO.type==2" maxlength="20"/>
+        <span class="mui-icon mui-icon-closeempty posi_abslotu transformY50 pos_right0 pos_right1r" *ngIf="authInfoDTO.title" (click)="ValueNone('title')"></span>
+      </div>
+      <div class="posi_relative">
+        <input class="input_org" type="tel" name="cardNo" [(ngModel)]="authInfoDTO.cardNo" placeholder="请输入您的身份证号码" value="" maxlength="18" id="cardNo"/>
+        <span class="mui-icon mui-icon-closeempty posi_abslotu transformY50 pos_right0 pos_right1r" *ngIf="authInfoDTO.cardNo" (click)="ValueNone('cardNo')" id="chaIonic2"></span>
+      </div>
+      <div class="posi_relative">
+        <input class="input_org b-t m-t10" type="text" name="groupCode" [(ngModel)]="authInfoDTO.groupCode" placeholder="请输入公司统一社会信用代码" maxlength="18" value="" *ngIf="authInfoDTO.type==2"/>
+        <span class="mui-icon mui-icon-closeempty posi_abslotu transformY50 pos_right0 pos_right1r" *ngIf="authInfoDTO.groupCode" (click)="ValueNone('groupCode')"></span>
+      </div>
+      <div class="posi_relative">
+        <input class="input_org" type="text" name="companyName" [(ngModel)]="authInfoDTO.company" placeholder="请输入公司名称" value="" *ngIf="authInfoDTO.type==2" maxlength="50"/>
+        <span class="mui-icon mui-icon-closeempty posi_abslotu transformY50 pos_right0 pos_right1r" *ngIf="authInfoDTO.company" (click)="ValueNone('company')"></span>
+      </div>
+      <div class="posi_relative">
+        <input class="input_org" type="text" name="companyAdress" [(ngModel)]="authInfoDTO.address" placeholder="请输入公司地址" value="" *ngIf="authInfoDTO.type==2" maxlength="50"/>
+        <span class="mui-icon mui-icon-closeempty posi_abslotu transformY50 pos_right0 pos_right1r" *ngIf="authInfoDTO.address" (click)="ValueNone('address')"></span>
+      </div>
+      <div class="padding_17">
+        <div class="bac_certification pull-left posi_relative m-t20" id="changePositive">
+          <img src="../assets/images/bac_certification.png" alt="" class="w100 height7" *ngIf="certifi=='1'"/>
+          <img src="{{changePositiveImg}}" alt="" class="w100 height7" *ngIf="certifi=='2'"/>
+          <label class="img posi_abslotu w100 fenshenFont text_center fff fonSml" id="positiveUpload" for="positiveFile"><span>上传身份证正面</span>
+            <input type="file" id="positiveChoose" accept="image/*" multiple>
+            <ul class="img-list posi_abslotu w100">
+              <li *ngFor="let img of positiveImgList; let i = index" [ngStyle]="{'background-image':'url(' + img.data + ')'}"><div class="xiugai">修改</div></li>
+            </ul>
+            <input type="file" id="positiveFile" value=""/>
+          </label>
+        </div>
+        <div class="bac_certification pull-right posi_relative m-t20" id="changeReverse">
+          <img src="../assets/images/bac_certification.png" alt="" class="w100 height7" *ngIf="certifi=='1'"/>
+          <img src="{{changeReverseImg}}" alt="" class="w100 height7" *ngIf="certifi=='2'"/>
+          <label class="img posi_abslotu w100 fenshenFont text_center fff fonSml" id="reverseUpload" for="reverseFile"><span>上传身份证反面</span>
+            <input type="file" id="reverseChoose" accept="image/*" multiple>
+            <ul class="img-list posi_abslotu w100">
+              <li *ngFor="let img of reverseImgList; let i = index" [ngStyle]="{'background-image':'url(' + img.data + ')'}"><div class="xiugai">修改</div></li>
+            </ul>
+            <input type="file" id="reverseFile" value=""/>
+          </label>
+        </div>
+        <div class="bac_certification pull-left posi_relative m-t20" id="changeHand">
+          <img src="../assets/images/bac_certification.png" alt="" class="w100 height7" *ngIf="certifi=='1'"/>
+          <img src="{{changeHandImg}}" alt="" class="w100 height7" *ngIf="certifi=='2'"/>
+          <label class="img posi_abslotu w100 fenshenFont text_center fff fonSml" id="handUpload" for="handFile"><span>手持身份证照</span>
+            <input type="file" id="handChoose" accept="image/*" multiple>
+            <ul class="img-list posi_abslotu w100">
+              <li *ngFor="let img of handImgList; let i = index" [ngStyle]="{'background-image':'url(' + img.data + ')'}"><div class="xiugai">修改</div></li>
+            </ul>
+            <input type="file" id="handFile" value=""/>
+          </label>
+          <div class="posi_abslotu w100 transformY50 pos_left0 tex_center fff fonSml"></div>
+        </div>
+        <div class="bac_certification pull-right posi_relative m-t20" id="businessPhoto">
+          <img src="../assets/images/bac_certification.png" alt="" class="w100 height7" *ngIf="certifi=='1'"/>
+          <img src="{{changeBusinessImg}}" alt="" class="w100 height7" *ngIf="certifi=='2'"/>
+          <label class="img posi_abslotu w100 fenshenFont text_center fff fonSml" id="businessUpload" for="businessFile"><span>营业照</span>
+            <input type="file" id="businessChoose" accept="image/*" multiple>
+            <ul class="img-list posi_abslotu w100">
+              <li *ngFor="let img of businessImgList; let i = index" [ngStyle]="{'background-image':'url(' + img.data + ')'}"><div class="xiugai">修改</div></li>
+            </ul>
+            <input type="file" id="businessFile" value=""/>
+          </label>
+        </div>
+      </div>
+      <div class="m0_auto" style="width: 80%;" id="bindFinish">
+        <input type="submit" class="bindFinish text_center fff fonSml fon900 height_3" value="提交认证" [disabled]="!Form.form.valid" (click)="submitForm()"/>
+      </div>
+
+    </form>
+    <div class="m-t20 text_center m-b20">
+      <span id="contactService"><span href="tel:10086#mp.weixin.qq.com">联系客服</span></span>
+    </div>
+  </div>
+</div>

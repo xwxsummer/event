@@ -1,0 +1,13 @@
+.box{
+    height: 13rem;
+}
+.box_c{
+    height: 2rem;
+    line-height: 2rem;
+    padding-left: 15px;
+    color: #333;
+}
+.box_c span:nth-child(2){
+    float: right;
+    padding-right: 15px;
+}

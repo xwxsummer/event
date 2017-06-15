@@ -1,0 +1,29 @@
+<div class="padding_17 fonSml clearfix">
+  <div class="yewotongji_flex pull-left">{{beginTime}}&nbsp;&nbsp;至&nbsp;&nbsp;{{endTime}}</div>
+  <div class="yewotongji_flex pull-right" *ngIf="type=='1'">{{num}}吨</div>
+  <div class="yewotongji_flex pull-right" *ngIf="type=='2'">{{num}}元</div>
+</div>
+<div class="mui-scroll-wrapper" style="margin-top: 2rem;">
+  <div class="mui-scroll">
+    <div class="b-b b-t back_fff padding_17 dis_flex" (click)="sourceInfo(site.childNo)"  *ngFor="let site of data">
+      <div class="flex1">
+        <img src="{{site.headImg}}" alt="" class="touxiang m-t10 m-b10" (click)="driverdetails(site.driverId);$event.stopPropagation();"/>
+      </div>
+      <div class="flex9 pL_10 p_T10">
+        <div class="col_333 fon900 back_fff">
+          <span class="fonSml">{{site.driverName}}</span>
+          <span class="perTopSpan font12 fff">&nbsp;<img src="../assets/images/jifen.png" alt=""/>&nbsp;已认证</span>
+          <span class="ea5529 pull-right fonSml" *ngIf="type=='1'">{{site.capacity.toFixed(2)}}吨</span>
+          <span class="ea5529 pull-right fonSml" *ngIf="type=='2'">{{site.freight.toFixed(2)}}元</span>
+        </div>
+        <p class="fon85">车牌号:{{site.truckNo}}<span class="pull-right">{{site.payTime}}</span></p>
+      </div>
+    </div>
+    <!--<div *ngIf="uploading.noneIfno==1">-->
+      <!--<div class="text_center m-t10 m-b10 fonSml" *ngIf="!uploading.isLoading" id="loadingMore">{{uploading.loadingMore}}</div>-->
+      <!--<div class="text_center m-t10 m-b10 moreInfo" *ngIf="uploading.isLoading">正在加载 <img src="../assets/images/loading.jpg" alt=""/></div>-->
+    <!--</div>-->
+    <div class="text_center m-t3" *ngIf="uploading.noneIfno==2">暂无该信息</div>
+  </div>
+</div>
+

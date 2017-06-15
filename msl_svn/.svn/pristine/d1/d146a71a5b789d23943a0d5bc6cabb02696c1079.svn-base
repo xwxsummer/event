@@ -1,0 +1,50 @@
+
+
+ <div class="height36 text_center bgc_ea5529 fff fonSml posi_relative">{{market_title}}
+            <img src="../assets/images/saoyisao.png"
+             alt="" class="posi_abslotu posi_right transformY50" style="width: 20px;" (click)="scan()"/>       
+        </div>
+<div class="box ">
+    <div class="mui-scroll-wrapper">
+        <div class="mui-scroll">
+    <div class="box2 posi_relative back_fff"(click)="sourceInfo(info?.childNo)" *ngFor="let info of infos" >
+
+        <div class="box3">
+            <div class="box3_top">
+                <span class="a"><img class="headImg" src={{info?.domain+info?.headImg}} onerror='this.src="../assets/images/myDriver.png"'/></span>
+                <span>{{info?.driverName}}</span>
+                <div class="button"><nav></nav></div>
+                <div class="bu">
+                    <span class="pull-right f7931e" *ngIf="info?.status<51">待装车</span>
+                    <span class="pull-right f7931e" *ngIf="info?.status<150&&info?.status>51">运输中</span>
+                    <span class="pull-right f7931e" *ngIf="info?.status==150">已完成</span>
+                </div>
+            </div>
+            <div class="left">
+                <span>车牌号：{{info?.truckNo}}</span>
+                <span>载重：{{info?.truckLoad.toFixed(2)}}吨</span>
+                <span>车型：{{info?.truckModel}}</span>
+            </div>
+            <div class="right"> 
+                <span style="float: left;width: 75%;background: url('../assets/images/myGoodsTel.png')no-repeat right;background-size: 1.2rem;padding-left: 5px;" (click)="call(info.driverPhone);$event.stopPropagation();">{{info?.driverPhone}}</span>
+                <img style="float: right;margin-top: 10px" (click)="goodsDetails(info?.childNo)" src="../assets/images/gd.png" width="15px"height="15px"/>
+            </div>
+        </div>
+    
+    <div class="bottom">
+            <span>{{info?.createTime}}</span>
+            <input type="button" class="buttons" *ngIf="info?.status<150" value="轨迹查询"  (click)="maps(info?.childNo)"/>
+            <input type="button" class="buttons" *ngIf="info?.status==54"  (click)="skip(info?.childNo)" value="确认收货"/>
+        </div>
+    </div>
+
+ 
+
+         <div *ngIf="uploading.noneIfno==1" style="margin-bottom: 35px;">
+      <div class="text_center fon85" *ngIf="!uploading.isLoading" id="loadingMore">{{uploading.loadingMore}}</div>
+      <div class="text_center fon85 moreInfo" *ngIf="uploading.isLoading">正在加载 <img src="../assets/images/loading.jpg" alt=""/></div>
+      
+    </div>
+    <div class="text_center m-t3 zanwu" *ngIf="uploading.noneIfno==2">暂无收货信息</div>
+    </div>
+    </div>

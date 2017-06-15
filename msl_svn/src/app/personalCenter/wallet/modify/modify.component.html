@@ -1,0 +1,21 @@
+<!--<label class="label"><input #oldPwd maxlength="6" type="password" placeholder="请输入交易密码"/></label>-->
+<!--<label class="label"><input #newPwd maxlength="6" type="password" placeholder="请输入新交易密码"/></label>-->
+<!--<label class="label"><input #newPwdChk maxlength="6" (keyup)="checkPwd(newPwd.value,newPwdChk.value)" type="password"placeholder="确认新密码"/></label>-->
+<div class="posi_relative">
+    <input class="input_org" type="{{imgWatch_oldPwd.ImgType}}" name="psd" placeholder="请输入交易密码" [(ngModel)]="oldPwd" #psd="ngModel" maxlength="6"/>
+    <span class="mui-icon mui-icon-closeempty posi_abslotu transformY50 pos_right0 pos_right1r posi_right27" *ngIf="oldPwd" (click)="ValueNone('oldPwd')"></span>
+    <img src="{{imgWatch_oldPwd.imgSrc}}" alt="" class="posi_abslotu posi_right transformY50" style="width: 24px;" (click)="changeImg('imgWatch_oldPwd')"/>
+</div>
+<div class="posi_relative">
+    <input class="input_org" type="{{imgWatch_newPwd.ImgType}}" name="psdNewPwd" placeholder="请输入新交易密码" [(ngModel)]="newPwd" #psdNewPwd="ngModel" maxlength="6"/>
+    <span class="mui-icon mui-icon-closeempty posi_abslotu transformY50 pos_right0 pos_right1r posi_right27" *ngIf="newPwd" (click)="ValueNone('newPwd')"></span>
+    <img src="{{imgWatch_newPwd.imgSrc}}" alt="" class="posi_abslotu posi_right transformY50" style="width: 24px;" (click)="changeImg('imgWatch_newPwd')"/>
+</div>
+<div class="posi_relative">
+    <input class="input_org" type="{{imgWatch_newPwdChk.ImgType}}" name="psdNewPwdChk" placeholder="确认新密码" [(ngModel)]="newPwdChk" #psdNewPwdChk="ngModel" maxlength="6"/>
+    <span class="mui-icon mui-icon-closeempty posi_abslotu transformY50 pos_right0 pos_right1r posi_right27" *ngIf="newPwdChk" (click)="ValueNone('newPwdChk')"></span>
+    <img src="{{imgWatch_newPwdChk.imgSrc}}" alt="" class="posi_abslotu posi_right transformY50" style="width: 24px;" (click)="changeImg('imgWatch_newPwdChk')"/>
+</div>
+<div class="m0_auto m-t3" style="width: 80%;">
+    <input type="submit" class="bindFinish text_center fff fonSml fon900 height_3" style="width: 100%;padding-left:0px;" value="保&nbsp;&nbsp;&nbsp;存" [disabled]="submitlag" (click)="submit()"/>
+</div>

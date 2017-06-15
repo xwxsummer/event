@@ -1,0 +1,87 @@
+<form class="" #myForm="ngForm">
+<div class="big">
+<div class=" padding16 b-b m-b10 back_fff">
+  <h3 class="height3 fonNormal fon900 col_333 b-b">收货信息</h3>
+  <ul class="clearfix p_T10 p_b10">
+    <li class="detail_li">发货人姓名：{{data?.sendName }}&nbsp;&nbsp;&nbsp;&nbsp;{{data?.sendPhone}}</li>
+    <li class="detail_li">出发地：{{data?.sendProvince }}</li>
+    <li class="detail_li">目的地：{{data?.receiveCity }}</li>
+    <li class="detail_li">发货单位：{{data?.sendCompany }}</li>
+    <li class="detail_li">收货单位：{{data?.receiveCompany }}</li>
+    <li class="detail_li">货物名称：{{data?.goodsName }}</li>
+    <li class="detail_li">货物价值：{{data?.goodsPrice.toFixed(2) }}元/{{data?.goodsUnit}}</li>
+    <li class="detail_li">装货时间：{{data?.loadTime }}</li>
+  </ul>
+</div>
+
+<div class="padding16 b-b m-b10 back_fff">
+  <h3 class="height3 fonNormal fon900 col_333 b-b">装货信息</h3>
+  <ul class="clearfix p_T10 p_b10">
+    <li class="detail_li1 pull-left">皮重：{{data?.sendTare.toFixed(2)}}/{{data?.goodsUnit}}</li>
+     <li class="detail_li1 pull-left">毛重: {{data?.sendRough.toFixed(2)}}/{{data?.goodsUnit}}</li>
+    <li class="detail_li1 pull-left">净重：{{data?.sendNet.toFixed(2)}}/{{data?.goodsUnit}}</li>
+  </ul>
+</div>
+
+<div class="padding16 b-b m-b10 back_fff">
+  <h3 class="height3 fonNormal fon900 col_333 b-b">卸货信息</h3>
+  
+  <ul class="input_ul clearfix">
+    <li class="pull-left">皮重：<input type="text" ngModel name="pizhong" required (keyup)="onKey1(values=myForm.value.pizhong)" />&nbsp;吨&nbsp;</li>
+    <li class="pull-left">&nbsp;毛重：<input type="text" ngModel name="maozhong" required (keyup)="onKey2(values2=myForm.value.maozhong)" />&nbsp;吨</li>
+    <li class="pull-left">净重：<input type="text" [(ngModel)]="jingzhong" readonly="readonly" name="jingzhong" required value="{{jingzhong}}"/>&nbsp;吨&nbsp;</li>
+    <li class="pull-left">&nbsp;运费：<input type="text" [(ngModel)]="price" readonly="readonly" required name="yunfei" value="{{price}}" />&nbsp;元</li>
+    <label (click)="DeductMoney()">扣款：
+        <b style="color: #0a01ff;" *ngIf="deductionsList.length==0" >添加</b>
+        <b style="color: #0a01ff;" *ngIf="deductionsList.length>0">修改</b>
+    </label><br/>
+  </ul>
+    <!--显示扣款明细-->
+  <ul class="input_ul clearfix" *ngIf="deductionsList.length>0">
+    <li class="pull-left" *ngIf="myForm.value.order>0">数量不符：{{myForm.value.order}}元</li>
+    <li class="pull-left"  *ngIf="myForm.value.goodsBad>0">货物损坏：{{myForm.value.goodsBad}}元</li>
+    <li class="pull-left" *ngIf="myForm.value.timeout>0">运货延期：{{myForm.value.timeout}}元</li>
+    <li class="pull-left" *ngIf="myForm.value.QS>0">参数不达标：{{myForm.value.QS}}元</li>
+  </ul>
+  <div *ngIf="myForm.value.spk!=''">扣款说明:{{myForm.value.spk}}</div>
+  <div class="padding16 back_fff b-b" >
+    <h3 class="fonNormal col_333 fon900 height3" >添加照片（选填）</h3>
+    <div class="addImg p_b10 p_T10 fonSml m-b10">
+      <label class="imgs" id="upload" for="file"><img src="../../../assets/images/Camera.png" alt="" class="camera" />最多可添加6张照片</label>
+        <input type="file" id="file" value="" style="display:none"/></div>     
+  </div>
+
+<div class="remarks">
+        <div class="remarks2">
+        <span *ngFor="let img of imgList; let i = index" [ngStyle]="{'background-image':'url(' + img + ')'}" (click)="removeImage(i)" >X</span>
+        </div>
+</div>
+
+<div class="padding16 back_fff b-b" >
+    <div  class="zhuangche_sure text_center bgc_ea5529 fff fonSml" (click)="ReceivedSuccess(myForm.value)">确认</div>
+
+      <div class="text_center" *ngIf="data?.status!=220" (click)="ExceptionHanding()">异常协商处理</div>
+</div>
+ </div>
+</div>
+<div class="money" style="display:none">
+<div class="padding16 b-b m-b10 back_fff">
+  <ul class="clearfix input_ul1 b-b" >
+    <!--name="phone" [(ngModel)]="user.mobile" #phone="ngModel"-->
+    <li class="">数量不符：&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" required class="receiving"  [(ngModel)]="myorder" #order="ngModel" name="order"/>元</li>
+    <li class="">货物损坏：&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" required class="receiving"  [(ngModel)]="mygoodsBad" #goodsBad="ngModel" name="goodsBad"/>元</li>
+    <li class="">运货延期：&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" required class="receiving" [(ngModel)]="mytimeout" #timeout="ngModel" name="timeout"/>元</li>
+    <li class="">参数不达标：&nbsp;<input type="text" required class="receiving"   [(ngModel)]="myQS" #QS="ngModel" name="QS"/>元</li>
+  </ul>
+  <h3 class="height3 fonNormal col_333 b-b">扣款说明</h3>
+  <div class="padding16 back_fff m-t10">
+    <textarea  name="spk"  cols="10" rows="4" maxlength="200" ngModel placeholder="最多可以输入200字" ></textarea>
+  </div>
+</div>
+<div class="padding16">
+  <div class="zhuangche_sure text_center bgc_ea5529 fff fonSml" (click)="ReturnPage(myForm.value)" *ngIf="deductionsList.length==0">确认</div>
+  <div class="zhuangche_sure text_center bgc_ea5529 fff fonSml" (click)="Recompose(myForm.value)" *ngIf="deductionsList.length>0">确认</div>
+</div>
+</div>
+</form>
+<!--<div>{{myForm.value | json}}</div>-->

@@ -1,0 +1,74 @@
+.Success{
+  width: 70%;
+  height: 3rem;
+  line-height: 3rem;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.speak {
+  width: 80%;
+  margin-top: 20px;
+  background-color: #cccccc;
+}
+.cancel_li{
+    border: 1px solid #000;
+    border-radius: 5px;
+    width: 25%;
+    display: inline-block;
+    margin-bottom: 10px;
+    height: 2rem;
+    line-height: 2rem;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #333333;
+    padding:0;
+}
+.special {
+    border: 1px solid #ea5529;
+    color: #ea5529;
+}
+.special1 {
+    border: 1px solid #ea5529;
+    color: #ea5529;
+}
+
+.box3_top img{
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+    margin-left: 30px;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+.box3_top {
+    color: #000000;
+    font-weight: 800;
+}
+.box3_top .button{
+    vertical-align: middle;
+    width: 25%;
+    height: 1.5rem;
+    background: url("/assets/images/yi.png")no-repeat;
+    background-size: 5rem;
+    border-radius: 20px;
+    color: #ffffff;
+    margin-left: 10px;
+    display: inline-block;
+}
+a, button, input {
+    -webkit-user-modify: read-only;
+}
+#segmentedControl{
+    background-color: #fff;
+    width: 40%;
+    margin: 0 auto;
+}
+#good{
+    text-align: center;
+    border-right: 2px solid #cccccc;
+}
+#bad{
+    text-align: center;
+}

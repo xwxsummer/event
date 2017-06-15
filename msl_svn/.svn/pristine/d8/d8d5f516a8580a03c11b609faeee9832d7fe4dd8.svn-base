@@ -1,0 +1,46 @@
+
+<div class="padding16 b-b m-b10 back_fff">
+  <h3 class="height3 fonNormal col_333 b-b">装货信息</h3>
+  <ul class="clearfix p_T10 p_b10">
+    <li class="detail_li pull-left">皮重： {{data?.sendTare}}{{data?.goodsUnit }}</li>
+     <li class="detail_li pull-left">毛重： {{data?.sendRough}}{{data?.goodsUnit }}</li>
+    <li class="detail_li">净重： {{data?.sendNet}}{{data?.goodsUnit }}</li>
+    <li>装货时间： {{data?.loadTime}}</li>
+  </ul>
+</div>
+
+  <form #myForm = "ngForm">
+      <!--<div class="padding16 b-b m-b10 back_fff">
+          <h3 class="height3 fonNormal col_333 b-b">收货信息</h3>
+    <ul class="p_T10 p_b10 clearfix">
+      <li class=" detail_li pull-left">皮重：{{data?.sendTare}}/{{data?.goodsUnit }}</li>
+      <li class="detail_li pull-left">&nbsp;毛重：{{data?.sendTare}}/{{data?.goodsUnit }}</li>
+      <li class="detail_li pull-left">净重：{{data?.sendTare}}/{{data?.goodsUnit }}</li>
+      <li class="detail_li">到达时间： {{data?.loadTime}}</li>
+    </ul>
+    </div>-->
+    <div class="padding16 b-b m-b10 back_fff">
+     <h3 class="height3 fonNormal col_333">异常原因</h3>
+    <textarea  name="speaks" ngModel cols="10" rows="5" placeholder="最长可以输入200字" maxlength="200" style="    color: #333;background-color:#ebebeb; border-radius:.5rem"></textarea>
+     <div></div>
+     </div>
+<div class="padding16 back_fff b-b" >
+    <h3 class="fonNormal col_333 height3" >添加照片（选填）</h3>
+    <div class="addImg p_b10 p_T10 fonSml m-b10"  style="background-color:#ebebeb;border-radius:.5rem;color: #333;">
+       
+        <label class="imgs" id="upload" for="file"><img src="../../../assets/images/Camera.png" alt="" class="camera" />最多可添加6张照片</label>
+        <input type="file" id="file"  style="display:none"/>
+    </div>     
+</div>
+<div class="remarks">
+        <div class="remarks2">
+        <span *ngFor="let img of imgList; let i = index" [ngStyle]="{'background-image':'url(' + img + ')'}" (click)="removeImage(i)" >X</span>
+    </div>
+</div>
+    <div  class="sure text_center bgc_ea5529 fff fonSml" (click)="ReceivedSuccess(myForm.value)">提交申请</div>
+      <div class="text_center">联系客服</div>
+ </form>
+<!--<div>{{myForm.value | json}}</div>-->
+<!--<p>{{values2-values}}</p>-->
+
+

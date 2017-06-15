@@ -1,0 +1,186 @@
+/**
+ * by于婷
+ *
+ * ******/
+
+import { Component,OnInit } from '@angular/core';
+import { RouterModule,ActivatedRoute, Router } from '@angular/router';
+import { authInfoDTO } from '../../../register/certification/fragment/authInfoDTO';//注册 认证
+//http
+import { personalCenterService } from  '../../personalCenter.service';
+import { Title } from '@angular/platform-browser';
+import { upLoadImg } from "../../../fragment/upDataImg";//上传图片
+//验证
+import { ValidateMessage } from '../../../fragment/validateMessage';
+declare var $: any;
+declare var mui: any;
+@Component({
+  selector: 'app-updateAuthMessage',
+  templateUrl: '../../../register/certification/companyCertification.component.html',
+  styleUrls: ['../../../register/certification/companyCertification.component.css'],
+  providers:[ personalCenterService ]
+
+
+})
+
+export class UpdateAuthMessage implements OnInit{
+  public certifi:string;//判断从哪个界面跳过来
+  public changePositiveImg;//正面照../assets/images/bac_certification.png
+  public changeReverseImg;//反面照../assets/images/bac_certification.png
+  public changeHandImg;//手拿../assets/images/bac_certification.png
+  public changeBusinessImg;//营业照../assets/images/bac_certification.png
+  public authInfoDTO;//../assets/images/bac_certification.png
+  public positiveImgList: any[] = [];//正面照
+  public reverseImgList: any[] = [];//反面照
+  public handImgList: any[] = [];//手持身份
+  public businessImgList: any[] = [];//营业照
+  public upLoadImg: upLoadImg;
+  public ValidateMessage;//验证验证码
+  public submitlag:boolean;//验证验证码
+  constructor(
+    public router: Router,
+    public titleService: Title,
+    public routeInfo:ActivatedRoute,//页面间传值
+    public service : personalCenterService
+  ){
+    this.authInfoDTO = new authInfoDTO();
+    this.upLoadImg = new upLoadImg(this.service);
+    this.ValidateMessage = new ValidateMessage();
+  }
+
+  ngOnInit(): void{
+    this.titleService.setTitle('查看认证信息');
+    this.submitlag=false;
+    this.certifi=this.routeInfo.snapshot.queryParams["certifi"];
+    //this.certifi==1 认证    this.certifi==2 个人信息
+    mui('.mui-scroll-wrapper').scroll({
+      deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+    });
+    if(this.certifi=="2"){//this.certifi==1 个人信息
+      this.service.getAuthMessage()
+        .subscribe(
+          data => {
+          if(data.code==0){   //请求成功
+            this.authInfoDTO=data.data;
+            console.log(data.data);
+            this.changePositiveImg=data.data.domain+data.data.cardFrontImg;//正面照
+            this.changeReverseImg=data.data.domain+data.data.cardBackImg;//反面照
+            this.changeHandImg=data.data.domain+data.data.faceCardImg;//手拿照
+            if(this.authInfoDTO.businessImg){
+              this.changeBusinessImg=data.data.domain+data.data.businessImg;//营业照
+            }else{
+              this.changeBusinessImg="../assets/images/bac_certification.png";
+            }
+            if(this.authInfoDTO.type==1){//个人
+              $("#changePositive").hide();//正面照
+              $("#changeReverse").hide();//反面照
+              $("#changeHand").hide();//手拿照
+              $("#businessPhoto").hide();//营业照
+              $("#bindFinish").hide();//提交
+              $('#personalName').attr("disabled",true);//姓名不可以编辑
+              $('#cardNo').attr("disabled",true);//姓名不可以编辑
+             }
+          }
+        }
+      );
+    }
+    this.upLoadImg.UpLoadImg("positiveFile","#positiveUpload",this.positiveImgList,"cardFrontImg");
+    this.upLoadImg.UpLoadImg("reverseFile","#reverseUpload",this.reverseImgList,"cardBackImg");
+    this.upLoadImg.UpLoadImg("handFile","#handUpload",this.handImgList,"faceCardImg");
+    this.upLoadImg.UpLoadImg("businessFile","#businessUpload",this.businessImgList,"businessImg");
+
+
+  }
+  //打电话
+  call(){
+    window.open('tel:10086');
+  }
+  //点击值为空
+  ValueNone(info){
+    if(this.authInfoDTO.type==1){
+
+    }else{
+      this.authInfoDTO[info]="";
+    }
+  }
+  //发送请求
+  resubmitFrom(){
+    this.service.updateAuthMessage(this.authInfoDTO)
+        .subscribe(
+            data => {
+          if(data.code==0){
+            this.router.navigateByUrl("certification/checking?checking=2");//跳到审核界面
+          }else{
+            mui.toast(data.msg,{ duration:'short', type:'div' });
+
+          }
+        }
+    );
+  }
+  //身份认证
+  photoStory(){
+    //验证正面照
+    if(sessionStorage["cardFrontImg"]){
+      this.authInfoDTO.cardFrontImg=sessionStorage["cardFrontImg"];
+    }
+    //验证反面照
+    if(sessionStorage["cardBackImg"]){
+      this.authInfoDTO.cardBackImg=sessionStorage["cardBackImg"];
+    }
+    //验证手持身份证照
+    if(sessionStorage["faceCardImg"]){
+      this.authInfoDTO.faceCardImg=sessionStorage["faceCardImg"];
+    }
+
+  }
+  submitForm():void {
+    //跳到审核页面
+    if(this.authInfoDTO.type==2){
+      if(this.ValidateMessage.validateName(this.authInfoDTO.name)==1){//验证姓名
+        if(!this.authInfoDTO.title){//公司职位
+          mui.toast("请输入公司职位",{ duration:'short', type:'div' });
+          return;
+        }
+        //身份证号
+        if(this.ValidateMessage.validateCardNo(this.authInfoDTO.cardNo)==1){
+          //请输入公司统一社会信用代码
+          if(this.ValidateMessage.creditCode(this.authInfoDTO.groupCode)==1){
+            if(!this.authInfoDTO.company){//请输入公司名称
+              mui.toast("请输入公司名称",{ duration:'short', type:'div' });
+              return
+            }
+            if(!this.authInfoDTO.company){//请输入公司地址
+              mui.toast("请输入公司地址",{ duration:'short', type:'div' });
+              return
+            }
+            this.photoStory();
+            //验证营业照
+            if(sessionStorage["businessImg"]){
+              this.authInfoDTO.businessImg=sessionStorage["businessImg"];
+            }
+            this.submitlag=true;
+            this.service.updateAuthMessage(this.authInfoDTO)
+                .subscribe(
+                    data => {
+                      this.submitlag=false;
+                  if(data.code==0){
+                    this.router.navigateByUrl("certification/checking?checking=1");//跳到审核界面
+                  }else if(data.code==4132){
+                    this.router.navigateByUrl("certification/checking?checking=1");//跳到审核界面
+                  }else{
+                    mui.toast(data.msg,{ duration:'short', type:'div' });
+                  }
+                }
+            );
+          }
+        }
+      }
+    }
+    //跳到审核页面
+    this.service.updateAuthMessage(this.authInfoDTO);
+
+  }
+
+
+
+}

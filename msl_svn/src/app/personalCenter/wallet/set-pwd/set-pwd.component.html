@@ -1,0 +1,17 @@
+<div class="input_org back_fff posi_relative">
+    <label class="col_333">新密码</label>&nbsp;&nbsp;&nbsp;
+    <input name="pwd" maxlength="6" type="{{imgWatch_setPwd.ImgType}}" placeholder="请输入6位数字交易密码" [(ngModel)]="setPwd" #pwd="ngModel"/>
+    <span class="mui-icon mui-icon-closeempty posi_abslotu transformY50 pos_right0 pos_right1r posi_right27" *ngIf="setPwd" (click)="ValueNone('setPwd')"></span>
+    <img src="{{imgWatch_setPwd.imgSrc}}" alt="" class="posi_abslotu posi_right transformY50" style="width: 24px;" (click)="changeImg('imgWatch_setPwd')"/>
+</div>
+<div class="input_org back_fff posi_relative">
+    <label class="col_333">确认密码</label>
+    <input name="pwd2" maxlength="6" type="{{imgWatch_secondPwd.ImgType}}" placeholder="确认密码" [(ngModel)]="secondPwd" #pwd2="ngModel"/>
+    <span class="mui-icon mui-icon-closeempty posi_abslotu transformY50 pos_right0 pos_right1r posi_right27" *ngIf="secondPwd" (click)="ValueNone('secondPwd')"></span>
+    <img src="{{imgWatch_secondPwd.imgSrc}}" alt="" class="posi_abslotu posi_right transformY50" style="width: 24px;" (click)="changeImg('imgWatch_secondPwd')"/>
+
+</div>
+
+<div style="width: 80%;" class="m0_auto m-t3">
+    <input type="submit" class="bindFinish text_center fff fonSml fon900 height_3" style="width: 100%;padding-left:0px;" value="保&nbsp;&nbsp;&nbsp;存" [disabled]="submitlag" (click)="submit()"/>
+</div>

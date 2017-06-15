@@ -1,0 +1,76 @@
+import { Component,OnInit } from '@angular/core';
+import { RouterModule,ActivatedRoute, Router } from '@angular/router';
+import { saoyisaoService } from '../saoyisao.service';
+declare var mui: any;
+
+@Component({
+  selector: 'app-zhuangcheSuccess',
+  templateUrl: './zhuangcheSuccess.component.html',
+  styleUrls: ['./zhuangcheSuccess.component.css']
+
+})
+
+export class ZhuangcheSuccess implements OnInit{
+  market_title="我的货源";
+  public type: any =0;
+  public timer;
+  public data;
+  constructor(
+    public router: Router,
+    public activatedRoute: ActivatedRoute,
+    public service: saoyisaoService
+  ){
+
+  }
+  ngOnInit(): void{
+      // let myspan=document.getElementById("myspan");
+      // let timer=10;
+      // let flag;
+      // let thisSelf=this;
+      // function daoji(){
+      //    this.timer=timer;
+      //    timer=timer-1;
+      //    myspan.innerHTML=this.timer;
+      //    function sevrices(){
+      //        thisSelf.service.getStatusByChildNo(this.activatedRoute.snapshot.params['id'])
+      //         .subscribe(
+      //             data => {
+      //           if(data.code==0){
+      //             this.data=data.data;
+      //             if(this.data.data==121){
+      //                 this.router.navigateByUrl("saoYiSao/DetailsInfo/"+this.activatedRoute.snapshot.params['id'] + "?type=0"); 
+      //             }
+      //           }else{
+      //             alert(data.msg)
+      //           }
+      //         }
+      //       );
+      //    }
+      //    if(this.timer==9){
+      //       this.sevices()
+      //    }
+      //    if(this.timer==6){
+      //       this.sevices()
+      //    }
+      //    if(this.timer==3){
+      //       this.sevices()
+      //    }
+      //      if(this.timer==0){
+      //        mui.alert("支付失败")
+      //        clearInterval(flag);  
+      // }
+      // }
+      // flag=setInterval(daoji,1000);
+  }
+  装车成功
+  DetailsInfo() {
+    console.log(this.activatedRoute.snapshot.params['id'])
+    
+    this.router.navigateByUrl("saoYiSao/DetailsInfo/"+this.activatedRoute.snapshot.params['id'] + "?type=" + this.type);
+  }
+
+
+
+
+
+}
