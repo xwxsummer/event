@@ -1,0 +1,80 @@
+<div class="height36 b-b back_fff w100 posi_relative m-b5">
+    <img src="../assets/images/goback.png" class="goback posi_abslotu posi_left transformY50" (click)="goBack()" alt=""/>
+    <img src="../assets/images/home.png" class="home posi_abslotu posi_right transformY50" (click)="goHome()" alt=""/>
+</div>
+
+<div class="myGoods_content back_fff m-b10 b-b">
+    <div class="height3 fonNormal col_333  pL_10 b-b">货物详情</div>
+        <div class="m-t10"></div>
+        <div class="pR_10 pL_10 m-b10 mgGoodsList">
+            <div>出发地：{{data?.sendProvince}}</div>
+            <div>目的地：{{data?.receiveProvince}}</div>
+            <div>货物名称：{{data?.goodsName}}</div>
+            <div>货物数量：{{data?.goodsAmount.toFixed(2)}}/{{data?.goodsUnit}}</div>
+            <div>运费单价：{{data?.freightPrice.toFixed(2)}}元/吨</div>
+            <div>到达货源地时间：{{data?.arriveTime}}</div>
+            <div>装货时间：{{data?.loadTime}}</div>
+            <div>卸货时间：{{data?.unloadTime}}</div>
+        </div>
+</div>
+<!--*ngIf="data?.ownerId==userId"-->
+<div >
+<div class="receipt padding16 back_fff b-t b-b">
+    <div class="height3 fonNormal col_333 b-b pL_10">运费明细</div>
+    <div class="re_b  pL_10 pR_10">
+        <div class="re_r"> 
+            <nav>货物运费：<span style="float:right">-{{freight.toFixed(2)}}元</span></nav>
+            <nav>担保金额：<span style="float:right">-{{data?.insuranceFee.toFixed(2)}}元</span></nav>
+        </div>
+    </div>
+</div>
+
+<div class="goodsDetail b-b back_fff padding16 b-t m-t10 p_T10 p_b10" *ngIf="data?.orderChildCompensationVO.orderChildCompensationItemList.length!=0">
+    <div class="height3 fonNormal col_333 b-b pL_10  m-b10">扣费明细</div>
+    <!--新添加的一段代码-->
+     <!--<ul class="fon85 pL_10 pR_10">
+        <li *ngFor="let item of objItem, let i=index">
+            <nav>{{item[i].name}}：
+            <span style="float:right">{{item[i].value.toFixed(2)}}元</span>
+            </nav>
+        </li>
+     </ul>-->
+    <ul class="fon85 pL_10 pR_10">
+        <li *ngIf="data?.orderChildCompensationVO.orderChildCompensationItemList.length!=0">
+            <nav>{{data?.orderChildCompensationVO.orderChildCompensationItemList[0].name}}
+            <span style="float:right">{{data?.orderChildCompensationVO.orderChildCompensationItemList[0].value.toFixed(2)}}元</span>
+            </nav>
+        </li>
+         <li *ngIf="data?.orderChildCompensationVO.orderChildCompensationItemList.length>1">
+            <nav>{{data?.orderChildCompensationVO.orderChildCompensationItemList[1].name}}
+            <span style="float:right">{{data?.orderChildCompensationVO.orderChildCompensationItemList[1].value.toFixed(2)}}元</span>
+            </nav>
+        </li>
+         <li *ngIf="data?.orderChildCompensationVO.orderChildCompensationItemList.length>2">
+            <nav>{{data?.orderChildCompensationVO.orderChildCompensationItemList[2].name}}
+            <span style="float:right">{{data?.orderChildCompensationVO.orderChildCompensationItemList[2].value.toFixed(2)}}元</span>
+            </nav>
+        </li>
+         <li *ngIf="data?.orderChildCompensationVO.orderChildCompensationItemList.length>3">
+            <nav>{{data?.orderChildCompensationVO.orderChildCompensationItemList[3].name}}
+            <span style="float:right">{{data?.orderChildCompensationVO.orderChildCompensationItemList[3].value.toFixed(2)}}元</span>
+            </nav>
+        </li>
+        <li *ngIf="data?.orderChildCompensationVO.compensationRemark!=null">扣款说明：{{data?.orderChildCompensationVO.compensationRemark }}</li>
+    </ul>
+    <div>
+    </div>   
+ </div>
+
+ <div class="padding16 back_fff b-b m-t10 m-b10" *ngIf="imgListNew[0]">
+  <div class="height3 fonNormal col_333 pL_10 m-b10 b-b">图片详情</div>
+  <div class="m-t20 m-b20">
+    <img src="{{img}}" *ngFor="let img of imgListNew " class="refuseImg"/>
+  </div>
+</div>
+
+<div class=" b-b back_fff padding16 b-t m-t10 p_T10 p_b10">
+    <div class=" fonSml col_333 text_center pL_10">已支付:<span class="ea5529 fon900">{{payment.toFixed(2)}}</span>元</div>
+<div >
+
+</div>

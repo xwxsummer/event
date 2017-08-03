@@ -1,0 +1,222 @@
+<div class="wrap">
+    <div (click)="pushCard()" class="pushCard" id="addCard">
+        添加新卡
+    </div>
+    <div class="card_list">
+        <div class="ForList" *ngFor="let data of datas">
+           <!-- {{data.bankCode}} -->
+           {{data.bank}}&nbsp;&nbsp;&nbsp;({{data.cardNo}})&nbsp;&nbsp;&nbsp;{{data.type==10?"借记卡":"信用卡"}}&nbsp;&nbsp;&nbsp;单笔限额：{{data.singleMax}}元&nbsp;&nbsp;&nbsp;每日限额：{{data.dayMax}}元&nbsp;&nbsp;&nbsp;{{data.faster==1?"已开通快捷支付":"未开通快捷支付"}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="removeBinding" (click)="removeBinding(data.id)">解除绑定</a>
+        </div>
+        
+    </div>
+</div>
+
+<!-- 弹框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+      <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">
+					&times;
+				</button>
+				<strong class="modal-title" id="myModalLabel">
+					合作银行/机构&nbsp;&nbsp;&nbsp;借记卡
+				</strong>
+			</div>
+			<div class="modal-body" style="background-color:#ebebeb;padding-left:20px;height:300px;overflow:scroll">
+        <!-- 第一步：银行卡的查看 -->
+        <div class="card">
+          <div class="brImg">
+            <input type="radio" name="1" value="104">
+            <img src="../../../../assets/images/img (24).jpg">
+            <input type="radio" name="1" value="105">
+            <img src="../../../../assets/images/img (23).jpg">
+            <input type="radio" name="1" value="103">
+            <img src="../../../../assets/images/img (22).jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="102">
+            <img src="../../../../assets/images/img (21).jpg">
+            <input type="radio" name="1" value="100">
+            <img src="../../../../assets/images/img (20).jpg">
+            <input type="radio" name="1" value="447">
+            <img src="../../../../assets/images/img (19).jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="440">
+            <img src="../../../../assets/images/img (18).jpg">
+            <input type="radio" name="1" value="434">
+            <img src="../../../../assets/images/img (17).jpg">
+            <input type="radio" name="1" value="424">
+            <img src="../../../../assets/images/img (16).jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="422">
+            <img src="../../../../assets/images/img (15).jpg">
+            <input type="radio" name="1" value="408">
+            <img src="../../../../assets/images/img (14).jpg">
+            <input type="radio" name="1" value="403">
+            <img src="../../../../assets/images/img (13).jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="401">
+            <img src="../../../../assets/images/img (12).jpg">
+            <input type="radio" name="1" value="310">
+            <img src="../../../../assets/images/img (11).jpg">
+            <input type="radio" name="1" value="309">
+            <img src="../../../../assets/images/img (10).jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="308">
+            <img src="../../../../assets/images/img (9).jpg">
+            <input type="radio" name="1" value="307">
+            <img src="../../../../assets/images/img (8).jpg">
+            <input type="radio" name="1" value="305">
+            <img src="../../../../assets/images/img (7).jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="304">
+            <img src="../../../../assets/images/img (6).jpg">
+            <input type="radio" name="1" value="303">
+            <img src="../../../../assets/images/img (5).jpg">
+            <input type="radio" name="1" value="302">
+            <img src="../../../../assets/images/img (4).jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="450">
+            <img src="../../../../assets/images/img (4).png">
+            <input type="radio" name="1" value="316">
+            <img src="../../../../assets/images/img (2).png">
+            <input type="radio" name="1" value="423">
+            <img src="../../../../assets/images/img (3).png">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="306">
+            <img src="../../../../assets/images/img (1).png">
+          </div>
+        </div>
+        <!-- 第二步：选择账户类型 -->
+        <div class="accountType" style="display:none">
+            <div style="padding-left:40px;width:400px;border:2px solid #ccc;
+              background-color:#ebebeb;height:60px;line-height:60px;">
+              <img src="">&nbsp;&nbsp;&nbsp;&nbsp;中国建设银行&nbsp;&nbsp;&nbsp;&nbsp;
+              储蓄卡尾号（2934）&nbsp;&nbsp;&nbsp;&nbsp;<a>更换</a>
+            </div><hr>
+            <div>
+              选择账户类型:
+            </div><hr>
+            <div>
+              <input type="radio" value="11" name="2" (click)="personAccount()">个人账户
+            </div><hr>
+            <div>
+              <input type="radio" value="12" name="2" (click)="firmAccount()">企业账户 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>不可以绑定快捷支付方式</span>
+            </div><hr>
+        </div>
+        <!-- 第三1步企业账户绑定卡 -->
+        <div class="firmAccount" style="display:none">
+            <div class="inputDiv">
+               <span class="e85529">*</span>持卡人&nbsp;<input type="text"  name="name"  readonly="readonly" value="企业人">
+            </div>
+            <div class="inputDiv">
+               <span class="e85529">*</span>银行卡号|&nbsp;<input type="text" name="cardNo">
+            </div>
+            <div class="inputDiv">
+               <span class="e85529">*</span>开户行名称|&nbsp;<input type="text" name="bank">
+            </div>
+            <div>
+                <button class="personButton"  (click)="confirmAccount()">确认</button>
+            </div>
+        </div>
+        <!-- 第三2步个人账户绑定卡 -->
+        <div class="back" style="display:none;margin-left:20%">
+            <div class="inputDiv">
+               <span class="e85529">*</span>持卡人&nbsp;<input type="text" readonly="readonly" name="name1" value="夏光辉">
+            </div>
+            <div class="inputDiv">
+               <span class="e85529">*</span>银行卡号|&nbsp;<input type="text" name="cardNo1">
+            </div>
+            <div class="inputDiv">
+               <span class="e85529">*</span>开户行名称|&nbsp;<input type="text" name="bank1">
+            </div>
+            <div class="inputDiv">
+               <span class="e85529">*</span>银行预留手机号|&nbsp;<input type="text" name="mobile">
+            </div>
+            <div class="inputDiv">
+               <span class="e85529">*</span>开户证件类型|&nbsp;
+               <select id="IdentificationType" name="idType" >
+              <option value="0">身份证</option>
+              <option value="1">户口薄</option>
+              <option value="2">护照</option>
+              <option value="3">军官证</option>
+              <option value="4">士兵证</option>
+              <option value="5">港澳居民来往内地通行证</option>
+              <option value="6">台湾同胞来往内地通行证</option>
+              <option value="7">临时身份证</option>
+              <option value="8">外国人居留证</option>
+              <option value="9">警官证</option>
+              <option value="X">其他证件</option>
+            </select>
+            </div>
+            <div class="inputDiv">
+               <span class="e85529">*</span>开户证件号|&nbsp;<input type="text" name="idNo">
+            </div>
+            <div>
+               <span class="e85529"><input type="checkbox" id="faster" name="faster"></span>绑定快捷支付方式
+            </div>
+            <div>
+                <button class="personButton" (click)="confirm()">
+                    确认
+                </button>
+            </div>
+        </div>
+        <!-- 第四步个人账户绑定卡获取手机验证码 -->
+        <div class="verCode" style="display:none">
+            <div>请输入{{personMobile}}收到的验证码</div>
+            <div>
+              <span class="e85529">*</span>验证码<input type="text" placeholder="请输入验证码" name="validation">
+            </div>
+            <div>
+              <button>未收到验证码</button>&nbsp;
+              <button (click)="binding()">确认绑定</button>
+            </div>
+        </div>
+        <!-- 第五步绑定成功 -->
+        <div class="bindingSuccess" style="display:none">
+            <h1>绑定成功</h1>
+            <button (click)="bindingSuccess()" *ngIf="isNum==1">继续充值</button>
+            <button (click)="complete()" *ngIf="isNum==0">完成</button>
+        </div>
+      </div>
+	    <div class="modal-footer">
+        <button type="button" class="btn btn-primary next1" (click)="next1()">下一步</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">关闭</button>
+		  </div>
+		</div>
+  </div>
+</div>
+
+
+<!-- 弹框 -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+      <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">
+					&times;
+				</button>
+			</div>
+	  <div class="modal-body" style="background-color:#ebebeb;padding-left:20px;height:300px;overflow:scroll">
+        <div>马上来钱包支付密码</div>
+        <div><input type="text" name="pwd"><a>忘记密码？</a></div>
+        <div>请输入六位数字密码</div>
+        <div style="color:red">密码输入有误，请重新输入</div>
+      </div>
+	    <div class="modal-footer">
+            <button type="button" class="btn btn-default"  (click)="remove()">确认解绑
+            </button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">取消
+            </button>
+		</div>
+		</div>
+    </div>
+</div>

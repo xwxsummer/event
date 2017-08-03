@@ -1,0 +1,87 @@
+
+.right-top {
+  height: 90px;
+  border-bottom: 1px solid #cccccc;
+  line-height: 90px;
+}
+
+.right-top span {
+  display: block;
+  width: 14%;
+  height: 3rem;
+  float: left;
+  color: #ffffff;
+  text-align: center;
+  line-height: 3rem;
+  position: absolute;
+  top: 2.5rem;
+}
+
+.right-top span:nth-child(1) {
+  background: url('../../../../assets/images/a2.png') no-repeat;
+  background-size: 14rem;
+  color: #999;
+  left: 2.2rem;
+}
+
+.right-top span:nth-child(2) {
+    background: url('../../../../assets/images/a2.png') no-repeat;
+    background-size: 14rem;
+    color: #999;
+    left: 20.2rem;
+}
+
+.right-top span:nth-child(3) {
+    background: url('../../../../assets/images/a2.png') no-repeat;
+    background-size: 14rem;
+    color: #999;
+    left: 38rem;
+}
+
+.right-top span:nth-child(4) {
+    background: url('../../../../assets/images/a2.png') no-repeat;
+    background-size: 14rem;
+    color: #999;
+    left: 56rem;
+}
+.right-top span:nth-child(5) {
+    background: url('../../../../assets/images/a2.png') no-repeat;
+    background-size: 14rem;
+    color: #999;
+    left: 74rem;
+}
+.right-top span:nth-child(6) {
+    background: url('../../../../assets/images/a2.png') no-repeat;
+    background-size: 12rem;
+    color: #999;
+    left: 92rem;
+}
+.right-bottom {
+    width: 98%;
+    float: left;
+    height: 84%;
+    border: 1px solid #cccccc;
+    margin: 15px 0 10px 10px;
+    overflow-y: scroll;
+}
+.littleTittle{
+    margin-left:1%;
+    margin-top:10px;
+    margin-bottom:10px;
+    padding-left:1%;
+    font-size:18px;
+    border-left:2px solid #e85529;
+}
+
+.refuse div{
+    margin-top:1%;
+}
+.refuse div img{
+    width:10%;
+    height: 10%;
+    border:4px solid #e2e8ec;
+    margin-right: 3%;
+}
+.layui-table{
+    width:98%;margin-left:1%
+}

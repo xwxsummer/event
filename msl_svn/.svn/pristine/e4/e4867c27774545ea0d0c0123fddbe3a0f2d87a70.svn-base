@@ -1,0 +1,30 @@
+import { Component, OnInit } from '@angular/core';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+declare var mui: any;
+
+
+@Component({
+  selector: 'app-bank',
+  templateUrl: './bank.component.html',
+  styleUrls: ['./bank.component.css']
+
+})
+
+
+export class Bank implements OnInit {
+
+  public recharge:any;
+  public today: number = Date.now();
+  constructor(public router: Router) {
+
+  }
+
+  ngOnInit(): void {
+
+    this.recharge=sessionStorage.get('recharge')
+    console.log(this.recharge,this.recharge.bank)
+  }
+  bank() {
+    this.router.navigateByUrl("personalCenter/Wallet");
+  }
+}

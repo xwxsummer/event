@@ -1,0 +1,59 @@
+.padding16{
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  
+}
+.pel {
+  color: #333333;
+}
+.tel {
+  float: right;
+}
+.height3{
+  height: 2.5rem;
+  line-height: 2.5rem;
+}
+.detail_li{
+  width: 50%;
+
+}
+.button_refuse{
+  float: left;
+  width: 25%;
+  height: 2rem;
+  background: #ea5529;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 2rem;
+  color: #fff;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  border:none;
+}
+.left{
+  margin-left: 20%;
+}
+.right{
+  margin-left:10%;
+}
+.infos{
+  margin-top: 10px;
+}
+.button_refuse{
+  width: 80%;
+  height: 2rem;
+  background: #ea5529;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 2rem;
+  color: #fff;
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-bottom: 5%;
+}
+.huo {
+  margin-bottom: 10px;
+}
+input:disabled {
+  background-color: #fff;
+}

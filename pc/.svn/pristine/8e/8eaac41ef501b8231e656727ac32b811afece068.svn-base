@@ -1,0 +1,233 @@
+import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { MyGoodsService } from "app/content/my-goods/my-goods.service";
+import { ActivatedRoute, Params, Router } from "@angular/router";
+declare var layui:any;
+declare var layer:any;
+declare var $:any;
+
+@Component({
+  selector: 'app-invoice-details',
+  templateUrl: './invoice-details.component.html',
+  styleUrls: ['./invoice-details.component.css']
+})
+export class InvoiceDetailsComponent implements OnInit {
+  public datas;
+  public dbState:string;
+  public pageSize:number=5;//每页显示的条数
+  public pageNum:number;//当前第几页
+  public totalNum:number=0;//记录总条数
+  public totalPage:number;//总页数
+  public tzpageNum:number=1;//点击要跳转的页
+  public childStatus:number;//状态码
+  public title:string = "接单历史";
+  AdditionalTip = [];//取消原因显示
+  public dataRefuse=[];//取消原因
+  public myMoney;
+  public childNo;
+  public adress;
+  public time1:string;
+  public time2:string;
+  public value={};
+  constructor(
+     private activatedRoute: ActivatedRoute,
+     public service : MyGoodsService,
+     public router:Router
+  ) { }
+  changePageNum(pageChange:number){
+     this.tzpageNum =  pageChange;
+     console.log(this.tzpageNum);
+     this.finds();
+  }
+  //显示取消
+  showBg() { 
+      var bh = $("body").height(); 
+      var bw = $("body").width(); 
+      $("#fullbg").css({ 
+      height:bh, 
+      width:bw, 
+      display:"block" 
+      }); 
+    $("#dialog").show(); 
+      } 
+  //关闭灰色 jQuery 遮罩 
+  closeBg() { 
+      $("#fullbg,#dialog").hide(); 
+    } 
+  //取消原因清空
+  clearResult(){
+    for(let s=0;s<this.AdditionalTip.length;s++){
+      this.AdditionalTip[s]=false;
+    }
+  }
+  //查看详细
+  childView(childNo){
+    this.router.navigateByUrl("content/myGoods/invoiceDetailsInfo/"+childNo)
+  }
+ //轨迹查询
+  map(childNo){
+    this.router.navigateByUrl("content/myGoods/TrajectoryMap/"+childNo)
+  }
+  //获取取消原因
+   yuanyin(){
+    let thisSelf=this;
+    this.service.getSystemLabelByType(2)
+        .subscribe(data=>{
+          if(data.code==0){//成功
+            for(let b=0;b<data.data.length;b++){
+              this.AdditionalTip.push(false);
+            }
+            this.dataRefuse=data.data;
+          }else{
+             alert(data.msg);
+          }
+        });
+   }
+  ngOnInit() { 
+    this.finds();
+    this.yuanyin();
+    }
+   ngOnChanges(changes: SimpleChanges): void {
+    this.ngOnInit();
+  }
+    //查询方法
+  finds(){
+        this.activatedRoute.params.subscribe((params:Params)=>{
+              this.childStatus=params["id"];
+              if(!params["id"]){
+                this.childStatus=107;
+              }
+              if(this.childStatus==104){
+                this.title = "协商中";
+              }
+              if(this.childStatus==105){
+                this.title = "待收货";
+              }
+              if(this.childStatus==106){
+                this.title = "已收货";
+              }
+              if(this.childStatus==107){
+                this.title = "接单历史";
+              } 
+              let details = new Details();
+              details.childStatus=this.childStatus;
+              details.page=this.tzpageNum;
+              console.log(details);
+              
+      this.service.getOrderDetailListByParam(details).subscribe(
+        data =>{
+          if(data.code==0){
+             this.datas = data.data;
+             this.totalNum=data.total;//记录总条数
+             this.pageNum=data.pageNum;//当前处在的页数
+             for(var i=0;i<data.data.length;i++){
+             this.adress=data.data[i].receiveCity+data.data[i].receiveAddress;
+             this.adress=this.adress.substr(0,10)+"...";
+             }
+          }else{
+            alert(data.msg)
+              }
+            }
+          )
+        }); 
+      }
+  //点击描述
+  AdditionalTip_click(info){
+        switch(this.AdditionalTip[info]){
+          case true:
+            this.AdditionalTip[info] = false;
+            break;
+          case false:
+           //如果被激活的大于1个不操作
+        if( this.AdditionalTip.filter(i=>i === true).length >= 1 )break;
+            this.AdditionalTip[info]=true;  
+        }
+    }
+  childCancel(childNo){
+    this.childNo=childNo;
+     //《货主端》根据子单编号获取取消子订单的赔偿金
+    this.service.compensationOwnerCancel(childNo)
+        .subscribe(
+            data => {
+          if(data.code==0){//成功
+            if(data.data.compensationFee==0){
+             this.myMoney=0;
+            }else{
+              this.myMoney=data.data.compensationFee;
+            }
+            this.showBg();
+            }else{
+            alert(data.msg);
+          }
+      });
+  }
+  //确认取消
+   goodsCancle(){
+      let label = Array.from(document.querySelectorAll('.special') as NodeListOf<HTMLElement>).map(i=>i.innerText)
+      console.log(label);
+      if(label){
+       this.service.orderChildOwnerCancel(this.childNo,label)
+          .subscribe(data=>{
+            if(data.code==0){
+              layer.msg("取消成功");
+              this.closeBg();
+              this.router.navigateByUrl("content/myGoods/orderDetails/null");
+            }else{
+              layer.msg(data.msg)
+            }
+          });
+      }else{
+        layer.msg("请选择取消原因");
+      }
+    }
+  //筛选
+    form(value){
+      console.log(value);
+      let details = new Details();
+      details.childStatus=this.childStatus;
+      details.page = 1;
+      details.childNo = value.childNo;
+      details.truckNo = value.truckNo;
+      details.receiveCompany = value.receiveCompany
+      details.sendCity = value.sendCity;
+      details.receiveCity = value.receiveCity;
+      details.startTime =  $("#startTime").val();
+      details.endTime =  $("#endTime").val();
+      details.insurance = value.insurance=="已担保"?1:0;
+      console.log(details);
+      this.service.getOrderDetailListByParam(details).subscribe(
+        data =>{
+          if(data.code==0){
+             console.log(data)
+             this.datas = data.data;
+             this.totalNum=data.total;//记录总条数
+             this.pageNum=data.pageNum;//当前处在的页数
+             for(var i=0;i<data.data.length;i++){
+             this.adress=data.data[i].receiveCity+data.data[i].receiveAddress;
+             this.adress=this.adress.substr(0,12)+"...";
+             }
+          }else{
+            alert(data.msg)
+              }
+            }
+          )
+    }
+  //重置清空
+  clear(){
+    $("input").val("");
+  }
+}
+
+ export  class Details{
+    public childStatus:number;
+    public pageSize:number;
+    public page:number;
+    public receiveId:number;
+    public childNo:number;
+    public truckNo:number;
+    public sendCity;
+    public receiveCity;
+    public receiveCompany;
+    public startTime;
+    public endTime;
+    public insurance;
+  }

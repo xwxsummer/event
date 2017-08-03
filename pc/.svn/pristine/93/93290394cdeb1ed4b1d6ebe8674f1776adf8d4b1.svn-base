@@ -1,0 +1,15 @@
+<div class="outside">
+<div class="bgc_e8  bt bt1" data-container="body" data-toggle="popover" data-placement="left" 
+      data-content="tel:010-12345678">客服电话</div>   
+<div class="bgc_e8  bt bt1" data-container="body" data-toggle="popover" data-placement="left" 
+      data-content="QQ:87654321">QQ咨询</div>
+<div class="bgc_e8  bt bt1" data-container="body" data-toggle="popover" data-placement="left" 
+      data-content="weixin:1234567">关注微信</div>
+ <div class="bgc_e8 bt bt2" data-container="body" data-toggle="popover" data-placement="left" 
+      data-content='请扫描二维码'
+      >
+   下载马上来<br>
+   APP客户端<br>
+   <img src="../assets/images/sao.jpg" style="width:60px;height:60px;">
+</div> 
+</div>

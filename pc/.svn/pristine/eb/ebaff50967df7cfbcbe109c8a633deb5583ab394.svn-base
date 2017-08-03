@@ -1,0 +1,248 @@
+import {Router} from '@angular/router';
+import {MyWalletService} from '../my-wallet.service';
+import { Component, OnInit } from '@angular/core';
+declare var layer:any;
+declare  var $:any;
+
+@Component({
+  selector: 'app-card-management',
+  templateUrl: './card-management.component.html',
+  styleUrls: ['./card-management.component.css']
+})
+export class CardManagementComponent implements OnInit {
+  public datas;
+  public cardType;
+  public isNum:number;
+  public msg = new Msg();
+  public serialNumber;//开通快捷支付返回的验证码
+  public id;//银行卡ID
+  public pwd;//支付密码
+  public personMobile;
+  public publicMobile;
+  constructor(
+    public router:Router,
+    public service:MyWalletService
+  ) { }
+
+  ngOnInit() {
+     //查询银行卡列表walletCode
+        this.service.bankCardFindList()
+            .subscribe(data=>{
+                if(data.code==0){//成功
+                    this.datas=data.data;
+                    console.log(data);
+                }else{
+                  layer.msg(data.msg)
+                }
+            });
+  }
+  //添加银行卡
+  pushCard(){
+    $("#addCard").attr("data-toggle","modal");
+    $("#addCard").attr("data-target","#myModal");
+    $("#myModal").show();
+  }
+  next1(){
+    if(!$("input[type='radio']:checked").val()){
+      layer.msg("请选择银行");
+      return
+    }
+    $(".card").hide();
+    $(".accountType").show();
+    $(".next1").hide();
+    //$(".next2").show(); 
+    this.msg.bankCode=$("input[type='radio']:checked").val();
+    console.log(this.msg);
+  }
+  //个人账户添加详细信息
+  personAccount(){
+    this.isNum=1;
+    $(".accountType").hide();
+    $(".back").show();
+    this.msg.accountType=$("input[name='2']:checked").val();
+    console.log(this.msg);
+  }
+  //确认提交个人账户信息
+  confirm(){
+    let names = $("input[name='name1']").val();
+    let cardNo1 = $("input[name='cardNo1']").val();
+    let bank1 = $("input[name='bank1']").val();
+    let mobile = $("input[name='mobile']").val();
+    let idType = $("input[name='idType']").val();
+    let idNo = $("input[name='idNo']").val();
+    //不能为空
+    if(cardNo1==''||mobile==''||bank1==''||idNo==''){
+      console.log(cardNo1+mobile+bank1+idNo)
+      layer.msg("请补全信息，不能为空");
+      return;
+    }
+    //校验银行卡
+    let cardNoReg = /^(\d{19})$/;
+    if(cardNoReg.test(cardNo1) === false){  
+      layer.msg("请输入合法的19位借记卡");  
+      return 
+    }else if(isNaN(cardNo1)){
+      layer.msg("只能输入数字");
+      return
+    }
+    //手机号码校验
+    let mobileReg =/^1[3|4|5|7|8][0-9]\d{8}$/;
+    if(mobileReg.test(mobile)===false){
+      layer.msg("手机号码格式不正确");
+      return
+    }
+    //身份证号码校验
+    let idNoReg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+    if(idNoReg.test(idNo) === false){
+      layer.msg("身份证号码格式不正确");
+      return
+    }
+    this.personMobile = $("input[name='mobile']").val();
+    this.msg.name = $("input[name='name1']").val();
+    this.msg.cardNo = $("input[name='cardNo1']").val();
+    this.msg.bank = $("input[name='bank1']").val();
+    this.msg.mobile = $("input[name='mobile']").val();
+    this.msg.idType = $("input[name='idType']").val();
+    this.msg.idNo = $("input[name='idNo']").val();
+    if($('input[name="faster"]').prop("checked"))
+        {
+          this.msg.faster=1;
+        }else{
+          this.msg.faster=0;
+    }
+    console.log(this.msg);
+    this.service.bankCard(this.msg).subscribe(data=>
+    {
+      if(data.code==0){
+        console.log(data.data);
+        this.serialNumber=data.data;
+        $(".back").hide();
+        $(".verCode").show();
+      }
+      else{
+        layer.msg(data.msg)
+      }
+    })
+  
+  }
+  //提交手机收到的验证码
+  binding(){
+     if(!$("input[name='validation']").val()){
+      layer.msg("请输入验证码");
+      return
+    }
+    console.log(typeof this.serialNumber);
+    console.log(typeof $("input[name='validation']").val());
+    this.service.binding(this.serialNumber,$("input[name='validation']").val())
+    .subscribe(data=>
+    {
+      if(data.code==0){
+        console.log(data.data);
+        $(".verCode").hide();
+        $(".bindingSuccess").show();
+      }
+      else{
+        alert(data.msg)
+      }
+    })
+    
+  }
+  //继续充值
+  bindingSuccess(){
+    window.location.reload();
+    this.router.navigateByUrl("content/myWallet/topup");
+  }
+  //企业账户
+  firmAccount(){
+    this.isNum=0;
+    this.msg.accountType=$("input[name='2']:checked").val();
+    console.log(this.msg);
+    $(".accountType").hide();
+    $(".firmAccount").show();
+  }
+  //企业账户信息提交
+  confirmAccount(){
+     let names = $("input[name='name']").val();
+    let cardNo = $("input[name='cardNo']").val();
+    let bank = $("input[name='bank']").val();
+
+    //不能为空
+    if(cardNo==''||bank==''){
+      console.log(cardNo+bank)
+      layer.msg("请补全信息，不能为空");
+      return;
+    }
+    //校验银行卡
+    let cardNoReg2 = /^(\d{19})$/;
+    if(cardNoReg2.test(cardNo) === false){  
+      layer.msg("请输入合法的19位借记卡");  
+      return 
+    }else if(isNaN(cardNo)){
+      layer.msg("只能输入数字");
+      return
+    }
+    this.msg.name = $("input[name='name']").val();
+    this.msg.cardNo = $("input[name='cardNo']").val();
+    this.msg.bank = $("input[name='bank']").val();
+     this.service.bankCard(this.msg).subscribe(data=>
+    {
+      if(data.code==0){
+        console.log(data.data);
+        this.serialNumber=data.data;
+      }
+      else{
+        alert(data.msg)
+      }
+    })
+    $(".firmAccount").hide();
+    $(".bindingSuccess").show();
+  }
+  //企业账户绑定完成
+  complete(){
+    window.location.reload();
+    this.router.navigateByUrl("content/myWallet/cardManagement");
+  }
+  //关闭
+  clear(){
+    $(".card").show();
+    $(".next1").show();
+    $(".accountType").hide();
+    $(".next2").hide();
+    $(".back").hide();
+    $(".verCode").hide();
+    $(".firmAccount").hide();
+    $(".bindingSuccess").hide();
+  }
+  //解除绑定
+  removeBinding(id){
+    console.log(id);
+    this.id = id;
+    $(".removeBinding").attr("data-toggle","modal");
+    $(".removeBinding").attr("data-target","#myModal1");
+  }
+  remove(){
+    this.pwd = $("input[name='pwd']").val();
+    this.service.unBinding(this.id,this.pwd)
+    .subscribe(data=>{
+    if(data.code==0){
+      console.log(data);
+     }else{
+       alert(data.msg);
+     }
+    })
+    window.location.reload();
+    this.router.navigateByUrl("content/myWallet/cardManagement");
+  }
+}
+export class Msg{
+  public accountType;
+  public bank;
+  public bankCode;
+  public cardNo;
+  public faster;
+  public idNo;
+  public idType;
+  public mobile;
+  public name;
+  public userCode;
+}

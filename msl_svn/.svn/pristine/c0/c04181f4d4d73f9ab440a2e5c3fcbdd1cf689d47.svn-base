@@ -1,0 +1,96 @@
+.padding17{
+  padding-right: 1.6rem;
+  padding-left: 1.6rem;
+  background: #ffffff;
+}
+.dis_flex{
+  display: flex;
+}
+.dis_flex>.flex1{
+  flex: 2;
+}
+p>img{
+  width: 1.5rem;
+}
+.telP{
+  margin-top: 5px;
+  padding-top: 5px;
+  padding-right: 1.7rem;
+}
+.dis_flex>.flex9{
+  flex: 9;
+  padding-left: 1.1rem;
+  padding-top: 1.1rem;
+}
+
+.perTopSpan{
+  margin-bottom: 2px;
+}
+.perTopSpan img {
+  width: 4rem;
+  vertical-align: middle;
+  margin-bottom: 2px;
+}
+.employeeTab>div{
+  flex: 1;
+}
+.employeActive{
+  background-color: #fff;
+  color:#ea5529;
+  border-bottom: 3px solid #ea5529;
+  box-sizing: border-box;
+}
+.employeNone{
+  background-color: #e5e5e5;
+  border: none;
+  color: #333;
+}
+.perCenterImg{
+  display: inline-block;
+  vertical-align: middle;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+}
+
+
+.Lists{
+  box-sizing: border-box;
+}
+.touxiang{
+  width: 2rem;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+.font12{
+  font-size: 12px;
+}
+
+.dis_flex ul{
+  flex: 9;
+}
+
+.dis_flex ul li{
+  width: 50%;
+  line-height: 2rem;
+
+}
+.jiedanshu_bottom{
+  height: 2.2rem;
+  line-height: 2.2rem;
+}
+
+.toJian{
+  font-size: 2rem;
+  padding-top: 19px;
+}
+.jiedanshu_contact{
+  height: 1.6rem;
+  line-height: 1.6rem;
+  border: 1px solid #4bbcbd;
+  color: #4bbcbd;
+  border-radius: 10px;
+  width: 4.7rem;
+  margin-top: 0.3rem;
+  margin-left: 5px;
+}

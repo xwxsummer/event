@@ -1,0 +1,70 @@
+
+    <div class="right-top">
+        <span>填写货源信息</span>
+        <span>确认发货信息</span>
+        <span>支付保证金（担保金）</span>
+        <span>发布成功</span>
+    </div>
+
+    <div *ngIf="info" class="right-bottom">
+        <h3>货源信息</h3>
+        <div class="message">
+            <ul class="ul">
+                <li><a>*</a>货物名称：<input disabled="disabled" type="text" value="{{info?.goodsName}}"/></li>
+                <li><a>*</a>货物数量：<input disabled="disabled" type="text" value="{{info?.goodsAmount}}"/> 吨</li>
+                <li><a>*</a>货物运费：<input disabled="disabled" type="text"value="{{info?.freightPrice}}"/></li>
+                <li><a>*</a>货物价值：<input disabled="disabled" type="text"value="{{info?.goodsPrice}}"/> 元/吨</li>
+                <li><a>*</a>最晚接单时间：<input disabled="disabled" readonly="readonly"  class="layui-input"value="{{info?.endTime}}" /></li>
+                <li><a>*</a>最晚装货时间：<input readonly="readonly"   class="layui-input"value="{{info?.latestArrivalTime}}"/></li>
+            </ul>
+
+            <ul class="ul2">
+                <span style="float: left;padding-left: 1rem;"><a style="color: #e85529">*</a>其他描述</span>
+                <li *ngFor="let item of info?.labels?.split('|')">{{item}}</li>
+            </ul>
+
+            <div class="text1">
+                <p style="margin-bottom:5px;">备注：</p>
+                <span class="span">{{info?.remark}}</span>
+            </div>
+
+            <div class="text">
+                <!-- <p>添加图片（选填）</p> -->
+                <div class="text2">
+                    <img class="img" *ngFor="let item of img" src="{{item}}"/>
+
+                    <!-- <span>删除</span> -->
+                </div>
+
+
+            </div>
+
+            <div class="map">
+                <h3 style="border-top: 1px solid #cccccc; padding-left:3rem; "><span style="color: #e85529;">*</span>发货信息</h3>
+                <div class="map2">
+                    <div class="map3" style="position: relative">
+                        <span style="padding-top: 0.8rem">{{info?.sendProvince}}{{info?.sendCity}}（{{info?.sendName}} 发）</span>
+                        <span>{{info?.sendCompany}}</span>
+                        <span>{{info?.sendProvince}} {{info?.sendCity}} {{info?.sendCompany}} {{info?.sendTown}} {{info?.sendAddress}}</span>
+                        <span>{{info?.sendPhone}}</span>
+                        <!-- <span style="position: absolute;right: 1rem;bottom: 0.75rem;color: #0a01ff;cursor: pointer;">修改发货信息</span> -->
+                    </div>
+                </div>
+                <h3 style="border-top: 1px solid #cccccc; padding-left:3rem; "><span style="color: #e85529;">*</span>收货信息</h3>
+                <div class="map2">
+                    <div class="map3">
+                      <span style="padding-top: 0.8rem">{{info?.receiveProvince}}{{info?.receiveCity}}（{{info?.receiveName}} 收）</span>
+                      <span>{{info?.receiveCompany}}</span>
+                      <span>{{info?.receiveProvince}} {{info?.receiveCity}} {{info?.receiveCompany}} {{info?.receiveTown}} {{info?.receiveAddress}}</span>
+                      <span>{{info?.receivePhone}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="but">
+                <button (click)="pay()">下一步</button>
+                <button (click)='bank()'>取消</button>
+            </div>
+        </div>
+
+    </div>

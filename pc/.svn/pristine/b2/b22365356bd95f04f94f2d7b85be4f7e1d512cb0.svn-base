@@ -1,0 +1,56 @@
+
+<!--<div id="background" style="position:absolute;z-index:-1;width:100%;height:100%;top:0px;left:0px;">
+  <img src="../../../assets/images/bj.jpg" width="100%" height="100%"/>
+</div>-->
+<div class="wrap">
+<div class="container content" style="background-color: rgba(220,220,220,0.5);">
+   <div class="row" >
+      <form (ngSubmit)="submitForm()" #Form="ngForm" name="submitForm" role="form">
+      <div class="col-xs-6 col-sm-6 fform">
+      
+  <div class="header-left" style="color:#e85529">
+    <img src="../assets/images/logored.png">
+  </div>
+  <div class="header-right" style="color:#e85529">
+    <H3>马上来</H3>
+    <span>mashanglai.com</span>
+  </div>
+  <div style="float:right">
+    <H1>找回密码</H1>
+  </div>
+    <input  class="form-control" type="tel" name="phone" placeholder="请输入手机号码" [(ngModel)]="user.mobile" #phone="ngModel" maxlength="11"/>
+    
+    <br>
+    <input  class="form-control" type="{{imgWatch_img1.ImgType}}" name="password"  maxlength="12" [(ngModel)]="pwd" #password="ngModel" placeholder="请输入6-12位数字或字母密码"/>
+    <br>
+    <input  class="form-control"  type="{{imgWatch_img2.ImgType}}" name="confirmPassword" [(ngModel)]="rePwd" #confirmPassword="ngModel" maxlength="12" placeholder="再次输入密码" />
+    <br>
+    <input class="form-control captch" type="tel" [(ngModel)]="user.captcha" name="yzm1" id="yzm1" placeholder="请输入验证码" maxlength="4"/>&nbsp;&nbsp;&nbsp;
+    <input type="button" class="form-control captchaButton" value={{yzm}}  (click)="captchaReg()"/>
+    <br>
+    <input type="submit" class="form-control complete" value="完&nbsp;&nbsp;&nbsp;成"/>
+      </div>
+   </form>
+      <div class="col-xs-6 col-sm-6 fform" 
+         style="text-align:center">
+         <span>已有账号，请<a (click)="login()">登录</a></span><br>
+         <H1>货源信息共享的网络平台</H1>
+         <div>
+           <img src="../assets/images/sao.jpg" style="width:200px;height:200px;margin-top:40px;">
+         </div>
+         <span>扫描二维码</span><br>
+         <span>关注“马上来”微信公众号</span>
+      </div>
+   </div>
+</div>
+
+
+<div class="footer" style="color:#fff">
+   <span>Copyright   @mashanglao.com.All Rights Reserved</span><br>
+  <span>北京诚联信科技有限责任公司</span><br>
+  <span>京ICP备14053608京公忘安备号110119081017620</span><br>
+</div>
+</div>
+ <app-side-bar></app-side-bar> 
+
+

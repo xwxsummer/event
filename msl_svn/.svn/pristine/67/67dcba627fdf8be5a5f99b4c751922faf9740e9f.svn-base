@@ -1,0 +1,171 @@
+.goodsTop {
+  display: flex;
+
+}
+.myGoods_content:first-child{
+  margin-top: 5px;
+}
+
+.goodsTop div{
+  flex: 1;
+  padding-bottom: 1px;
+  border-bottom: 1px solid #ccc;
+}
+.goodsTop .special{
+  padding-bottom: 0px;
+  border-bottom: 2px solid #ea5529;
+  color: #ea5529;
+
+}
+.cancel_ul .special{
+  padding-bottom: 0px;
+  border: 1px solid #ea5529;
+  color: #ea5529;
+
+}
+
+/*取消*/
+.mui-popover.mui-popover-action .mui-table-view {
+  margin: 0;
+  text-align: center;
+  color: #999;
+  border-radius: 0px;
+}
+.cancle_resuit{
+  background-color: #fff;
+  color: #333;
+}
+.cancel_ul{
+  padding-top: 20px;
+}
+.cancel_ul li:nth-child(odd){
+  float: left;
+}
+.cancel_ul li:nth-child(even){
+  float: right;
+}
+.mui-table-view-cell {
+  padding: 0;
+}
+.cancel_li{
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 47%;
+  margin-bottom: 1.1rem;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  color: #999;
+}
+.cancel_li:nth-child(odd){
+  float: left;
+}
+.cancel_li:nth-child(even){
+  float: right;
+}
+.cancle_yes{
+  width: 100%;
+}
+.cancle_yes div{
+  border: none;
+  border-radius: 5px;
+  width: 96%;
+  margin-bottom: 20px;
+}
+.bgc_c0c0{
+  background-color: #c0c0c0;
+}
+
+.cancel_ul a{
+  display: inline-block;
+  width: 100%;
+}
+
+.myGoods_content{
+  box-sizing: border-box;
+  padding-top: 10px;
+}
+.huwu_jian{
+  width: 2.4rem;
+  display: inline-block;
+  vertical-align: bottom;
+}
+.myGoods_bottom{
+  height: 2.2rem;
+  line-height: 2.2rem;
+}
+.myGoods_cancel{
+  height: 1.6rem;
+  line-height: 1.6rem;
+  border: 1px solid #4bbcbd;
+  color: #4bbcbd;
+  border-radius: 10px;
+  width: 4.6rem;
+  margin-top: 0.3rem;
+  margin-left: 5px;
+}
+
+
+/*取消*/
+.mui-popover.mui-popover-action .mui-table-view {
+  margin: 0;
+  text-align: center;
+  color: #999;
+  border-radius: 0px;
+}
+.mgGoodsList div{
+  line-height: 1.4rem;
+}
+.moreInfo{
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+.moreInfo img {
+  width: 20px;
+  vertical-align: middle;
+}
+
+/*层*/
+.bg{
+  display: block;position: absolute;top: 0;
+  left: 0;width: 100%;height: 100%;
+  background: rgba(0,0,0,.4);
+  z-index:998;    }
+.ceng_show{
+  display: block;
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  min-height: 273px;
+  width: 80%;
+  background-color: rgba(255,255,255,.95);
+  z-index:1002;
+  font-size: 14px;
+  color: #000;
+  font-weight: 900;
+  padding: 40px 40px;
+}
+#contact_show ul li{
+  height: 2.4rem;
+  line-height: 2.4rem;
+  text-align: center;
+  border-radius: 10px;
+  margin: 25px 0;
+  border: 1px solid #333;
+  color: #333;
+}
+#contact_show ul li:last-child{
+  margin-bottom: 10px;
+}
+#contact_show .cancel_span{
+  top: 10px;
+  right: 10px;
+  font-size: 26px;
+
+}
+.contactUs_cancel,.contactUs_sure{
+  width: 50%; height: 44px;line-height:44px;font-size: 17px;
+}
+
+
+

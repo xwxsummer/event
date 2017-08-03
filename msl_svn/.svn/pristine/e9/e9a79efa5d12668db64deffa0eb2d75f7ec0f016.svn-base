@@ -1,0 +1,23 @@
+<div class="box">
+  <div class="box2">
+      <span class="span"(click)="back()"></span>
+      <div class="box3">
+          <div class = 'panel'><select style="height:2rem;text-align:center;padding: 0.4rem 1rem;color:#000000" open id = 'subDistricts'></select></div>
+          <!-- (change)='search()'-->
+          <span style="position: absolute;left: 7.9rem;top: 1rem;"><img src="../../assets/images/fen.png" ></span>
+          <input type="search"style="background:#ffffff"  name=""  id="keyword" onfocus='this.value=""' placeholder="请输入地址">
+
+      </div>
+      <div (click)="search()" id="submit" style="float: right;color: #fff;line-height: 3rem;padding-right: 1.4rem;">搜索</div>
+  </div>
+    <input type="hidden" name="long" id="city">
+    <input type="hidden" name="long" id="county">
+    <input type="hidden" name="long" id="province">
+    <input type="hidden" name="long" id="town">
+    <!--<input type="hidden" name="long" id="address">-->
+    <input type="hidden" name="long" id="long">
+    <input type="hidden" name="lat" id="lat">
+  <div class="map" id="container"></div>
+    <div id="panel"></div>
+  <div id="tip"></div>
+</div>

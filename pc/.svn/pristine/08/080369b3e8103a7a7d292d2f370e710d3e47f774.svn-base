@@ -1,0 +1,45 @@
+.wrap{
+    margin-top:2%;
+    margin-left: 2%;
+
+}
+.pushCard{
+    width:100px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background-color: #e85529;
+    border-radius: 5px;
+}
+.brImg{
+    margin-bottom:20px;
+}
+.brImg > img{
+    border: 1px solid #e5e5e5; 
+    width:138px;
+    height: 33px;
+    box-shadow: 5px 5px 2px #888888;
+    margin-right: 10px;
+}
+.inputDiv{
+    background-color: #fff;
+    border-radius: 10Px;
+    height:30px;
+    margin-top: 2%;
+    width: 300px;
+}
+.inputDiv input{
+    border:none;
+    height:100%;
+    color:#333;
+}
+.personButton{
+    text-align: center;
+    width: 200px;
+    margin-left: 50px;
+    background-color: #e85529;
+    border: none;
+    height: 30px;
+    margin-top: 10px;
+    border-radius: 5px;
+}

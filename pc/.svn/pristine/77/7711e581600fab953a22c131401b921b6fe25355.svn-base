@@ -1,0 +1,24 @@
+
+<table class=" personalTable table table-bordered" >
+	<thead>
+		<tr>
+			<td colspan='2' style="padding-left:4%">账户详情</td>	
+		</tr>
+	</thead>
+	<tbody>
+		<tr style="border:none">
+			<td style="width:70%;border-right:none;border:none">
+				<div id="main" style="width: 600px;height:200px; ">
+				</div>
+			</td>
+			<td style="width:30%;line-height:22px;border:none">
+				<div style="padding-top:15%">
+					<div>钱包总额： ￥{{fmoney(money.total)}}</div>
+					<div>冻结金额： ￥{{fmoney(money.frozen)}}</div>
+					<div>可提现金额： ￥{{fmoney(money.residue)}}</div>
+				</div>
+				
+			</td>
+		</tr>
+	</tbody>
+</table>

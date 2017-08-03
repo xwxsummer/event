@@ -1,0 +1,123 @@
+.wrap{
+    margin-top:2%;
+    margin-left: 2%;
+
+}
+.pushCard{
+    width:140px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background-color: #e85529;
+    border-radius: 5px;
+    color:white;
+    margin-top:20px;
+}
+.brImg{
+    margin-bottom:20px;
+}
+.brImg > img{
+    border: 1px solid #e5e5e5; 
+    width:138px;
+    height: 33px;
+    box-shadow: 5px 5px 2px #888888;
+    margin-right: 10px;
+}
+ .inputDiv{
+    margin-top: 2%;
+} 
+.inputDiv input,select{
+    border:1px solid #e5e5e5;
+    border-radius: 5px;
+    width: 200px;
+    height: 40px;
+    color:#333;
+
+}
+.inputDiv label{
+    width:130px;
+}
+.personButton{
+    text-align: center;
+    width: 200px;
+    margin-left: 50px;
+    background-color: #e85529;
+    border: none;
+    height: 30px;
+    margin-top: 10px;
+    border-radius: 5px;
+    color:white;
+}
+.card_list{
+    margin-top: 2%;
+    width:98%;
+    border: 2px solid #ccc;
+    background-color: #f2f5f7;
+}
+.ForList{
+    border-bottom:2px solid #ccc;
+    height: 50px;
+    line-height: 50px;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.next1{
+    background-color: #e85529;
+    color:white;
+    border:none;
+    width:120px;
+    height: 33px;
+    border-radius: 5px;
+}
+.down{
+    width:120px;
+}
+.middleContent{
+    padding-left:20px;
+    height:300px;
+    overflow-x: hidden; 
+    overflow-y: auto;
+}
+.checkbox{
+    margin-top:10px;
+    margin-bottom: 10px;
+    font-size:16px;
+}
+.mobileStyle{
+    font-size:16px;
+    color:#ccc;
+    margin-bottom: 15px;
+}
+.yzmStyle label{
+    
+    width:130px;
+    font-size:16px;
+}
+.yzmStyle input{
+    border:1px solid #e5e5e5;
+    border-radius: 5px;
+    width: 200px;
+    height: 40px;
+    color:#333;
+}
+.noYzm{
+    background-color: #e85529;
+    border: none; 
+    width:150px;
+    text-align: center;
+    height: 40px;
+    border-radius: 5px;
+}
+.btnStyle{
+    color:white;
+    border: none; 
+}
+.tishi{
+    margin-top:15px;
+    color:#ccc;
+}
+.seccess{
+    margin-top: 100px;
+    text-align: center;
+    font-size: 18px;
+}

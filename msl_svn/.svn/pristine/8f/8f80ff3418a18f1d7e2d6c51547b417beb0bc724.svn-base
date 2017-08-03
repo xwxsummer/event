@@ -1,0 +1,12 @@
+<div class="padding1 fon85 clearfix">
+  <div class="yewotongji_flex pull-left m-r10" (click)="myBeginTime()">起：<span class="ea5529" id="beginTime"></span>&nbsp;<img src="../assets/images/select.png" alt="" class="select"/></div>
+  <div class="yewotongji_flex pull-left m-l10" (click)="EndTime()">终：<span class="ea5529" id="entTime"></span>&nbsp;<img src="../assets/images/select.png" alt="" class="select"/></div>
+  <div class="pull-right yewotongji_flex"><span class="lan search" (click)="search()">查询</span></div>
+</div>
+<ul class="back_fff b-t">
+  <li class="fonNormal col_333 b-b  padding17" (click)="deliverNumbers(data.publishOrderCount,1)">发布货源数 <span class="col_999 pull-right">{{data?.publishOrderCount}}条></span></li>
+  <li class="fonNormal col_333 b-b padding17" (click)="jiedanshu(data.ordersCount)">已接单数 <span class="col_999 pull-right">{{data?.ordersCount}}单></span></li>
+  <li class="fonNormal col_333 b-b padding17" (click)="goodsNum(data.goodsCount.toFixed(2),1)">已运货物数量 <span class="col_999 pull-right">{{data?.goodsCount.toFixed(2)}}吨></span></li>
+  <li class="fonNormal col_333 b-b padding17" (click)="goodsNum(data.payFreight.toFixed(2),2)">已支付运费 <span class="col_999 pull-right">{{data?.payFreight.toFixed(2)}}元></span></li>
+  <li class="fonNormal col_333 b-b padding17" (click)="deliverNumbers(data.orderSaleCount,2)">已运货款 <span class="col_999 pull-right">{{data?.orderSaleCount}}元></span></li>
+</ul>

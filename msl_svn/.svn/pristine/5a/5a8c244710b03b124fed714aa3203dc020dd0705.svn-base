@@ -1,0 +1,13 @@
+<div class="box">
+  <div class="img">
+
+  </div>
+  <span>绑定成功！</span>
+  <div class="box2">
+    <i class="span"></i>
+    <i>建设银行</i>
+    <i>储蓄卡</i>
+    <i>(****************1232)</i>
+  </div>
+  <input (click)='gobank()' id='input' class="height36" type="button" name="" value="完成">
+</div>

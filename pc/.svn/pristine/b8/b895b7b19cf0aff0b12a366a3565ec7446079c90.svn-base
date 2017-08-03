@@ -1,0 +1,184 @@
+<div style="margin-left:2%;">
+  <div style="margin-top:20px;margin-bottom:20px">
+    请输入充值金额：<input id="inp" type="text" name="money" class="money">
+  </div>
+  <div>
+    <div *ngFor="let card of cardList" (click)="snding(card.snBinding)" style="padding-left:40px;width:600px;border:2px solid #ccc;
+    background-color:#ebebeb;height:60px;line-height:60px;">
+    <input type="radio" value="check" name="check">
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="ii">&nbsp;&nbsp;&nbsp;&nbsp;{{card.bank}}&nbsp;&nbsp;&nbsp;&nbsp;
+    {{card.cardNo}}&nbsp;&nbsp;&nbsp;&nbsp;储蓄卡</div>
+  </div>
+  <div style="margin-top:20px;margin-bottom:20px">
+    <div class="cardBotton" (click)="bangka()">使用新卡支付</div>
+    <div class="cardBotton" id="net" (click)="netSilver()" >使用网银支付</div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <div style="margin-top:20px;margin-bottom:20px">
+    <div>马上来支付密码</div>
+    <div><input type="text" id="inp" onfocus="this.type='password'" name="payPwd" maxlength="6"></div><a>忘记密码？</a>
+  </div>
+  <div>
+    <button class="btn-lg" (click)="payment()" id="pay">
+        确认支付
+    </button> 
+  </div>
+</div>
+<!-- 弹框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+      <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">
+					&times;
+				</button>
+				<strong class="modal-title" id="myModalLabel">
+					合作银行/机构&nbsp;&nbsp;&nbsp;借记卡
+				</strong>
+			</div>
+			<div class="modal-body" style="background-color:#ebebeb;padding-left:20px;height:300px;overflow:scroll">
+        <!-- 第一步：银行卡的查看 -->
+        <div class="card">
+          <div class="brImg">
+            <input type="radio" name="1" value="104">
+            <img src="../../../../assets/images/104.jpg">
+            <input type="radio" name="1" value="105">
+            <img src="../../../../assets/images/105.jpg">
+            <input type="radio" name="1" value="103">
+            <img src="../../../../assets/images/103.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="102">
+            <img src="../../../../assets/images/102.jpg">
+            <input type="radio" name="1" value="100">
+            <img src="../../../../assets/images/100.jpg">
+            <input type="radio" name="1" value="447">
+            <img src="../../../../assets/images/447.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="440">
+            <img src="../../../../assets/images/440.jpg">
+            <input type="radio" name="1" value="434">
+            <img src="../../../../assets/images/434.jpg">
+            <input type="radio" name="1" value="424">
+            <img src="../../../../assets/images/424.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="422">
+            <img src="../../../../assets/images/422.jpg">
+            <input type="radio" name="1" value="408">
+            <img src="../../../../assets/images/408.jpg">
+            <input type="radio" name="1" value="403">
+            <img src="../../../../assets/images/403.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="401">
+            <img src="../../../../assets/images/401.jpg">
+            <input type="radio" name="1" value="310">
+            <img src="../../../../assets/images/310.jpg">
+            <input type="radio" name="1" value="309">
+            <img src="../../../../assets/images/309.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="308">
+            <img src="../../../../assets/images/308.jpg">
+            <input type="radio" name="1" value="307">
+            <img src="../../../../assets/images/307.jpg">
+            <input type="radio" name="1" value="305">
+            <img src="../../../../assets/images/305.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="304">
+            <img src="../../../../assets/images/304.jpg">
+            <input type="radio" name="1" value="303">
+            <img src="../../../../assets/images/303.jpg">
+            <input type="radio" name="1" value="302">
+            <img src="../../../../assets/images/302.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="450">
+            <img src="../../../../assets/images/450.jpg">
+            <input type="radio" name="1" value="316">
+            <img src="../../../../assets/images/316.jpg">
+            <input type="radio" name="1" value="423">
+            <img src="../../../../assets/images/423.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="306">
+            <img src="../../../../assets/images/306.jpg">
+          </div>
+        </div>
+        <!-- 第二步：选择账户类型 -->
+        <div class="accountType" style="display:none">
+            <div style="padding-left:10px;width:400px;border:2px solid #ccc;
+              background-color:#ebebeb;height:60px;line-height:60px;">
+              <img src={{cardId}} >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              储蓄卡&nbsp;&nbsp;&nbsp;&nbsp;<a (click)="backBankList()">更换</a>
+            </div><hr>
+            <div>
+              选择账户类型:
+            </div><hr>
+            <div>
+              <input type="radio" value="11" name="2">个人网上银行（需开通网银）&nbsp;&nbsp;&nbsp;&nbsp;调转至网银时请认真核对收款方，以保障支付安全。
+            </div><hr>
+            <div>
+              <input type="radio" value="12" name="2">企业网上银行（需开通网银）&nbsp;&nbsp;&nbsp;&nbsp;需开通网上银行。
+            </div><hr>
+        </div>
+        <!-- 第三步调转 -->
+        <div class="back" style="display:none;margin-left:20%">
+          <input type="text" class="btn btn-default" data-dismiss="modal" value="支付失败" style="width:120px;height:40px;text-align:center" (click)="failure()">
+          <input type="text" class="btn btn-default" data-dismiss="modal" value="支付成功" style="width:120px;height:40px;text-align:center;margin-left:2%" (click)="success()">
+          <div>如充值遇到问题请拨打客服电话：400-1234-5674</div>
+        </div>
+      </div>
+			<div class="modal-footer">
+        <button type="button" class="btn btn-primary next1" (click)="next1()">
+					下一步
+        </button>
+        <button type="button" class="btn btn-primary next2" (click)="next2()" style="display:none">
+					下一步
+				</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">关闭
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 弹框2确认支付输入验证码 -->
+<div class="modal fade" id="myModals" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+      <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">
+					&times;
+				</button>
+				<!-- <strong class="modal-title" id="myModalLabel">
+					合作银行/机构&nbsp;&nbsp;&nbsp;借记卡
+				</strong> -->
+			</div>
+			<div class="modal-body" style="background-color:#ebebeb;padding-left:20px;height:300px;overflow:scroll">
+        <div class="verCode">
+            <div>请输入收到的验证码</div>
+            <div>
+              <span class="e85529">*</span>验证码<input type="text" placeholder="请输入验证码" name="valida">
+            </div>
+            <div>
+              <button>未收到验证码</button>&nbsp;
+              <button (click)="confrim()">确认</button>
+            </div>
+        </div>
+      </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">关闭
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+ 

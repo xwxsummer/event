@@ -1,0 +1,93 @@
+import {Router} from '@angular/router';
+import {MyWalletService} from '../my-wallet.service';
+import { Component, OnInit } from '@angular/core';
+declare var $:any;
+declare var layer:any;
+
+@Component({
+  selector: 'app-topup',
+  templateUrl: './topup.component.html',
+  styleUrls: ['./topup.component.css']
+})
+export class TopupComponent implements OnInit {
+  public posts=new postLists();
+  public data;
+  constructor(
+    public service :MyWalletService,
+    public router:Router
+  ) {
+    
+   }
+
+  ngOnInit() {
+  }
+
+  netSilver(){
+    if(!$("input[name=money]").val()){
+      layer.msg("请输入金额");
+      return
+    }else{
+      $("#net").attr("data-toggle","modal");
+      $("#net").attr("data-target","#myModal");
+      this.posts.money=$("input[name=money]").val();
+      console.log(this.posts);
+      $("#myModal").show();
+    }
+  }
+  //选择银行后下一步
+  next1(){
+    if(!$("input[type='radio']:checked").val()){
+      layer.msg("请选择银行");
+      return
+    }
+    $(".card").hide();
+    $(".accountType").show();
+    $(".next1").hide();
+    $(".next2").show();
+    this.posts.cardId=$("input[type='radio']:checked").val();
+    console.log(this.posts);
+   
+  }
+  //选择账户类型
+  next2(){
+     if(!$("input[name='2']:checked").val()){
+      layer.msg("请选择账户类型");
+      return
+    }
+    console.log($("input[name='2']:checked").val());
+    this.posts.accountType=$("input[name='2']:checked").val();
+    console.log(this.posts);
+    this.service.cpcnDirect(this.posts).subscribe(
+      data =>{
+        console.log(data.data);
+        this.data=data.data;
+      //调用第三支付页面
+        $("#forms").attr("action",data.data.action);
+        $("#message").val(data.data.message);
+        $("#signature").val(data.data.signature)
+        $("#forms").submit();
+      }
+    )
+        $(".accountType").hide();
+        $(".next2").hide();
+        $(".back").show();
+  }
+  clear(){
+    $(".card").show();
+    $(".accountType").hide();
+    $(".next1").show();
+    $(".next2").hide();
+    $(".back").hide();
+  }
+  failure(){
+    this.clear();
+  }
+  success(){
+    this.router.navigateByUrl("content/myWallet/payments")
+  }
+}
+export class postLists{
+    public cardId;
+    public money;
+    public accountType;
+}

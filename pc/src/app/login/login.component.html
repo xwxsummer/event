@@ -1,0 +1,52 @@
+
+<div class="wrap">
+<!--//头部-->
+  <div class="header">
+    <div class="header-left">
+      <img src="../assets/images/logo.png">
+    </div>
+    <div class="header-right">
+      <span style="font-size:22px;">马上来</span><br>
+      <span style="font-size:12px;">91msl.com</span>
+    </div>
+  </div>
+<!--内容部分-->
+<div class="content">
+  
+      <div class="content-left">
+          <span style="font-size:42px;"><strong>货物信息发布平台</strong></span><br>
+          <span style="font-size:28px;"><strong> 马上来，需要您就马上来!</strong></span>
+      </div>
+
+      <div class="content-right">
+        <form #myForm="ngForm">
+           <!-- (keydown)="keyLogin(myForm,event)" -->
+          <div class="inputDiv">
+              <label>&nbsp;<img src="../assets/images/zhanghao.png"></label>
+               <input  type="tel" ngModel name="phone" placeholder="请输入手机号码" maxlength="11" autocomplete="off" (keydown)="KeyDown()">
+          </div>
+              <input type="hidden">  
+          <div class="inputDiv">
+              <label>&nbsp;<img src="../assets/images/mima.png"></label>
+              <input type="text" ngModel name="password"  maxlength="12" onfocus="this.type='password'" placeholder="请输入6-12位数字或字母密码" autocomplete="off" (keydown)="KeyDown()"/>
+          </div>
+          <div class="tuxing">
+              <input type="text"  ngModel style="width:150px;color:#333" type="tel"  name="yzm1" id="yzm1" placeholder="请输入验证码" maxlength="4"/>
+              <span *ngIf="test==1" (click)="huoqu(myForm.value)">点击获取验证码</span>
+              <span *ngIf="test==2"><label><img src={{captchaUrl}}></label><label (click)="yzm(myForm.value)">换一张</label></span>
+          </div>
+            <input type="submit" class="button" id="up" style="background-color:#e85529;color:#fff;" value="登&nbsp;&nbsp;录" (click)="login(myForm.value)" /><br>
+          <div class="links">  
+            <div style="color:#000; float:left;" (click)="forget()">忘记密码?</div>
+            <div class="e85529" style="color:#e85529;float:right;" (click)="qrcode()">免费注册</div>
+          </div>
+        </form>
+      </div> 
+</div>
+<!--尾部-->
+<div class="footer">
+  <span>版权所有2017©北京诚联信科技有限责任公司</span><br>
+  <span>京ICP备17011268号</span><br>
+</div>
+</div>
+ <app-side-bar></app-side-bar> 

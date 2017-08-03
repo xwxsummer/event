@@ -1,0 +1,14 @@
+<form (ngSubmit)="submitForm()" #Form="ngForm" name="submitForm" role="form">
+  <div class="posi_relative">
+    <input class="input_org" type="tel" (keyup)="checkMobile()" name="phone" placeholder="请输入联系人手机号" [(ngModel)]="ownerStaffDTO.phone" #phone="ngModel" maxlength="11"/>
+    <span class="mui-icon mui-icon-closeempty posi_abslotu transformY50 pos_right0 pos_right1r" *ngIf="ownerStaffDTO.phone" (click)="ValueNone('phone')"></span>
+  </div>
+  <input class="input_org" value="" [(ngModel)]="ownerStaffDTO.name" #name="ngModel" name="name"  placeholder="联系人真实姓名" readOnly="true"/>
+
+  <div class="m0_auto" style="width: 80%;">
+    <input type="submit" class="bindFinish text_center fff fonSml fon900" id="submit" value="确认添加" [disabled]="!Form.form.valid||isSubmit"/>
+  </div>
+</form>
+<div class="m-t20 text_center m-b20">
+  <span id="contactService"><a href="tel:82239800#mp.weixin.qq.com">联系客服</a></span>
+</div>

@@ -1,0 +1,156 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="wrapper" style=" overflow-y:scroll;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div _ngcontent-c3="" class="title h90 bt-b font24">业务统计</div>
+  </section>
+  <!-- Main content -->
+  <section class="content">
+    <div class="row" style="margin-left: 0px;">
+      <div class="col-xs-12">
+        <div class="box">
+          <!-- Date -->
+          <div class="row" style="margin-top: 2rem">
+            <div class="col-md-4">
+              <div class="box-body">
+                <div class="input-group">
+                  <div class="col-md-4" style="margin-top: 8px">
+                    <span>开始时间</span>
+                  </div>
+                  <div class="col-md-8">
+                    <input readonly="readonly" id="startTime" class="layui-input"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="box-body">
+                <div class="input-group">
+                  <div class="col-md-4" style="margin-top: 8px">
+                    <span>结束时间</span>
+                  </div>
+                  <div class="col-md-8">
+                    <input readonly="readonly" id="endTime" class="layui-input"/>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <div class="col-md-2">
+              <a class="btn btn-danger" style="width: 15rem; height: 3rem;margin-top: 10px" (click)="getList(1)">
+                查询
+              </a>
+            </div>
+          </div>
+
+          <div class="container-fluid" style="margin-top: 2rem">
+            <div class="row-fluid">
+              <div class="span12">
+                <div class="tabbable" id="tabs-816488">
+                  <ul class="nav nav-tabs">
+                    <li class="col-md-2">
+                      <a href="javascript:;" data-toggle="tab" (click)="selectMode(1)">发布货源数{{orderNum?.publishOrderCount}}条</a>
+                    </li>
+                    <li class="col-md-2">
+                      <a href="javascript:;" data-toggle="tab"
+                         (click)="selectMode(2)">已接单数{{orderNum?.ordersCount}}条</a>
+                    </li>
+                    <li class="col-md-2">
+                      <a href="javascript:;" data-toggle="tab"
+                         (click)="selectMode(3)">已运货物数量{{orderNum?.goodsCount}}吨</a>
+                    </li>
+                    <li class="col-md-2">
+                      <a href="javascript:;" data-toggle="tab"
+                         (click)="selectMode(4)">已支付运费{{orderNum?.payFreight}}元</a>
+                    </li>
+                    <li class="col-md-2">
+                      <a href="javascript:;" data-toggle="tab"
+                         (click)="selectMode(5)">已运货款{{orderNum?.orderSaleCount}}元</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- /.box-header -->
+          <div class="box-body">
+            <table id="example2" class="list table table-bordered"
+                   style="width:98%;margin-left:1%;margin-top:1%;border-color:#e2e8ec">
+              <tr>
+                <th>货源单号</th>
+                <th *ngIf="!showCarNo">货物信息</th>
+                <th *ngIf="!showCarNo">收货单位</th>
+                <th *ngIf="showMoney">已运货款</th>
+                <th *ngIf="showCarNo">车辆信息</th>
+                <th *ngIf="showCarNo">实际载货（吨）</th>
+                <th *ngIf="showCarNo">运费（元）</th>
+                <th *ngIf="showCarNo">车牌号</th>
+                <th>担保状态</th>
+                <th *ngIf="!showCarNo">货单状态</th>
+                <th *ngIf="showCarNo">运单状态</th>
+                <th>操作</th>
+              </tr>
+              <tr *ngFor="let order of orders;">
+                <td *ngIf="!showCarNo">{{order.orderNo}}</td><!--主单单号-->
+                <td *ngIf="showCarNo">{{order.childNo}}</td><!--子单单号-->
+                <td *ngIf="!showCarNo">货物名称：{{order.goodsName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;运费单价：{{order.freightPrice}}元/吨<br/>发货地址：{{order.sendAddress}}
+                </td><!--货物信息-->
+                <td *ngIf="!showCarNo">{{order.receiveCompany}}</td><!--收货单位-->
+                <td *ngIf="showMoney">{{getMoney(order)}}</td><!--已运货款-->
+                <td *ngIf="showCarNo">司机姓名：{{order.driverName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;车辆载重：{{order.truckLoad}}吨</td>
+                <!--车辆信息-->
+                <td *ngIf="showCarNo">{{order.receiveNet}}</td><!--实际载货（吨）-->
+                <td *ngIf="showCarNo">{{order.freight}}</td><!--运费（元）-->
+                <td *ngIf="showCarNo">{{order.truckNo}}</td><!--车牌号-->
+                <td>{{order.insurance === 1?"未担保":"已担保"}}</td><!--担保状态-->
+                <td *ngIf="!showCarNo">{{getOrderStatus(order.orderStatus)}}</td><!--货单状态-->
+                <td *ngIf="showCarNo">{{getOrderChildStatus(order)}}</td><!--运单状态-->
+                <td>
+                  <!--主单-->
+                  <a class="btn btn-adn btn-xs" *ngIf="showBtn ===0" (click)="orderView(order.orderNo)">查看</a>
+                  <!--子单-->
+                  <a class="btn btn-adn btn-xs" *ngIf="showBtn ===2||showBtn===1"
+                     (click)="childView(order.childNo)">查看</a>
+                  <a class="btn btn-adn btn-xs" *ngIf="showBtn ===0" (click)="orderCancel(order.orderNo)">取消</a>
+                  <a class="btn btn-adn btn-xs" *ngIf="showBtn ===2" (click)="searchRoute(order.childNo)">轨迹查询</a>
+                </td>
+              </tr>
+            </table>
+
+            <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate" class="col-md-12">
+
+              <div class="previous col-md-8" style="margin-top: 18px;margin-bottom: 28px">
+                <app-pagination [pageSize]="pageSize" [totalNum]="orderCount"
+                                (pageChange)="getList($event)"></app-pagination>
+              </div>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+      <div id="main">
+        <div id="fullbg"></div>
+        <div id="dialog">
+          <div>
+            <div>选择取消原因：</div>
+            <ul class="cancel_ul">
+              <li class="cancel_li" [class.special]="AdditionalTip[i]" *ngFor="let siteRefuse of dataRefuse;let i=index"
+                  (click)="AdditionalTip_click(i,siteRefuse?.name)">{{siteRefuse?.name}}
+              </li>
+            </ul>
+          </div>
+          <div class="button-class">
+            <button (click)="goodsCancel()">确定提交</button>
+            <button (click)="closeBg();">关闭</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- /.box -->
+  </section>
+
+  <!-- /.content -->
+</div>

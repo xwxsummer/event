@@ -1,0 +1,32 @@
+
+<div class="title h90 bt-b font24">个人信息</div>
+
+<table class=" personalTable table table-bordered" >
+	<thead>
+		<tr>
+			<div>基本信息</div>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<div style="height: 100px; margin-top:20px;margin-bottom:20px">
+        头像<img src={{data?.domain+data?.headImg}} onerror='this.src="../../assets/images/headImg.png"'/>
+      </div>
+		</tr>
+    <tr>
+			<div>
+        认证状态：<span class="e85529">{{data?.authed}}</span>
+      </div>
+		</tr>
+    <tr>
+      <div>
+			  登录账号：{{data?.mobile}}
+      </div>
+		</tr>
+     <tr>
+      <div>
+			  姓名：{{data?.name}}
+      </div>
+		</tr>
+	</tbody>
+</table>

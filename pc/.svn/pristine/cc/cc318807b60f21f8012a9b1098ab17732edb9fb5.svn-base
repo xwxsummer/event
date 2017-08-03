@@ -1,0 +1,24 @@
+
+        <div class="left">
+            <a class="deliverGoods" [routerLink]='["./deliverGoods"]'>发布货源</a>
+            <a class="details">接单详情</a>
+            <ul>
+                <li [routerLink]='["./invoiceDetails",105]'>待收货货单</li>
+                <li [routerLink]='["./invoiceDetails",106]'>已收货货单</li>
+                <li [routerLink]='["./invoiceDetails",104]'>协商中货单</li>
+                <li [routerLink]='["./invoiceDetails",107]'>接单历史</li>
+            </ul>
+            <a class="details">货源详情</a>
+            <ul>
+                <li [routerLink]='["./orderDetails",2]'>待接单货源</li>
+                <li [routerLink]='["./orderDetails",10]'>进行中货源</li>
+                <li [routerLink]='["./orderDetails",1]'>待发布货源</li>
+                <li [routerLink]='["./orderDetails",0]'>货源历史</li>
+            </ul>
+        </div>
+        <div class="right">
+            <div class="nen">
+               <router-outlet></router-outlet>
+            </div>
+           
+        </div>

@@ -1,0 +1,90 @@
+<div class="right-top">
+  <span>填写货源信息</span>
+  <span>确认发货信息</span>
+  <span>支付保证金（担保金）</span>
+  <span>发布成功</span>
+</div>
+<div class="right-bottom">
+  <h3>货源信息</h3>
+  <div class="message">
+    <ul class="ul">
+      <li><a>*</a>货物名称：<input ngModel name="goodsName" required type="text" /></li>
+      <li><a>*</a>货物数量：<input ngModel name="goodsAmount" required type="text" /> 吨</li>
+      <li><a>*</a>货物运费：<input ngModel name="freightPrice" required type="text" /> 元/吨</li>
+      <li><a>*</a>货物价值：<input ngModel name="goodsPrice" required type="text" /> 元/吨</li>
+      <li><a>*</a>货物价格：<input ngModel name="goodsSale" required type="text" /> 元/吨</li>
+      <li><a>*</a>最晚接单时间：<input onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss', min: laydate.now()})" ngModel name="endTime" required id="endTime" #endTime readonly="readonly" class="layui-input" /></li>
+      <!-- <img style="margin-left:0.2rem" src="../../../../assets/images/icon.png"> -->
+      <!--id="LAY_demorange_s"  -->
+      <li><a>*</a>最晚装货时间：<input onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss',min: laydate.now()})" ngModel name="latestArrivalTime" required #latestArrivalTime readonly="readonly" class="layui-input" /></li>
+      <!-- id="LAY_demorange_e"id="latestArrivalTime" -->
+    </ul>
+    <ul class="ul2">
+      <span style="float: left;padding-left: 1rem;"><a style="color: #e85529">*</a>其他描述</span>
+      <li [class.special]="AdditionalTip[i]" (click)="AdditionalTip_click(i)" *ngFor="let tip of tips;let i=index">{{tip}}</li>
+
+    </ul>
+    <div class="text1">
+      <p>备注（选填）</p>
+      <textarea name="remark" style="width: 95%;height: 5rem;margin-top: 1rem;display:block;line-height: 2rem"></textarea>
+    </div>
+    <div class="text">
+      <p>添加图片（选填）</p>
+      <div class="text2" *ngFor="let j=index; let img of imgList">
+        <div class="img" [ngStyle]="{'background-image':'url(' + img + ')'}"></div>
+        <span (click)="removeImage(j)">删除</span>
+      </div>
+
+      <!-- <div class="text2">
+          <div class="img"></div>
+          <span>删除</span>
+        </div> -->
+      <label *ngIf="imgList.length<6" class="text2" id="upload" for="file">
+          <div class="img"></div>
+
+          <!-- 添加照片 -->
+        </label>
+      <input style="visibility:hidden;" type="file" id="file" value="" />
+
+    </div>
+    <div class="map">
+      <h3 style="border-top: 1px solid #cccccc; padding-left:3rem; "><span style="color: #e85529;">*</span>发货信息</h3>
+      <div class="map2">
+        <div *ngFor="let item of sendlist" class="map3" style="position: relative">
+
+          <span style="padding-top: 0.8rem">{{item.province}} {{item.city}}（{{item.name}} 发）</span>
+          <span>{{item.company}}</span>
+          <span>{{item.province}} {{item.city}} {{item.county}} {{item.town}} {{item.address}}</span>
+          <span>{{item.phone}}</span>
+          <span (click)="address()" style="position: absolute;right: 1rem;bottom: 0.75rem;color: #0a01ff;cursor: pointer;">修改发货信息</span>
+        </div>
+        <div class="map3" *ngIf="sendlist.length==0">
+          <span (click)='address()'  style="text-align: center;line-height: 9rem;color: #0a01ff;cursor: pointer;">添加收货信息</span>
+        </div>
+
+      </div>
+      <h3 style="border-top: 1px solid #cccccc; padding-left:3rem; "><span style="color: #e85529;">*</span>收货信息</h3>
+      <div class="map2">
+        <div class="map3" *ngFor="let item of receivelist" style="position: relative">
+          <!-- *ngFor="let item of receivelist"  -->
+          <!-- <span (click)='add()' style="text-align: center;line-height: 9rem;color: #0a01ff;cursor: pointer;">添加收货信息</span> -->
+          <span style="padding-top: 0.8rem">{{item.province}} {{item.city}}（{{item.name}} 收）</span>
+          <span>{{item.company}}</span>
+          <span>{{item.province}} {{item.city}} {{item.county}} {{item.town}} {{item.address}}</span>
+          <span>{{item.phone}}</span>
+          <span (click)="add()" style="position: absolute;right: 1rem;bottom: 0.75rem;color: #0a01ff;cursor: pointer;">修改收货信息</span>
+        </div>
+        <div class="map3" *ngIf="receivelist.length==0">
+          <span (click)='add()'  style="text-align: center;line-height: 9rem;color: #0a01ff;cursor: pointer;">添加收货信息</span>
+        </div>
+      </div>
+    </div>
+    <div class="but">
+      <button (click)="onSubmit()">下一步</button>
+
+
+      <!-- <button>取消</button> -->
+    </div>
+  </div>
+
+</div>

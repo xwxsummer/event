@@ -1,0 +1,87 @@
+<div class="right-top">
+  <span>填写货源信息</span>
+  <span>确认发货信息</span>
+  <span>支付保证金（担保金）</span>
+  <span>发布成功</span>
+</div>
+<div class="box">
+  <h4><span>*</span>货源信息</h4>
+  <table class="layui-table">
+    <colgroup>
+      <col width="150">
+      <col width="200">
+      <col>
+    </colgroup>
+    <thead style="background:#f3f6f8;">
+      <tr>
+        <th>货源单号</th>
+        <th>货物信息</th>
+        <th>收货地址</th>
+        <th>收货单位</th>
+        <th>发货地址</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{info?.orderNo}}</td>
+        <td>货物名称：{{info?.goodsName}}<br/> 货物运费：{{info?.freightPrice}}元/吨<br/> 货物数量：{{info?.goodsAmount}}吨<br/> 货物价值：{{info?.goodsPrice}}元/吨<br/>货物价格：{{info?.goodsSale}}元/吨</td>
+        <td>{{info?.receiveProvince}} {{info?.receiveCity}} {{info?.receiveCounty}} {{info?.receiveTown}} {{info?.receiveAddress}}</td>
+        <td>{{info?.receiveCompany}}</td>
+        <td>{{info?.sendProvince}} {{info?.sendCity}} {{info?.sendCounty}} {{info?.sendTown}} {{info?.sendAddress}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <h4><span>*</span>担保赔偿</h4>
+  <div class="pay layui-form">
+      <input  type="checkbox" name="" value="">
+      <span>马上来平台担保</span>
+      <span style="float: right;color:#e85529; padding-right:10%;">{{info?.insuranceFee}}元</span>
+  </div>
+  <h4><span>*</span>需支付保证金： <span>{{info?.ownerDeposit}}元</span></h4>
+  <div class="pay">
+      <!-- <input style="outline:none" type="checkbox" name="" value=""> -->
+      <span>马上来钱包</span>
+      <span style="float: right;color:#e85529;padding-right:10%;">需支付{{info?.ownerDeposit}}元</span>
+  </div>
+  <h4><span>*</span>马上来钱包支付密码</h4>
+  <!-- <input class="input" type="password" maxlength="6" id="password"> -->
+  <!-- <table id="number_input" border="0" cellspacing="0" cellpadding="0">
+    <tbody>
+    <tr>
+      <td class="input-item"></td>
+      <td class="input-item"></td>
+      <td class="input-item"></td>
+      <td class="input-item"></td>
+      <td class="input-item"></td>
+      <td class="input-item"></td>
+    </tr>
+    </tbody>
+  </table> -->
+  <!-- <div class="text">
+    <input type="password" name="" value=""maxlength="1">
+    <input type="password" name="" value=""maxlength="1">
+    <input type="password" name="" value=""maxlength="1">
+    <input type="password" name="" value=""maxlength="1">
+    <input type="password" name="" value=""maxlength="1">
+    <input type="password" name="" value=""maxlength="1">
+  </div> -->
+
+  <div class="alieditContainer" id="payPassword_container">
+      <input minlength="6" maxlength="6" tabindex="1" id="payPassword_rsainput" name="payPassword_rsainput" class="ui-input input i-text" oncontextmenu="return false" onpaste="return false" oncopy="return false" oncut="return false" autocomplete="off" value="" type="password">
+      <div class="sixDigitPassword" tabindex="0">
+          <i class="active"><b></b></i>
+          <i><b></b></i>
+          <i><b></b></i>
+          <i><b></b></i>
+          <i><b></b></i>
+          <i><b></b></i>
+          <span class="guangbiao" style="left:0px;"></span>
+      </div>
+  </div>
+
+
+
+  <span class="span">请输入6位支付密码</span>
+  <button type="submit" (click)="pay()" class="button">确认支付</button>
+
+</div>

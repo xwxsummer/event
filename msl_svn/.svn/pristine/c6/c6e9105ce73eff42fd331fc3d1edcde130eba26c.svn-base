@@ -1,0 +1,210 @@
+import { Component,OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { RouterModule,ActivatedRoute, Router } from '@angular/router';
+import { myGoodsService } from './myGoods.service';
+import { uploading } from '../fragment/uploading';
+import { Scan } from '../fragment/scan';
+declare var mui: any;
+declare var $ : any;
+
+
+@Component({
+  selector: 'app-myGoods',
+  templateUrl: './myGoods.component.html',
+  styleUrls: ['./myGoods.component.css'],
+  providers:[ myGoodsService ]
+
+})
+export class MyGoods implements OnInit{
+  market_title="我的货源";
+  public node;//元素
+  public myOrderNo:string;//主单订单编号
+  public cancelReason:string;//取消原因
+  public goodsResidue:string;//剩余货单数
+  public uploading:uploading;//点击加载更多
+  public Scan:Scan;//扫一扫
+  public data=[];
+  public data1=[];
+  public dataRefuse=[];//取消原因
+  public isShow:boolean;
+  AdditionalTip = [];//取消原因显示
+  constructor(
+      public router: Router,
+      public titleService: Title,
+      public service : myGoodsService
+  ){
+    this.uploading=new uploading(1,false,3,"");
+    this.Scan=new Scan(this.service);
+  }
+  //刷新页面
+  uploadInfo(){
+    this.uploading.page=1;
+    this.data=[];
+    //查询货源列表
+    this.service.getOrderInfo(this.uploading.page)
+        .subscribe(data=>{
+          $('.mui-scroll-wrapper').css('margin-top',"2.5rem");//设置距顶部高度
+          if(data.code==0){
+            this.data1=data.data;
+            if(this.data1.length==0){
+              this.uploading.noneIfno=2;
+            }else{
+              this.uploading.noneIfno=1;
+              for(let i=this.data1.length-1;i>=0;i--){
+                this.data.push(this.data1[i]);
+              }
+              for(let x=0;x<this.data.length;x++){
+                this.data[x].freightPrice=this.data[x].freightPrice.toFixed(2);
+              }
+              this.uploading.page=this.uploading.page+1;
+            }
+          }else{
+            mui.toast(data.msg,{ duration:'short', type:'div' });
+          }
+        });
+  }
+
+  ngOnInit(): void {
+    let self = this;
+    this.titleService.setTitle('我的货源');
+    this.myOrderNo="";
+    this.isShow=false;
+    mui('.mui-scroll-wrapper').scroll({
+      deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+    });
+    this.uploadInfo();
+    //获取取消原因
+    this.service.getSystemLabelByType(2)
+        .subscribe(data=>{
+          if(data.code==0){//成功
+            for(let b=0;b<data.data.length;b++){
+              this.AdditionalTip.push(false);
+            }
+            this.dataRefuse=data.data;
+          }else{
+            mui.toast(data.msg,{ duration:'short', type:'div' });
+          }
+        });
+    $('.mui-scroll-wrapper').on('touchend',function(){
+      let viewH =$(this).height(),//内容可见高度
+          contentH =$(this).get(0).scrollHeight,//滚动当前距底部高度
+          totalHeight =$(this).children().height(),//内容总高度
+          scrollTop =$(this).scrollTop();//滚动高度
+      if(contentH - viewH - scrollTop <= 80) { //到达底部100px时,加载新内容
+        //if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
+        // 这里加载数据..
+        self.moreInfo();
+      }else if(contentH-totalHeight >= 180){
+        console.log('下拉刷新');
+        self.uploadInfo();
+        $('<div>').attr('class','mui-pull-loading mui-icon mui-spinner').attr('style','display:block;margin: 30px auto -10px;').insertBefore('.mui-scroll');//.mui-scroll>.data:first-of-type'
+        setTimeout(()=>{
+          $('.mui-pull-loading').remove();
+          mui.toast('刷新成功');
+        },1000);
+
+      }
+
+    });
+  }
+  //扫一扫
+  saoYiSao(){
+    this.Scan.saoYiSao();
+  }
+  //取消原因清空
+  clearResult(){
+    for(let s=0;s<this.AdditionalTip.length;s++){
+      this.AdditionalTip[s]=false;
+    }
+  }
+  //充值运费
+  prePaidFreight(){
+    this.router.navigateByUrl("myGoods/PrepaidFreight");
+  }
+
+  //货源信息
+  sourceInfo(orderNo) {
+    console.log(orderNo);
+    this.router.navigateByUrl("myGoods/SourceInfo?number="+orderNo);
+  }
+
+  //取消原因
+  activate(status,orderNo,goodsResidue){
+    this.goodsResidue=goodsResidue+"";
+    this.myOrderNo=orderNo+"";
+    this.node=mui(event.target)[0].parentNode.parentNode;
+    if(status==2){
+      mui('#sheet1').popover('toggle');
+    }else if(status==10){
+      this.isShow=true;
+    }
+  }
+  //点击取消
+  goodsRefuse(){
+    this.clearResult();
+    this.cancelReason="";
+    mui('#sheet1').popover('hide');
+  }
+  //确认取消
+  goodsCancle(){
+    if(this.cancelReason){
+      //根据主单编号取消主单剩余货源
+      this.goodsRefuse();
+      this.service.cancelInfoByMainOrder(this.myOrderNo,this.cancelReason)
+          .subscribe(data=>{
+            if(data.code==0){//成功
+              this.node.remove();
+              this.clearResult();
+              mui.toast("取消成功",{ duration:'short', type:'div' });
+            }else{
+              mui.toast(data.msg,{ duration:'short', type:'div' });
+            }
+          });
+    }else{
+      mui.toast("请选择取消原因",{ duration:'short', type:'div' });
+    }
+
+  }
+
+  //点击加载更多
+  moreInfo(){
+    this.uploading.isLoading=true;
+    //查询货源列表
+    this.service.getOrderInfo(this.uploading.page)
+        .subscribe(data=>{
+          if(data.code==0){//成功
+            this.uploading.isLoading=false;
+            if(data.data.length==0){
+              this.uploading.loadingMore="已经到底了";
+            }else{
+              this.uploading.loadingMore="";
+              for(var i=0;i<data.data.length;i++){
+                this.data.push(data.data[i]);
+              }
+              this.uploading.page=this.uploading.page+1;
+            }
+          }else{
+            mui.toast(data.msg,{ duration:'short', type:'div' });
+          }
+        });
+  }
+
+  //接单查询
+  Order(number){
+    this.router.navigateByUrl("myGoods/Order?number="+number);
+  }
+  //点击取消
+  myGoods_cancle0(index,refuseName){
+    this.cancelReason=refuseName;
+    this.clearResult();//取消原因清空
+    this.AdditionalTip[index]=true;
+  }
+  //取消全部订单
+  cancelOrder(info){
+    this.isShow=false;
+    if(info==0){
+    }else{
+      this.router.navigateByUrl("myGoods/CancelInfoOrderAll?info="+info+"&orderNo="+this.myOrderNo+"&goodsResidue="+this.goodsResidue);
+    }
+  }
+}

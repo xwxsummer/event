@@ -1,0 +1,21 @@
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+declare var mui: any;
+declare var $: any;
+import { deliverGoodsService } from '../deliverGoods/deliverGoods.service';
+import { Title }from '@angular/platform-browser';
+@Component({
+  selector: 'app-sellgoods',
+  templateUrl: './sellgoods.component.html',
+  styleUrls: ['./sellgoods.component.css'],
+  providers:[ deliverGoodsService ]
+})
+export class SellgoodsComponent implements OnInit {
+  constructor(
+  
+  ) { }
+
+  ngOnInit() {
+  }
+
+}

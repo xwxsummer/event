@@ -1,0 +1,17 @@
+.Success{
+  width: 70%;
+  height: 2rem;
+  line-height: 2rem;
+  border-radius: 5px;
+  margin: 0 auto;
+  background-color: #ea5529;
+  color: #ffffff;
+  font-size: 0.9rem;
+  border:none;
+}
+.m30{
+  margin-top: 30px;
+}
+input:disabled {
+  background-color: #fff;
+}

@@ -1,0 +1,71 @@
+/**
+ * Created by CLX on 2017/5/13.
+ */
+/**
+ * Created by Administrator on 2017/5/2 0002.
+ */
+import { Http,Jsonp,URLSearchParams,Headers,Response } from '@angular/http';
+import { Observable } from 'rxjs';
+import {imgCompress} from "../deliverGoods/Remarks/imgCompress";
+import 'rxjs/add/operator/map';
+import  'rxjs/Rx';
+declare var mui: any;
+declare var $: any;
+
+//本地缓存
+export class imgData{
+    constructor(
+        public data:string,
+        public type:string
+    ){}
+}
+export class upLoadImg{
+    constructor(
+        public service
+    ){
+        }
+    //上传图片
+    UpLoadImg(positiveFile,positiveUpload,imgList,imgPhoto){
+        var filechooser = document.getElementById(positiveFile);
+        $(positiveUpload)
+            .on("touchstart", function() {
+                $(this).addClass("touch")
+            })
+            .on("touchend", function() {
+                $(this).removeClass("touch")
+            });
+        let service = this.service;
+        filechooser.onchange = function() {
+            if (!(<HTMLInputElement>this).files.length) return;
+            var files = Array.from((<HTMLInputElement>this).files);
+            if (files.length > 1) {
+                alert("最多同时只可上传6张图片");
+                return;
+            }
+            files.forEach(function(file, i) {
+                if (!/\/(?:jpeg|png|gif)/i.test(file.type)) return;
+                imgCompress(file).then(function(result) {
+                    if(imgList.length>0){
+                        imgList[0]=new imgData(<string>result,file.type);
+                        service.upBase64Image(<string>result).then(data=>{
+                            //sessionStorage[imgPhoto]=data.json().data.domain;
+                            if(data.json().code==0){
+                                sessionStorage[imgPhoto]=data.json().data.pathList[0];
+                                 }
+                        });
+                    }else{
+                        imgList.push(new imgData(<string>result,file.type));
+                        service.upBase64Image(<string>result).then(data=>{
+                            if(data.json().code==0){
+                                sessionStorage[imgPhoto]=data.json().data.pathList[0];
+
+                            }
+                        });
+                    }
+
+                });
+            })
+        };
+    }
+
+}

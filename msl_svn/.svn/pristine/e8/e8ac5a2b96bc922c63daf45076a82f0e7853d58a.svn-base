@@ -1,0 +1,12 @@
+<div class="big">
+    <img src="../assets/images/mslLogo.png" class="mslLogo" alt=""/>
+    <div class="fonSml col_333 text_center">马上来货运，需要就马上来！</div>
+    <div class="fon85 text_center m-t10">版本号：v1.0</div>
+    <div class="aboutUsBottom text_center">
+        <div class="lan fonSml">马上来用户协议</div>
+        <div class="fonSml col_333 m-t10 contactUs">客服电话：888888888</div>
+        <div class="fon85">北京诚联信科技有限责任公司 版权所有</div>
+        <div class="fon85">copyright@2011-2017 CHENGLIANXIN</div>
+        <div class="fon85">All Rights Reserved</div>
+    </div>
+</div>

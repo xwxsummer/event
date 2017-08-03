@@ -1,0 +1,64 @@
+<div class="mui-scroll-wrapper">
+  <div class="mui-scroll">
+    <div class="box">
+      <div class="header">
+        <div class="header_center">
+          <div class="left">
+            <div class="to">
+              <img src="{{data?.headImg}}" alt="" class="w100" style="border-radius: 50%;">
+            </div>
+            <div class="img">
+              <img src="../assets/images/certifiSuccess.png" alt=""/>
+            </div>
+          </div>
+          <div class="right">
+            <div class="right_top">
+              <span class="fonSml">{{data?.name}}</span>
+              <span style="font-size:0.75rem">驾龄{{driverAge}}年</span>
+            </div>
+            <div class="right_bottom">
+              <div class="right_bottom_1">
+                <span style="font-size:0.75rem">好评率{{haoping}}%</span>
+            <span>
+              <img *ngFor="let star of this.starImg" src="{{star}}">
+            </span>
+                <span>已接单{{data?.orderCount}}单</span>
+              </div>
+              <div class="phone" (click)="call(data.mobile)"></div>
+            </div>
+            <div class="blacklist" *ngIf="isBlack">
+              <span (click)="removeBlackList(data.mobile)">移除黑名单</span>
+            </div>
+            <div class="blacklist" *ngIf="!isBlack">
+              <span (click)="addBlackList(data.mobile)">加入黑名单</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--<div class="box2 b-b" *ngIf="data?.truckNo">
+        <div class="center b-t">
+          <h4 class="fonSml">车辆信息</h4>
+          <div class="left">
+            <span>车牌号：{{data?.truckNo}}</span>
+            <span>品牌：{{data?.brand}}</span>
+            <span>车型：{{data?.model}}</span>
+          </div>
+          <div class="right">
+            <span>载重：{{data?.load.toFixed(2)}}吨</span>
+          </div>
+        </div>
+      </div>-->
+      <div class="bottom b-t m-t10">
+        <div class="center">
+          <h4 class="b-b fonSml">{{data?.evaluateCount}}条评价</h4>
+          <div class="evaluate">
+            <span *ngFor="let site of data?.list">{{site.label}}+{{site.num}}</span>
+            <!--<span>时间延误+1</span>-->
+            <!--<div (click)="See()">查看全部</div>-->
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,87 @@
+import { Component, OnInit } from '@angular/core';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+import {Api} from '../../../api';
+import {Ajax} from '../../../ajax';
+import {Http} from "@angular/http";
+declare let AMap;
+declare let Date;
+@Component({
+  selector: 'app-trajectory-map',
+  templateUrl: './trajectory-map.component.html',
+  styleUrls: ['./trajectory-map.component.css']
+})
+export class TrajectoryMapComponent implements OnInit {
+  public ajax: Ajax;
+  public time: string;
+  constructor(
+    public http: Http,
+    public router: Router,
+    public activatedRoute: ActivatedRoute
+  ) {
+    this.ajax = new Ajax(this.http);
+  }
+  //返回按键
+  back(){
+    window.history.go(-1);
+  }
+  ngOnInit() {
+
+
+    let childNo = this.activatedRoute.snapshot.params['id'];
+
+    this.ajax.myget(Api.sparsePointRecords + '/' + childNo).subscribe(data => {
+      console.log(data.data);
+      let map = new AMap.Map('container', {
+        resizeEnable: true,
+        center: data.data[0].coordinate,
+        zoom: 15
+      });
+      let lineArr = data.data.map(i => i.coordinate);//路径坐标
+      console.log('路径：', lineArr);
+      let polyline = new AMap.Polyline({
+        path: lineArr,          //设置线覆盖物路径
+        strokeColor: "#3366FF", //线颜色
+        strokeOpacity: 0.8,       //线透明度
+        strokeWeight: 5,        //线宽
+        strokeStyle: "solid",   //线样式
+        strokeDasharray: [10, 5], //补充线样式
+        geodesic: true            // 绘制大地线
+      });
+      polyline.setMap(map);//画线
+
+      let marker = new AMap.Marker({
+        position: data.data[0].coordinate//起点坐标
+      });
+      marker.setMap(map);//设置起点标记
+
+      let marker1 = new AMap.Marker({
+        position: data.data.slice(-1)[0].coordinate//终点坐标
+      });
+
+      marker1.setMap(map);//设置终点标记
+
+      let time = new Date(new Date(data.data.slice(-1)[0].time.replace(' ', 'T')) - new Date(data.data[0].time.replace(' ', 'T')));
+      this.time = `总时间:${time.getUTCHours()}时${time.getUTCMinutes()}分${time.getUTCSeconds()}秒`;
+      console.log('总时间:', this.time);
+
+      let content = '<div style="width: 100%;border-radius:5px;height: 2rem;line-height:2rem;background-color: white;color:#000;">' + this.time + '</div>';
+      AMap.plugin(['AMap.InfoWindow','AMap.ToolBar','AMap.Scale'], function() {
+
+        map.addControl(new AMap.ToolBar({ visible: true }));
+        map.addControl(new AMap.Scale());
+        let infowindow = new AMap.InfoWindow({
+          isCustom: true,  //使用自定义窗体
+          content: content,
+          offset: new AMap.Pixel(0, -30)
+        });
+        infowindow.open(map, data.data[0].coordinate);
+      });
+
+
+    });
+
+
+
+  }
+
+}

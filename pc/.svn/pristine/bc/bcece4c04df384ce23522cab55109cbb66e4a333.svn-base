@@ -1,0 +1,65 @@
+a{
+text-decoration:none;
+}
+.left{
+    width: 15%;
+    height: 100%;
+    float: left;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    border-left: 1px solid #cccccc;
+}
+.left a{
+    cursor: pointer;
+}
+.left li:hover{
+    background: #efeff4;
+}
+.deliverGoods{
+    display: block;
+    height: 70px;
+    text-align: center;
+    line-height: 70px;
+    border-bottom: 1px solid #cccccc;
+    color: #999999;
+    background: url("../../../assets/images/fbhy.png") no-repeat 2rem center;
+}
+.details{
+    display: block;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    color: #999999;
+    font-size: 16px;
+    background: url("../../../assets/images/xiangqing.png") no-repeat 2rem center;
+}
+.left ul li{
+    list-style: none;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #333333;
+    cursor: pointer;
+    outline: none;
+}
+.left .a{
+    display: block;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    color: #999999;
+    background: url("../../../assets/images/xiangqing.png") no-repeat 2rem center;
+}
+.right{
+    margin-left: 15%;
+    width: 85%;
+    height:100%;
+    background: #ffffff;
+    position: relative;
+    border-bottom: 1px solid #cccccc;
+    /* overflow:scroll; */
+}
+.nen{
+    height:100%;
+    /* overflow:scroll; */
+}

@@ -1,0 +1,44 @@
+
+.header{
+    position: relative;
+    top:20px;left:30px;
+}
+.header-left {
+  
+    float:left; 
+   }
+.header-right{
+    float:left;
+    margin-left:20px;
+}
+.content{
+    position: relative;
+    top:200px;
+}
+.btn{
+    font-size: 20px;
+    text-align: center;
+    line-height: 50px;
+
+}
+.footer{
+    position: relative;
+    top:600px;
+    text-align: center;
+    font-size: 18px;
+}
+.form-control{
+    height: 50px;
+    border-radius: 10px;
+    border-color: #fff;
+}
+.fform{
+    padding: 20px;
+}
+.btns{
+    border-radius: 10px;
+    border-color: #fff;
+    width: 180px;
+    height: 60px;
+    background-color: red;
+}

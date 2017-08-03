@@ -1,0 +1,11 @@
+<form name="submitForm" role="form">
+  <div class="changePhone fonNormal col_333 b-b">请输入{{mobile}}收到的验证码</div>
+
+  <div class="posi_relative b-b">
+    <input class="input_org" type="tel" name="captcha" placeholder="请输入验证码" required [(ngModel)]="myCaptcha" #captcha="ngModel" maxlength="6"/>
+    <div class="posi_abslotu ea5529 posi_right transformY50 fonSml" (click)="changCaptcha()"><span class="clo_ccc m-r16">|</span>{{yzm}}</div>
+  </div>
+  <div class="m0_auto" style="width: 80%;">
+    <input (click)='success()' type="submit" class="bindFinish text_center fff fonSml fon900 height_3" id="submit" value="下一步" [disabled]="submitlag"/>
+  </div>
+</form>

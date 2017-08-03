@@ -1,0 +1,36 @@
+<div class="box b-b">
+    <div class="box_c">
+        <span>单号：</span>
+        <span>{{data?.serialNo}}</span>
+    </div>
+    <div class="box_c">
+        <span>类型：</span>
+        <span *ngIf="data?.type == 1">充值</span>
+        <span *ngIf="data?.type == 2">支出</span>
+        <span *ngIf="data?.type == 3">收入</span>
+        <span *ngIf="data?.type == 4">提现</span>
+        <span *ngIf="data?.type == 5">退款</span>
+    </div>
+    <div class="box_c">
+        <span *ngIf="data?.type == 1">充值：</span>
+        <span *ngIf="data?.type == 2">支出：</span>
+        <span *ngIf="data?.type == 3">收入：</span>
+        <span *ngIf="data?.type == 4">提现：</span>
+        <span *ngIf="data?.type == 5">退款：</span>
+        <span>{{data?.figure.toFixed(2)}}</span>
+    </div>
+    <div class="box_c">
+        <span>时间：</span>
+        <span>{{1497410672000| date:'yyyy-MM-dd HH:mm:ss'}}</span>
+    </div>
+    <div class="box_c">
+        <span>状态：</span>
+        <span *ngIf="data?.status == 0">失败</span>
+        <span *ngIf="data?.status == 1">进行中</span>
+        <span *ngIf="data?.status == 2">成功</span>
+    </div>
+    <div class="box_c">
+        <span>余额：</span>
+        <span>{{data?.residue.toFixed(2)}}</span>
+    </div>
+</div>

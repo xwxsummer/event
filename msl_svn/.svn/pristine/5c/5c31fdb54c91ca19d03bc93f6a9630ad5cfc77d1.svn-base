@@ -1,0 +1,8 @@
+<div class="box">
+    <div class="box2">
+      <span>充值成功</span>
+      <span>￥{{money.toFixed(2)}}</span>
+      <span>马上来货运</span>
+    </div>
+<input (click)='bank()' id="input" class="bindFinish text_center fonSml height36 m0_auto m-t3" type="button" name="" value="完成">
+</div>

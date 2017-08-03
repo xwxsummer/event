@@ -1,0 +1,12 @@
+<div class="left">
+  <a class="a" [routerLink]='["./personalMessage"]'>个人信息</a>
+  <ul>
+    <div class="a">地址管理</div>
+    <li [routerLink]='["./address"]'>发货信息管理</li>
+    <li [routerLink]='["./receivaddress"]'>收货信息管理</li>
+  </ul>
+   <a class="a" [routerLink]='["./business"]'>业务统计</a>
+</div>
+<div class="right">
+  <router-outlet></router-outlet>
+</div>

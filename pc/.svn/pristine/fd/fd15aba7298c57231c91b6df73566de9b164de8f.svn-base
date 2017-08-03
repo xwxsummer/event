@@ -1,0 +1,181 @@
+<div class="bgc"><div class="title h90 bt-b font24">{{title}}</div>
+<div *ngIf="totalNum==0" style="text-align:center;font-size:32px;">暂无相关信息</div>
+<div *ngIf="totalNum">
+<form #myForm="ngForm">
+<table class="search">
+	<tr>
+		<td>货源单号：<input ngModel name="orderNo" type="text" class="layui-input" sytle="width:150px"></td>
+		<td>发货人：<input  ngModel name="sendName" type="text" class="layui-input"></td>
+    <td>发布时间：
+      <input  ngModel name="startTime" readonly="readonly" id="startTime" class="layui-input" style="width:35%" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" > --
+      <input  ngModel name="endTime" style="width:35%" readonly="readonly"  id="endTime" class="layui-input" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+    </td>
+    <!-- <td>担保状态：<select ngModel name="dbState" class=" select layui-input"  style="font-size:8px">
+				<option></option>
+        <option>已担保</option>
+				<option>未担保</option>
+			</select>
+		</td> -->
+		<td><button class=" button layui-input" (click)="form(myForm.value)" style="color:#fff">筛&nbsp;选</button></td>
+	</tr>
+	<tr> 
+		<td>货源地：&nbsp;<input ngModel name="sendCity" type="text" class="layui-input"></td>
+    <td>目的地：<input ngModel name="receiveCity" type="text" class="layui-input"></td>
+		<td>收货单位：<input ngModel name="receiveCompany" type="text" class="layui-input"></td>
+		<!-- <td></td> -->
+		<td><button class="button layui-input" (click)="clear()" style="color:#fff">重&nbsp;置</button></td>
+	</tr>
+</table>
+</form>
+
+  <div class="layui-form">
+        <table class="layui-table" style="width:98%;margin-left:1%">
+          <colgroup>
+            <col width="150">
+            <col width="400">
+            <col width="100">
+            <col width="100">
+            <col width="100">
+            <col width="100">
+            <col width="200">
+          </colgroup>
+          <tr style="background-color:#f3f6f8">
+            <th>货源单号</th>
+            <th>货物信息</th>
+            <th>发货单位</th>
+            <th>收货单位</th>
+            <th>担保状态</th>
+            <th>货单状态</th>
+            <th>操作</th>
+          </tr> 
+          <tr *ngFor='let data of datas'>
+            <td>{{data.orderNo}}</td>
+            <td>
+              <div>
+                <span>货物名称：{{data.goodsName }}&nbsp;&nbsp;货物运费：{{data.freightPrice}}元/吨</span><br>
+                <span>收货地址：{{adress}}</span>
+              </div>
+            </td>
+            <td>{{data.sendCompany}}</td>
+            <td>{{data.receiveCompany}}</td>
+            <td>{{data.insurance==1?"已担保":"未担保"}}</td>
+            <td>
+              <span  *ngIf="data?.orderStatus==1">未发布</span>
+              <span  *ngIf="data?.orderStatus==2">已发布</span>
+              <span  *ngIf="data?.orderStatus==10">运输中</span>
+              <span  *ngIf="data?.orderStatus==11">暂停</span>
+              <span  *ngIf="data?.orderStatus==20">支付中</span>
+              <span  *ngIf="data?.orderStatus==30">完成</span>
+              <span  *ngIf="data?.orderStatus==40">取消</span>
+              <span  *ngIf="data?.orderStatus==60">支付失败</span>   
+            </td>
+            <td>
+              <a (click)="orderView(data?.orderNo)">查看</a>&nbsp;&nbsp;
+              <a *ngIf="data?.orderStatus==10||data?.orderStatus==2" (click)="judgeStatus(data.orderStatus,data.orderNo,data.goodsResidue,data.childNo)">取消</a>&nbsp;&nbsp;
+              <!--<a *ngIf="data?.orderStatus==1">删除</a> &nbsp;&nbsp;-->
+              <a (click)="pay(data?.orderNo)" *ngIf="data?.orderStatus==1">发布</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+<div class="paging">
+		<app-pagination [pageSize]="pageSize" [totalNum]="totalNum"  (pageChange)="changePageNum($event)"></app-pagination>
+</div>
+<!--弹框取消-->
+<div id="main">
+<div id="fullbg"></div> 
+<div id="dialog"> 
+
+    <div *ngIf="isShowDai">
+      选择取消原因：
+      <ul class="cancel_ul" >
+        <li class="cancel_li" [class.special]="AdditionalTip[i]" *ngFor="let siteRefuse of dataRefuse;let i=index" (click)="AdditionalTip_click(i,siteRefuse?.name)">{{siteRefuse?.name}}</li>
+      </ul>
+       <div class="button-class">
+          <button (click)="goodsCancle()">确定提交</button>
+          <button (click)="closeBg();">关闭</button> 
+        </div>
+    </div> 
+   
+   <div *ngIf="isShowJin">
+     <div>选择取消级别：</div> 
+<div class="layui-tab " style="border:none">
+  <ul class="layui-tab-title" style=" border-radius:10px">
+    <li class="layui-this" style="width:50%">取消剩余货单</li>
+    <li style="width:50%" (click)="cancelAll()">取消全部货单</li>
+  </ul>
+  <div class="layui-tab-content">
+    
+    <div class="layui-tab-item layui-show" style="margin-left:20px;margin-top:20px;">
+      <h2>未接单</h2><br>
+      <div>剩余货物数量：<span class="e85529">{{goodsResdue}}</span>吨</div>
+    </div>
+    <div class="button-class" style="text-align:center">
+    <button (click)="cancelRemain()">取消剩余</button>
+    <button (click)="closeBg();">关闭</button> 
+  </div>
+<!--按条件取消-->
+    <div class="layui-tab-item" id="hide">
+  <div class="shengyu">
+    <div class="height_3 padding_17 fonSml col_333 b-b">未接单</div>
+    <div class="height_3 padding_17 fonSml b-b back_fff">剩余货物数量：{{goodsResdue}}吨</div>
+    <div class="height_3 padding_17 fonSml col_333 b-b">待装车
+        <div class="mui-input-row mui-checkbox mui-right pull-right">
+            <label class="col_333">全选</label>
+            <input name="checkbox1" value="Item 1" type="checkbox" (click)="selectAll()" id="mySelectAll">
+        </div>
+    </div>
+    <div class="padding_17 fonSml b-b back_fff">
+        <div class="mui-input-row mui-checkbox mui-left">
+            <label class="col_333">{{data?.orderChildOwnerCancelGroupVOList[0].description}}</label>
+            <input name="checkbox1" value="Item 1" type="checkbox" (click)="checkNO0(data?.orderChildOwnerCancelGroupVOList[0].timeInterval,data?.orderChildOwnerCancelGroupVOList[0].totalCompensation)">
+        </div>
+        <div class="padding22"><span>接单数：{{danshu0}}单</span><span class="pull-right">预计赔偿：{{data?.orderChildOwnerCancelGroupVOList[0].totalCompensation}}元</span></div>
+    </div>
+    <div class="padding_17 fonSml b-b back_fff">
+        <div class="mui-input-row mui-checkbox mui-left">
+            <label class="col_333">{{data?.orderChildOwnerCancelGroupVOList[1].description}}</label>
+            <input name="checkbox1" value="Item 1" type="checkbox" (click)="checkNO1(data?.orderChildOwnerCancelGroupVOList[1].timeInterval,data?.orderChildOwnerCancelGroupVOList[1].totalCompensation)">
+        </div>
+        <div class="padding22"><span>接单数：{{danshu1}}单</span><span class="pull-right">预计赔偿：{{data?.orderChildOwnerCancelGroupVOList[1].totalCompensation}}元</span></div>
+    </div>
+    <div class="padding_17 fonSml b-b back_fff">
+        <div class="mui-input-row mui-checkbox mui-left">
+            <label class="col_333">{{data?.orderChildOwnerCancelGroupVOList[2].description}}</label>
+            <input name="checkbox1" value="Item 1" type="checkbox" (click)="checkNO2(data?.orderChildOwnerCancelGroupVOList[2].timeInterval,data?.orderChildOwnerCancelGroupVOList[2].totalCompensation)">
+        </div>
+        <div class="padding22"><span>接单数：{{danshu2}}单</span><span class="pull-right">预计赔偿：{{data?.orderChildOwnerCancelGroupVOList[2].totalCompensation}}元</span></div>
+    </div>
+    <div class="padding_17 fonSml b-b back_fff">
+        <div class="mui-input-row mui-checkbox mui-left">
+            <label class="col_333">{{data?.orderChildOwnerCancelGroupVOList[3].description}}</label>
+            <input name="checkbox1" value="Item 1" type="checkbox" (click)="checkNO3(data?.orderChildOwnerCancelGroupVOList[3].timeInterval,data?.orderChildOwnerCancelGroupVOList[3].totalCompensation)">
+        </div>
+        <div class="padding22"><span>接单数：{{danshu3}}单</span><span class="pull-right">预计赔偿：{{data?.orderChildOwnerCancelGroupVOList[3].totalCompensation}}元</span></div>
+    </div>
+    <div class="padding_17 fonSml b-b back_fff">
+    <div class="mui-input-row mui-checkbox mui-left">
+        <label class="col_333">{{data?.orderChildOwnerCancelGroupVOList[4].description}}</label>
+        <input name="checkbox1" value="Item 1" (checked)="flag0" type="checkbox" (click)="checkNO4(data?.orderChildOwnerCancelGroupVOList[4].timeInterval,data?.orderChildOwnerCancelGroupVOList[4].totalCompensation)">
+    </div>
+    <div class="padding22"><span>接单数：{{danshu4}}单</span><span class="pull-right">预计赔偿：{{data?.orderChildOwnerCancelGroupVOList[4].totalCompensation}}元</span></div>
+    </div>
+    <div class="height_3 padding_17 fonSml col_333 b-b">合计</div>
+    <div class="height_3 padding_17 fonSml b-b back_fff">预计赔偿：{{sumAll}}元</div>
+    <div class="padding_17 m-t10">
+        <div class="e85529 fonSml light2">温馨提示</div>
+        <p class="e85529 fon85">此赔偿金额仅供参考，最终结果以实际支付为准。</p>
+    </div>
+      <div class="button-class">
+    <button (click)="compensation()">确定提交</button>
+    <button (click)="closeBg();">关闭</button> 
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+</div> 
+</div> 
+</div> 
+</div>
+</div>

@@ -1,0 +1,188 @@
+.right-top {
+  height: 90px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.right-top span {
+  display: block;
+  width: 16%;
+  height: 3rem;
+  float: left;
+  color: #ffffff;
+  text-align: center;
+  line-height: 3rem;
+  position: absolute;
+  top: 2.5rem;
+  /*cursor: pointer;*/
+  /*background: url('../../../../assets/images/a.png') no-repeat;*/
+}
+
+.right-top span:nth-child(1) {
+  background: url('../../../../assets/images/a.png') no-repeat;
+  left: 3.2rem;
+  background-size: 100% 100%;
+}
+
+.right-top span:nth-child(2) {
+  background: url('../../../../assets/images/a2.png') no-repeat;
+  background-size: 100% 100%;
+  color: #999;
+  left: 23.2rem;
+}
+
+.right-top span:nth-child(3) {
+  background: url('../../../../assets/images/a2.png') no-repeat;
+  background-size: 100% 100%;
+  color: #999;
+  left: 43rem;
+}
+
+.right-top span:nth-child(4) {
+  background: url('../../../../assets/images/a2.png') no-repeat;
+  background-size: 100% 100%;
+  color: #999;
+  left: 63rem;
+}
+
+.right-bottom {
+  width: 98%;
+  float: left;
+  height: 80%;
+  border: 1px solid #cccccc;
+  margin: 15px 0 10px 10px;
+}
+
+.right-bottom h3 {
+  height: 45px;
+  font-size: 1rem;
+  color: #999999;
+  background: #f3f6f8;
+  line-height: 45px;
+  padding-left: 1rem;
+  border-bottom: 1px solid #cccccc;
+}
+
+.right-bottom .message {
+  height: 90%;
+  overflow-y: scroll;
+}
+
+.right-bottom .message .ul {
+  height: 8rem;
+  margin-left: 1rem;
+}
+
+.right-bottom .message .ul li {
+  float: left;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  width: 25%;
+}
+
+.right-bottom .message .ul li a {
+  color: #e85529;
+}
+
+.right-bottom .message .ul li input {
+  border-radius: 5px;
+  display: inline-block;
+  width: 40%;
+  height: 2rem;
+  border: 1px solid #afafaf;
+  background-color: transparent;
+}
+
+.right-bottom .message .ul2 {
+  height: 3rem;
+  line-height: 3rem;
+}
+
+.right-bottom .message .ul2 li {
+  float: left;
+  height: 2rem;
+  width: 10%;
+  color: #afafaf;
+  text-align: center;
+  line-height: 2rem;
+  border: 1px solid #afafaf;
+  border-radius: 5px;
+  margin-left: 2rem;
+  margin-top: 0.55rem;
+}
+
+.right-bottom .message .text {
+  padding-left: 1rem;
+  height: 12rem;
+  margin-top: 1rem;
+
+}
+.right-bottom .message .text p{
+  margin-top: 1rem;
+}
+.right-bottom .message .text1 {
+  padding-left: 1rem;
+  height: 8rem;
+}
+.right-bottom .message .text .text2 {
+  width: 12%;
+  height: 9rem;
+  margin-top: 10px;
+  margin-right: 15px;
+  float: left;
+}
+
+.right-bottom .message .text .text2 .img {
+  height: 7rem;
+  background: url("../../../../assets/images/img.png") no-repeat center center;
+  background-size: cover;
+}
+
+.right-bottom .message .text .text2 span {
+  padding-left: 3.8rem;
+  cursor: pointer;
+  color: #e85529;
+}
+
+.map2 {
+  height: 10rem;
+  border-bottom: 1px solid #cccccc;
+}
+
+.map3 {
+  border: 1px solid #cccccc;
+  margin: 10px;
+  width: 40%;
+  height: 9rem;
+  background: url("../../../../assets/images/deliverGoods_bottom.png") no-repeat bottom;
+  background-size: 32rem;
+  background-size: 100%;
+}
+
+.map3 span {
+  display: block;
+  padding-left: 2rem;
+  padding-top: 0.5rem;
+}
+
+.but button {
+  border: 0;
+  display: inline-block;
+  width: 10%;
+  height: 2.5rem;
+  text-align: center;
+  background: #e85529;
+  color: #ffffff;
+  border-radius: 5px;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.but button:nth-child(2) {
+  background: #cccccc;
+}
+
+.special{
+    border: 1px solid #ea5529!important;
+    color: #ea5529!important;
+}

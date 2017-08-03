@@ -1,0 +1,14 @@
+
+        <div class="left">
+            <a class="a" [routerLink]="['./accountDetails']">账户详情</a>
+            <ul>
+                <li [routerLink]="['./topup']">充&nbsp;值</li>
+                <li [routerLink]="['./withdrawal']">提&nbsp;现</li>
+                <li [routerLink]="['./cardManagement']">银行卡管理</li>
+                <li [routerLink]="['./payments']">收支明细</li>
+                <li [routerLink]="['./changePwd']">找回交易密码</li>
+            </ul>
+        </div>
+        <div class="right">
+           <router-outlet></router-outlet>
+        </div>

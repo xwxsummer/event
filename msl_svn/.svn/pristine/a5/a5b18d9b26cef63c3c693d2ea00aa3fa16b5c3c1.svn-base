@@ -1,0 +1,46 @@
+<div class="padding_17 fonSml clearfix">
+  <div class="yewotongji_flex pull-left">{{beginTime}}&nbsp;&nbsp;至&nbsp;&nbsp;{{endTime}}</div>
+  <div class="yewotongji_flex pull-right"  *ngIf="type=='1'">{{num}}条</div>
+  <div class="yewotongji_flex pull-right"  *ngIf="type=='2'">{{num}}元</div>
+</div>
+<div class="mui-scroll-wrapper" style="margin-top: 2rem;">
+  <div class="mui-scroll">
+    <div class="myGoods_content m-b10 back_fff b-t b-b" (click)="sourceInfo(site.orderNo)" *ngFor="let site of data">
+      <div class="b-b pT_10">
+        <div class="col_333 pR_10 pL_10 fon900">
+          <span>{{site.sendCity}}</span>
+          <div class="myGoods_jiantou posi_relative">
+            <img src="../assets/images/jian.png" alt="" class="w100"/>
+          </div>
+          <span>{{site.receiveCity}}（{{site.distance }}公里）</span>
+          <!--<span class="ea5529 pull-right">进行中</span>-->
+          <span class="ea5529 pull-right fonSml" *ngIf="site.orderStatus==1">待发布</span>
+          <span class="ea5529 pull-right fonSml" *ngIf="site.orderStatus==2">待接单</span>
+          <span class="ea5529 pull-right fonSml" *ngIf="site.orderStatus==10">进行中</span>
+          <span class="ea5529 pull-right fonSml" *ngIf="site.orderStatus==220">协商中</span>
+          <span class="ea5529 pull-right fonSml" *ngIf="site.orderStatus==30">已完成</span>
+          <span class="ea5529 pull-right fonSml" *ngIf="site.orderStatus==40">已取消</span>
+        </div>
+        <div class="pR_10 pL_10 m-b10 List">
+          <div>发货单位：{{site.sendCompany}}</div>
+          <div>收货单位：{{site.receiveCompany}}</div>
+          <div>货物名称：{{site.goodsName}}</div>
+          <div>货物余量：<span class="ea5529">{{site.goodsResidue.toFixed(2)}}</span>/{{site.goodsAmount.toFixed(2) }}{{site.goodsUnit}}</div>
+          <div>运费单价：{{site.goodsPrice.toFixed(2) }}元/吨</div>
+          <div>货物价值：{{site.freightPrice.toFixed(2)}}元/吨</div>
+          <div>货物价格：{{site.goodsSale.toFixed(2)}}元/吨</div>
+          <div>最晚接单时间：{{site.endTime }}</div>
+        </div>
+      </div>
+      <div class="pR_10 pL_10 myGoods_bottom">
+        <span>{{site.publishTime}}前</span>
+        <!--<span class="myGoods_cancel pull-right text_center" (click)="Order(site?.orderNo);$event.stopPropagation();" *ngIf="site.orderStatus==10||site.orderStatus==30">接单查询</span>-->
+      </div>
+    </div>
+    <!--<div *ngIf="uploading.noneIfno==1">-->
+      <!--<div (click)="moreInfo()" class="text_center m-b10 fonSml" *ngIf="!uploading.isLoading" id="loadingMore">{{uploading.loadingMore}}</div>-->
+      <!--<div (click)="moreInfo()" class="text_center m-b10 moreInfo" *ngIf="uploading.isLoading">正在加载 <img src="../assets/images/loading.jpg" alt=""/></div>-->
+    <!--</div>-->
+    <div class="text_center m-t3" *ngIf="uploading.noneIfno==2">暂无货款信息</div>
+  </div>
+</div>

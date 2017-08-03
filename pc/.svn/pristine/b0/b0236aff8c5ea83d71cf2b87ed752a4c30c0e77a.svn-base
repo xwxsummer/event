@@ -1,0 +1,33 @@
+.contents1,.contents2{
+    margin-left: 40px;
+}
+.divStyle{
+    height: 60px;
+    line-height: 60px;
+
+}   
+.input{
+    border-radius: 5px;
+    border:1px solid #e5e5e5;
+    height: 30px;
+    width:220px;
+}
+.button{
+    width:150px;
+    height: 30px;
+    line-height: 30px;
+    background-color:#e85529;
+    color:white;
+    border: none;
+    border-radius: 5px;
+}
+.verCode{
+    width:100px;
+    height:30px;
+    border:none;
+}
+.fontStyle{
+    color:#aaaaaa;
+    height:40px;
+    line-height:40px;
+}

@@ -1,0 +1,30 @@
+.box{
+  height: 100%;
+  width: 100%;
+}
+.box .box2{
+  height: 70px;
+  border-bottom: 1px solid #cccccc
+}
+.box2 span{
+
+  padding-left: 20px;
+  line-height: 70px;
+
+}
+/*.map{
+  height: 15%;
+  background: #cccccc;
+}*/
+.layui-btn{
+  color: #e85529;
+  border: 1px solid #e85529;
+  border-radius: 8px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.map .span{
+  padding-left: 5px;
+  color: #2b23ff;
+  cursor: pointer;
+}

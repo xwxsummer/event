@@ -1,0 +1,30 @@
+<div class="box">
+    <div class="title">
+        <div class="name">
+            <span>{{name}}</span>，
+            <span>欢迎登录马上来</span>，
+            <span (click)="b()">退出登录</span>
+        </div>
+    </div>
+    <div class="header">
+        <div class="span">
+            <span>马上来</span>
+            <span>91msl.com</span>
+        </div>
+
+        <ul class="ul">
+            <li [routerLink]="['./myGoods']">我的货源</li>
+            <li [routerLink]="['./myWallet']">我的钱包</li>
+            <li [routerLink]="['./personalCenter']">个人中心</li>
+        </ul>
+    </div>
+    <div class="content">
+       <router-outlet></router-outlet>
+    </div>
+    <div class="footer">
+        <span>关于马上来</span>|
+        <span>使用协议</span>|
+        <span>服务协议</span>|
+        <span>Powered By Chenglianxin  Copyright @ 2005-2017 All Rights Reserved</span>
+    </div>
+</div>

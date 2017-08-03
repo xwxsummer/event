@@ -1,0 +1,72 @@
+<div class="height36 text_center bgc_ea5529 fff fonSml posi_relative">{{market_title}}<img src="../assets/images/saoyisao.png" alt="" class="posi_abslotu posi_right transformY50" style="width: 20px;" (click)="saoYiSao()"/></div>
+<div class="mui-scroll-wrapper">
+  <div class="mui-scroll">
+    <div class="myGoods_content back_fff b-t b-b" (click)="sourceInfo(site?.orderNo)" *ngFor="let site of data">
+      <div class="b-b pT_10">
+        <div class="col_333 fonSml pR_10 pL_10 fon900 m-b10">
+          <span>{{site?.sendCity}}</span>
+          <div class="myGoods_jiantou posi_relative">
+            <img src="../assets/images/jiantou.png" alt="" class="jiantou w100"/>
+            <span class="col_999 fon85 posi_abslotu transformX50 pos_X50 jiantou_7">{{site?.distance}}公里</span>
+          </div>
+          <span>{{site?.receiveCity}}</span>
+          <span class="ea5529 pull-right fonSml" *ngIf="site?.orderStatus==1">待发布</span>
+          <span class="ea5529 pull-right fonSml" *ngIf="site?.orderStatus==2">待接单</span>
+          <span class="ea5529 pull-right fonSml" *ngIf="site?.orderStatus==10">进行中</span>
+          <span class="ea5529 pull-right fonSml" *ngIf="site?.orderStatus==220">协商中</span>
+          <span class="ea5529 pull-right fonSml" *ngIf="site?.orderStatus==30">已完成</span>
+          <span class="ea5529 pull-right fonSml" *ngIf="site?.orderStatus==40">已取消</span>
+        </div>
+        <div class="pR_10 pL_10 m-b10 mgGoodsList">
+          <div>发货单位：{{site?.sendCompany}}</div>
+          <div>收货单位：{{site?.receiveCompany}}</div>
+          <div>货物名称：{{site?.goodsName}}</div>
+          <div>剩余数量：<span class="ea5529">{{site?.goodsResidue.toFixed(2)}}</span>/{{site?.goodsAmount.toFixed(2) }}{{site?.goodsUnit}}</div>
+          <div>货物价值：{{site?.goodsPrice.toFixed(2) }}元/吨</div>
+          <div>运费单价：{{site?.freightPrice}}元/吨</div>
+          <div>截止日期：{{site?.endTime }}</div>
+          <div>最晚装货时间：{{site?.latestArrivalTime}}</div>
+        </div>
+      </div>
+
+      
+      <div class="pR_10 pL_10 myGoods_bottom">
+        <span *ngIf="site.publishTime!='0分钟'">{{site?.publishTime}}</span>
+        <span *ngIf="site.publishTime=='0分钟'">刚刚</span>
+        <span class="myGoods_cancel pull-right text_center" (click)="activate(site.orderStatus,site.orderNo,site.goodsResidue);$event.stopPropagation();" *ngIf="site.orderStatus==2||site.orderStatus==10">取&nbsp;&nbsp;消</span>
+        <span class="myGoods_cancel pull-right text_center" (click)="Order(site?.orderNo);$event.stopPropagation();" *ngIf="site.orderStatus==10">接单查询</span>
+        <span class="myGoods_cancel pull-right text_center" (click)="Order(site?.orderNo);$event.stopPropagation();" *ngIf="site.orderStatus==30">接单查询</span>
+      </div>
+    </div>
+    <!--<div *ngIf="uploading.noneIfno==1" style="margin-bottom: 35px;">-->
+      <!--<div class="text_center fon85" *ngIf="!uploading.isLoading" id="loadingMore">{{uploading.loadingMore}}</div>-->
+      <!--<div class="text_center fon85 moreInfo" *ngIf="uploading.isLoading">正在加载 <img src="../assets/images/loading.jpg" alt=""/></div>-->
+    <!--</div>-->
+    <div class="text_center m-t3" *ngIf="uploading.noneIfno==2">暂无货源信息，请发布货源</div>
+  </div>
+</div>
+
+
+<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action">
+  <!-- 可选择菜单 -->
+  <div class="cancle_resuit height36 fonSml pl_10 fff b-b padding_17">取消原因<span class="mui-icon mui-icon-closeempty pull-right cancle_resuit b-b" (click)="goodsRefuse()" style="font-size: 35px;"></span></div>
+  <ul class="mui-table-view back_fff cancel_ul padding_17">
+    <li class="mui-table-view-cell cancel_li" [class.special]="AdditionalTip[i]" *ngFor="let siteRefuse of dataRefuse;let i=index" (click)="myGoods_cancle0(i,siteRefuse?.name)">{{siteRefuse?.name}}</li>
+    <li class="cancle_yes">
+      <div class="m0_auto text_center bgc_ea5529 fff height36 fonSml">
+        <span href="" class="sureCancle" (click)="goodsCancle()"><span>确定提交</span></span>
+      </div>
+      </li>
+  </ul>
+</div>
+
+
+<div id="contact_show" class="ceng_show clearfix col_333 fonSml posi_relative" *ngIf="isShow">
+  <ul>
+    <li (click)="cancelOrder(1)">取消剩余货单</li>
+    <li (click)="cancelOrder(3)">取消全部货单</li>
+    <li (click)="cancelOrder(0)">先不取消</li>
+  </ul>
+  <span class="posi_abslotu cancel_span col_333 mui-icon mui-icon-closeempty" (click)="cancelOrder(0)"></span>
+</div>
+<div id="contact_bg" class="bg" *ngIf="isShow"></div>

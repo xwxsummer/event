@@ -1,0 +1,70 @@
+<div class="posi_relative m-b5 back_fff b-t b-b  fonSml" style="height:2.5rem;margin-bottom:10px;">
+  <div class="height36 text_center ea5529 back_fff fonNormal b-b" *ngIf="data?.orderStatus==1">待付款</div>
+  <div class="height36 text_center ea5529 back_fff fonNormal b-b" *ngIf="data?.orderStatus==2">待接单</div>
+  <div class="height36 text_center ea5529 back_fff fonNormal b-b" *ngIf="data?.orderStatus==10">进行中</div>
+  <div class="height36 text_center ea5529 back_fff fonNormal b-b" *ngIf="data?.orderStatus==220">协商中</div>
+  <div class="height36 text_center ea5529 back_fff fonNormal b-b" *ngIf="data?.orderStatus==30">已完成</div>
+  <div class="height36 text_center ea5529 back_fff fonNormal b-b" *ngIf="data?.orderStatus==40">已取消</div>
+  <img src="../assets/images/goback.png" class="goback posi_abslotu posi_left transformY50" (click)="goBack()" alt=""/>
+  <img src="../assets/images/home.png" class="home posi_abslotu posi_right transformY50" (click)="goHome()" alt=""/>
+</div>
+<div class="goodsDetail back_fff padding16 b-t b-b fonSml">
+  <div class="height36">
+    {{data?.sendCity}}&nbsp;&nbsp;
+    <span *ngIf="data?.orderType==1"><img src="../assets/images/jian.png" class="jian" alt=""/>&nbsp;&nbsp;{{data?.receiveCity}}&nbsp;&nbsp;&nbsp;（{{data?.distance}}公里）</span></div>
+  <ul class="">
+    <li>货物名称：{{data?.goodsName}}</li>
+    <li>货物剩余量：<span class="ea5529">{{fmoney(data?.goodsResidue)}}</span>/{{fmoney(data?.goodsAmount)}}吨</li>
+    <li *ngIf="data?.orderType==1">货物价值：{{fmoney(data?.goodsPrice)}}元/吨</li>
+    <li *ngIf="data?.orderType==1">货物价格：{{fmoney(data?.freightPrice)}}元/吨</li>
+    <li *ngIf="data?.orderType==2">货物单价：{{data?.freightPrice.toFixed(2)}}元/吨</li>
+    <li>运费单价：{{data?.freightPrice}}元/吨</li>
+    <li>最晚接单时间：{{data?.endTime}}</li>
+  </ul>
+</div>
+<div class="goodsDetail back_fff b-t m-t10">
+  <div class="fonNormal col_333 height36 padding16  pL_10">发货信息</div>
+  <ul class="f9f9fb p_T10 padding16">
+    <li class="fonSml col_333">发货人：{{data?.sendName}}<span class="pull-right">{{data?.sendPhone}}</span></li>
+    <li class="fonSml">发货地址：{{data?.sendProvince}}{{data?.sendCity}}{{data?.sendCounty}}{{data?.sendTown}}{{data?.sendAddress}}</li>
+  </ul>
+  <img src="../assets/images/deliverGoods_bottom.png" alt="" class="w100 deliverGoods_bottom"/>
+</div>
+
+<div class="goodsDetail back_fff b-t m-t10" *ngIf="data?.orderType==1">
+  <div class="fonNormal col_333 height36 padding16  pL_10">收货信息</div>
+  <ul class="f9f9fb p_T10 padding16">
+    <li class="fonSml col_333">收货人：{{data?.receiveName}}<span class="pull-right">{{data?.receivePhone}}</span></li>
+    <li class="fonSml">收货地址：{{data?.receiveProvince}}{{data?.receiveCity}}{{data?.receiveCounty}}{{data?.receiveTown}}{{data?.receiveAddress}}</li>
+  </ul>
+  <img src="../assets/images/deliverGoods_bottom.png" alt="" class="w100 deliverGoods_bottom"/>
+</div>
+<div class="goodsDetail b-b back_fff padding16 b-t m-t10 p_T10">
+  <ul class="fon85">
+    <li>订单编号：{{data?.orderNo}}</li>
+    <li>提交时间：{{data?.createTime}}</li>
+    <li *ngIf="data?.orderStatus!=1">付费方式：马上来平台钱包</li>
+  </ul>
+</div>
+<div class="clearfix m_top text_center" *ngIf="data?.orderStatus!=40||data?.orderStatus!=1">
+  <div class="details_btn fff text_center bgc_ea5529" (click)="Order(data.orderNo)" *ngIf="data?.orderStatus==10||data?.orderStatus==30">接单查询</div>
+  <div class="details_btn fff text_center bgc_ea5529" (click)="PublicGoods(data.orderNo)" *ngIf="data?.orderStatus==1">发布货源</div>
+  <div class="details_btn fff text_center" *ngIf="data?.orderStatus==10||data?.orderStatus==2" (click)="activate(data.orderStatus,data.orderNo,data.goodsResidue);$event.stopPropagation();">取消</div>
+  <!--<div class="details_btn fff text_center pull-left bgc_ea5529">运费充值</div>-->
+</div>
+
+
+<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action">
+  <!-- 可选择菜单 -->
+  <div class="cancle_resuit fonSml height36 pl_10 fff b-b padding_17">取消原因<span class="mui-icon mui-icon-closeempty pull-right cancle_resuit b-b" (click)="goodsRefuse()" style="font-size: 35px;"></span></div>
+  <ul class="mui-table-view back_fff cancel_ul padding_17">
+    <li class="mui-table-view-cell cancel_li" [class.special]="AdditionalTip[i]" *ngFor="let siteRefuse of dataRefuse;let i=index" (click)="myGoods_cancle0(i,siteRefuse?.name)">{{siteRefuse?.name}}</li>
+    <li class="cancle_yes">
+      <div class="m0_auto text_center bgc_ea5529 fff height36 fonSml">
+        <span href="" class="sureCancle" (click)="goodsCancle()"><span>确定提交</span></span>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<app-cancelOrderInfo (outer)="cancelOrder($event)" *ngIf="isShow"></app-cancelOrderInfo>

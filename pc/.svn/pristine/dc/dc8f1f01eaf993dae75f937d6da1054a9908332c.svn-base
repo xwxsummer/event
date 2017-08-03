@@ -1,0 +1,64 @@
+import { Component, OnInit } from '@angular/core';
+import {PersonalCenterService} from '../personal-center.service';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+declare var layer:any;
+declare var $:any;
+@Component({
+  selector: 'app-receivaddress',
+  templateUrl: './receivaddress.component.html',
+  styleUrls: ['../address/address.component.css']
+})
+export class ReceivaddressComponent implements OnInit {
+public addressList;
+  constructor(
+    public service: PersonalCenterService,
+    public router: Router,
+  ) { }
+
+  ngOnInit() {
+    sessionStorage['type']=2;
+    this.service.addressFindList('2')
+         .subscribe(
+           data => {
+           if(data.code==0){//成功
+             this.addressList=data.data;
+             console.log(data);
+           }else{
+             layer.msg(data.msg);
+           }
+         }
+       )
+  }
+  edit(index){
+    sessionStorage.put('address',this.addressList[index]);
+    this.router.navigateByUrl('/content/personalCenter/map');
+  }
+  remove(index){
+    let node = $(event.target).parent().parent();
+      console.log(node);
+    this.service.deleteAddress(this.addressList[index].id)
+       .subscribe(
+         data => {
+         if(data.code==0){//成功
+           node.remove();
+           // mui.toast("删除成功",{ duration:'short', type:'div' });
+         }else{
+             // mui.toast(data.msg,{ duration:'short', type:'div' });
+         }
+       });
+  }
+
+  setDefaultAddress(id){
+    console.log('设置默认地址：',id);
+    this.service.addressSetDefault(id,2).subscribe(
+      data => {
+      if(data.code==0){//未注册
+        layer.msg("设置默认地址成功");
+       //  mui.toast("设置默认地址成功",{ duration:'short', type:'div' });
+       }else{//设置默认收发货地址没有成功
+         layer.msg(data.msg);
+       //  mui.toast(data.msg,{ duration:'short', type:'div' });
+      }
+    });
+  }
+}

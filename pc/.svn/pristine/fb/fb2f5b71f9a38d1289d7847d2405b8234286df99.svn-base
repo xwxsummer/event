@@ -1,0 +1,60 @@
+<div style="margin-left:2%;" class="tixian">
+  <div style="margin-top:20px;margin-bottom:20px">
+    请输入提现金额：<input id="inp" type="text" name="money" class="money">
+  </div>
+  <div>
+    <div *ngFor="let card of data" (click)="snding(card.id,card.bank,card.cardNo)" style="padding-left:40px;width:600px;border:2px solid #ccc;
+    background-color:#ebebeb;height:60px;line-height:60px;">
+    <input type="radio" value="check" name="check">
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="ii">&nbsp;&nbsp;&nbsp;&nbsp;{{card.bank}}&nbsp;&nbsp;&nbsp;&nbsp;
+    {{card.cardNo}}&nbsp;&nbsp;&nbsp;&nbsp;储蓄卡</div>
+  </div>
+  <div style="margin-top:20px;margin-bottom:20px">
+    <div class="cardBotton" (click)="bangka()">使用新卡提现</div>
+    <!-- <div class="cardBotton" id="net" (click)="netSilver()" >使用网银支付</div> -->
+  </div>
+  <br>
+  <br>
+  <br>
+  <div style="margin-top:20px;margin-bottom:20px">
+    <div>马上来支付密码</div>
+    <div><input type="text" id="inp" name="payPwd"></div><a>忘记密码？</a>
+  </div>
+  <div>
+    <button class="btn-lg" (click)="withdrawal()" id="pay">
+        确认提现
+    </button> 
+  </div>
+</div>
+
+<!-- 提现明细 -->
+<div style="display:none" class="detail">
+   <table class="layui-table" style="width:48%;margin-left:1%">
+      <colgroup>
+        <col width="150">
+        <col width="150">
+      </colgroup>
+      <tr>
+        <td>提现金额</td>
+        <td>￥{{money}}</td>
+      </tr>
+      <tr>
+        <td>提现状态</td>
+        <td class="e85529">处理中</td>
+      </tr>
+      <tr>
+        <td>提现到</td>
+        <td>{{bank}}({{cardNo}})</td>
+      </tr>
+      <tr>
+        <td>提现申请时间</td>
+        <td>2017.1.6</td>
+      </tr>
+      <tr>
+        <td>提现单号</td>
+        <td>{{withdrawalId}}</td>
+      </tr>
+  </table>
+    <div class="complete" (click)="complete()">完成</div>
+</div>

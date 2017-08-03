@@ -1,0 +1,46 @@
+<div class="title h90 bt-b font24">
+<!-- <span>1、添加验证信息</span>&nbsp;&nbsp;&nbsp; -->
+<span>设置新交易密码</span>
+</div>
+<div class="contents1">
+  <div  class="fontStyle">请输入{{mobile}}收到的短信验证码</div>
+
+  <div class="divStyle">
+
+    <span class="e85529">*</span>验证码：&nbsp;
+    <input class="" style="width:100px;height:30px;border-radius: 5px;
+    border:1px solid #e5e5e5;" type="text" name="verCode">&nbsp;&nbsp;<span class="e85529" (click)="changCaptcha()"><span class="clo_ccc m-r16"></span>{{yzm}}</span>
+
+  </div>
+
+  <div class="divStyle"><button class="button" (click)="submit()">确认提交</button></div>
+
+</div>
+<!-- style="display:none" -->
+<div class="contents3" style="display:none">
+  <span class="fontStyle">请输入相关银行卡信息验证身份</span>
+
+   <div *ngFor="let card of data" (click)="snding(card.id,card.accountType)" style="padding-left:40px;width:600px;border:2px solid #ccc;
+    background-color:#ebebeb;height:60px;line-height:60px;">
+    <input type="radio" value="check" name="check">
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <img src={{card?.bank}}>&nbsp;&nbsp;&nbsp;&nbsp;
+    {{card.cardNo}}&nbsp;&nbsp;&nbsp;&nbsp;储蓄卡</div>
+
+  <div class="divStyle">
+    <span class="e85529">*</span>银行卡号：<input class="input" type="text" name="cardNo">
+  </div>
+
+  <div class="divStyle">
+    <span class="e85529">*</span>{{accountype==11?"身份证号":"统一社会信用代码"}}：<input class="input" type="text" name="idCard">
+  </div>
+
+  <div class="divStyle"><button class="button" (click)="submit1()">确认提交</button></div>
+</div>
+
+<div class="contents2" style="display:none">
+  <div class="fontStyle">设置新的交易密码保证您的账户安全</div>
+  <div class="divStyle">新的交易密码：<input class="input" type="password" name="pwd" maxlength="6"  placeholder="请输入6位数字支付密码"></div>
+  <div class="divStyle">确认交易密码：<input class="input" type="password" name="rpwd" maxlength="6"  placeholder="请再次输入6位数字支付密码"></div>
+  <div class="divStyle"><button class="button" (click)="compnent()">完&nbsp;成</button></div>
+</div>

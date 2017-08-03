@@ -1,0 +1,447 @@
+import {Component, OnInit} from '@angular/core';
+import 'rxjs/Rx'
+import {Http} from "@angular/http";
+import {Ajax} from "../../../ajax";
+import {Api} from "../../../api";
+import {URLSearchParams} from '@angular/http';
+import {Router} from "@angular/router";
+import {SessionStorage} from "app/fragment/session_storage";
+import {MyGoodsService} from "../../my-goods/my-goods.service";
+declare let layui: any;
+declare let layer: any;
+declare let $: any;
+
+@Component({
+  selector: 'app-business',
+  templateUrl: './business.component.html',
+  styleUrls: ['./business.component.css']
+})
+export class BusinessComponent implements OnInit {
+  public orders: Array<order>;
+  public orderNum: OrderNum;
+  public page: number = 1;
+  public status: number = 1;
+  public showCarNo: boolean = false;//车牌号
+  public showMoney: boolean = false;//已运货款
+  public showBtn: number = 0;//操作按钮
+  public orderCount: number = 0;
+  public pageSize: number = 5;
+  public httpUrl: string = Api.countPublishOrder;//请求路径
+  public ajax: Ajax;
+  public orderNo: number;
+  public myMoney;
+  AdditionalTip = [];//取消原因显示
+  public dataRefuse = [];//取消原因
+
+  constructor(public http: Http,
+              public service: MyGoodsService,
+              public router: Router,
+              public sessionStorage: SessionStorage,) {
+    this.ajax = new Ajax(http);
+
+  }
+
+  ngOnInit() {
+    this.getList(1);
+    layui.use('laydate', function () {
+      let laydate = layui.laydate;
+      let start = {
+        min: '2016-01-01 23:59:59'
+        , max: '2100-06-16 23:59:59'
+        , istoday: false
+        , choose: function (datas) {
+          end.min = datas; //开始日选好后，重置结束日的最小日期
+          end['start'] = datas //将结束日的初始值设定为开始日
+        }
+      };
+
+      let end = {
+        min: '2016-01-01 23:59:59'
+        , max: '2100-06-16 23:59:59'
+        , istoday: false
+        , choose: function (datas) {
+          start.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+      };
+      $("#startTime").click(function () {
+        start['elem'] = this;
+        laydate(start);
+      });
+      $("#endTime").click(function () {
+        end['elem'] = this;
+        laydate(end);
+      });
+    });
+
+    //获取取消原因
+    this.service.getSystemLabelByType(2)
+      .subscribe(data => {
+        if (data.code == 0) {//成功
+          for (let b = 0; b < data.data.length; b++) {
+            this.AdditionalTip.push(false);
+          }
+          this.dataRefuse = data.data;
+        } else {
+          alert(data.msg);
+        }
+      });
+  }
+
+  getList(page: number) {
+    this.orders = null;
+    this.orderCount = 0;
+    this.page = page;
+    let startTime: string = $('#startTime').val();
+    let endTime: string = $('#endTime').val();
+    if (startTime == null || startTime == "") {
+      startTime = "2016-01-01";
+    }
+    if (endTime == null || endTime == "") {
+      let laydate = layui.laydate;
+      endTime = laydate.now();
+    }
+    let p = new URLSearchParams();
+    p.set("userId", this.sessionStorage.getObject("data").userId);
+    p.set("beginTime", startTime);
+    p.set("endTime", endTime);
+    p.set("page", this.page + "");
+    p.set("pageSize", this.pageSize + "");
+    //获取订单列表
+    this.service.getOrderList(this.httpUrl, p).subscribe((data) => {
+      if (data.code == 0) {
+        this.orders = data.data;
+        this.orderCount = data.total;
+        for (let i = 0; i < this.orders.length; i++) {
+          switch (this.orders[i].status) {
+            case 1:
+            // "已创建";
+            case 2:
+            // "已接单";
+            case 3:
+            // "前往货源地";
+            case 4:
+            // "到达货源地";
+            case 50:
+            // "货主确认车辆";
+            case 200:
+            // "拒绝装车";
+            case 210:
+            // "货主取消";
+            case 211:
+            // "司机取消";
+            case 212:
+            // "客服取消";
+            case 213:
+            // "系统取消";
+            case 220:
+            // "协商中";
+            case 221:
+            // "客服处理完毕";
+            case 230:
+              // "司机接单支付失败";
+              this.orders[i].receiveNet = this.orders[i].truckLoad;//这些实际载重都显示为车辆载重
+              break;
+
+            case 121:
+            // "货主装车支付中";
+            case 51:
+            // "货主装车";
+            case 52:
+            // "司机确认装车";
+            case 53:
+            // "前往目的地";
+            case 54:
+            // "到达目的地";
+            case 100:
+            // "货主确认车辆";
+            case 231:
+              // "货主装车支付失败";
+              this.orders[i].receiveNet = this.orders[i].sendNet;//发货净重
+              break;
+
+            case 101:
+            // "货主确认收货";
+            case 102:
+            // "司机确认收货";
+            case 120:
+            // "支付中";
+            case 123:
+            // "确认收货支付中";
+            case 150:
+            // "完成";
+            case 151:
+            // "司机评价完成";
+            case 152:
+            // "货主评价完成";
+            case 232:
+              // "确认收货支付失败";
+              //   this.orders[i].receiveNet = this.orders[i].receiveNet;//收货净重
+              break;
+          }
+        }
+      } else {
+        layer.msg("信息获取失败，请重试")
+      }
+    });
+    //获取订单数量
+    this.service.getOrderNum(p)
+      .subscribe(
+        (data) => {
+          if (data.code == 0) {
+            this.orderNum = data.data;
+            console.log(this.orderNum);
+          }
+        });
+
+  }
+
+  selectMode(status: number) {
+    this.status = status;
+    this.showMoney = false;
+    switch (status) {
+      case 1://已发布
+        this.showCarNo = false;
+        this.showBtn = 0;
+        this.httpUrl = Api.countPublishOrder;
+        this.getList(1);
+        break;
+      case 5://已运货款
+        this.showCarNo = false;
+        this.showMoney = true;
+        this.showBtn = 0;
+        this.httpUrl = Api.countPublishOrder;
+        this.getList(1);
+        break;
+      case 2://已接单
+        this.showCarNo = true;
+        this.showBtn = 1;
+        this.httpUrl = Api.countOrderChildsToList;
+        this.getList(1);
+        break;
+      case 3://已运货
+      case 4://已支付
+        this.showCarNo = true;
+        this.showBtn = 2;
+        this.httpUrl = Api.countCompleteOrderToList;
+        this.getList(1);
+        break;
+    }
+
+  }
+
+  //主单取消不需要赔偿金
+  orderCancel(orderNo) {
+    this.orderNo = orderNo;
+    // this.good_service.compensationInfoByMainOrder(orderNo)
+    //   .subscribe(
+    //     data => {
+    //       if (data.code == 0) {//成功
+    //         this.myMoney = data.data.totalCompensation;
+    this.showBg();
+    //   } else if (data.code == 5040) {//无人接单，赔偿为0元
+    //     this.myMoney = 0;
+    //     this.showBg();
+    //   } else {
+    //     alert(data.msg);
+    //   }
+    // });
+  }
+
+  //确认取消
+  goodsCancel() {
+    let label = Array.from(document.querySelectorAll('.special') as NodeListOf<HTMLElement>).map(i => i.innerText)
+    console.log(label);
+    if (label) {
+      this.service.cancelInfoByMainOrder(this.orderNo, label)
+        .subscribe(data => {
+          if (data.code == 0) {
+            layer.msg("取消成功");
+            this.closeBg();
+            this.router.navigateByUrl("content/myGoods/orderDetails/null");
+          } else {
+            layer.msg(data.msg)
+          }
+        });
+    } else {
+      layer.msg("请选择取消原因");
+    }
+  }
+
+  //显示取消
+  showBg() {
+    var bh = $("body").height();
+    var bw = $("body").width();
+    $("#fullbg").css({
+      height: bh,
+      width: bw,
+      display: "block"
+    });
+    $("#dialog").show();
+  }
+
+  //关闭灰色 jQuery 遮罩
+  closeBg() {
+    $("#fullbg,#dialog").hide();
+  }
+
+  //点击描述
+  AdditionalTip_click(info) {
+    switch (this.AdditionalTip[info]) {
+      case true:
+        this.AdditionalTip[info] = false;
+        break;
+      case false:
+        //如果被激活的大于1个不操作
+        if (this.AdditionalTip.filter(i => i === true).length >= 1)break;
+        this.AdditionalTip[info] = true;
+    }
+  }
+
+  getMoney(order: order) {
+    return ((order.goodsAmount - order.goodsResidue) * order.goodsSale).toFixed(2);
+  }
+
+  //查看详细
+  childView(childNo) {
+    this.router.navigateByUrl("content/personalCenter/invoiceDetailsInfo/" + childNo)
+  }
+
+  //轨迹查询
+  searchRoute(childNo) {
+    this.router.navigateByUrl("content/personalCenter/TrajectoryMap/" + childNo)
+  }
+
+  //查看详细
+  orderView(orderNo) {
+    this.router.navigateByUrl("content/personalCenter/orderDetailsInfo/" + orderNo)
+  }
+
+
+  //主单状态
+  getOrderStatus(status: number) {
+    switch (status) {
+      case 1:
+        return "未发布";
+      case 2:
+        return "已发布";
+      case 10:
+        return "运输中";
+      case 11:
+        return "已暂停";
+      case 20:
+        return "支付中";
+      case 30:
+        return "已完成";
+      case 40:
+        return "已取消";
+      case 60:
+        return "支付失败";
+    }
+    return "异常";
+  }
+
+  //子单状态
+  getOrderChildStatus(myOrder: order) {
+    switch (myOrder.status) {
+      case 1:
+        return "已创建";
+      case 2:
+        return "已接单";
+      case 3:
+        return "前往货源地";
+      case 4:
+        return "到达货源地";
+      case 50:
+        return "货主确认车辆";
+      case 51:
+        return "货主装车";
+      case 52:
+        return "司机确认装车";
+      case 53:
+        return "前往目的地";
+      case 54:
+        return "到达目的地";
+      case 100:
+        return "货主确认车辆";
+      case 101:
+        return "货主确认收货";
+      case 102:
+        return "司机确认收货";
+      case 120:
+        return "支付中";
+      case 121:
+        return "货主装车支付中";
+      case 123:
+        return "确认收货支付中";
+      case 150:
+        return "完成";
+      case 151:
+        if (myOrder.driverEvaluate == 1)
+          return "已完成";
+        else
+          return "司机评价完成";
+      case 152:
+        if (myOrder.ownerEvaluate == 1)
+          return "已完成";
+        else
+          return "货主评价完成";
+      case 200:
+        return "拒绝装车";
+      case 210:
+        return "货主取消";
+      case 211:
+        return "司机取消";
+      case 212:
+        return "客服取消";
+      case 213:
+        return "系统取消";
+      case 220:
+        return "协商中";
+      case 221:
+        return "客服处理完毕";
+      case 230:
+        return "司机接单支付失败";
+      case 231:
+        return "货主装车支付失败";
+      case 232:
+        return "确认收货支付失败";
+    }
+    return "状态异常";
+  }
+}
+
+
+export class order {
+  constructor(public orderNo: number,
+              public childNo: number,
+              public goodsName: string,
+              public truckNo: string,//车牌号
+              public orderInfo: string,//信息
+              public receiveCompany: string,//收货单位
+              public sendAddress: string,//发货详细地址
+              public freightPrice: number,//单价
+              public driverName: string,//司机姓名
+              public truckLoad: number,//载重
+              public receiveNet: number,//收货净重
+              public sendNet: number,//发货净重
+              public freight: number,//运费
+              public insurance: number,//担保
+              public status: number,//子订单状态
+              public driverEvaluate: number,//司机评价
+              public ownerEvaluate: number,//货主评价
+              public goodsAmount: number,//货物总数
+              public goodsResidue: number,//剩余货物总数
+              public goodsSale: number,//货物价格
+              public orderStatus: number) {
+  }
+
+}
+
+export class OrderNum {
+  constructor(public goodsCount: number,
+              public ordersCount: number,
+              public payFreight: number,
+              public orderSaleCount: number,
+              public publishOrderCount: number) {
+  }
+}

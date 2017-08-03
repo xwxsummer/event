@@ -1,0 +1,37 @@
+<div class="box">
+     <div class="box2 back_fff b-b">
+
+        <label class=""><div class="input_org" style="width: 40%;display: inline-block">金额（￥）</div>
+            <input class="input_org pull-right" type="number" name="money" placeholder="请输入充值金额"/>
+
+            <!--<input style="width: 50%;height: 2.5rem;border: none;font-size: 0.75rem" type="text" value="请输入充值金额" onfocus="if(value=='请输入充值金额') {value=''}" onblur="if (value=='') {value='请输入充值金额'}"/>-->
+        </label>
+        <div class="box4 b-t">
+              <span>选择充值方式</span>
+        </div>
+        <div class="box3 b-b b-t mui-input-row mui-checkbox mui-right">
+            <div class="bank col_333 ">
+                <span class="bank_h"><img src="../../assets/images/bank.png" alt=""/></span>
+                <span id='bank'></span>
+                <span>21132</span>
+
+                <!-- <div class="mui-input-row mui-checkbox mui-right" style="height:3rem;background:#fff">
+                  <label class="posi_abslotu col_333 posi_left transformY50 fonSml">绑定快捷支付</label>
+                  <input class="formData" name="faster" id="faster" type="checkbox" checked="">
+                </div> -->
+
+            </div>
+            <label></label>
+            <input class="formData" name="faster" id="faster" type="checkbox" >
+
+        </div>
+        <div class=" b-b" style="height:24px;background:#fff;line-height:24px;padding-left:1rem;">当日限额 1000</div>
+        <div class="add" (click)="addBank()">
+
+          <span>添加银行卡</span>
+        </div>
+    </div>
+
+    <!-- <span id="span">*充值金额必须为整数</span> -->
+    <input id="input" class="bindFinish text_center fonSml height36 m0_auto m-t3" type="button" value="充值" (click)="SuccessChild()"/>
+</div>

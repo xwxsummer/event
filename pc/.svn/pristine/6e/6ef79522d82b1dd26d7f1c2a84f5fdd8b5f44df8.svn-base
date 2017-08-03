@@ -1,0 +1,7 @@
+<router-outlet></router-outlet>
+<div style="display:none">
+<form id="forms" method="post" target="_blank" novalidate>
+    <input id="signature" name="signature" type="text">
+    <input id="message" name="message" type="text">
+</form>
+</div>

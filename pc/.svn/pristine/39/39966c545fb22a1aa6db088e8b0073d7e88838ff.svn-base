@@ -1,0 +1,86 @@
+import {Router} from '@angular/router';
+import {MyWalletService} from '../my-wallet.service';
+import { Component, OnInit } from '@angular/core';
+declare var layer:any;
+declare var $:any;
+
+@Component({
+  selector: 'app-withdrawal',
+  templateUrl: './withdrawal.component.html',
+  styleUrls: ['./withdrawal.component.css']
+})
+export class WithdrawalComponent implements OnInit {
+ public data;
+ public snBingding;
+ public withdrawalId;//提现单号
+ public money;//提现金额
+ public bank;//提现银行
+ public cardNo;//卡号
+ public nowTime;
+ public 
+  constructor(
+    public service : MyWalletService,
+    public router : Router
+  ) { }
+
+  ngOnInit() {
+   
+    //查询银行卡列表walletCode
+    this.service.bankCardFindList()
+      .subscribe(data=>{
+          if(data.code==0){//成功
+            this.data=data.data;
+            console.log(data);
+
+          }else{
+            layer.msg(data.msg)
+          }
+      });
+  }
+  //获取绑定序列号
+  snding(id,bank,cardNo){
+    this.snBingding = id;
+    this.bank = bank;
+    this.cardNo = cardNo;
+  }
+  //使用新卡提现
+  bangka(){
+    this.router.navigateByUrl("content/myWallet/cardManagement");
+  }
+  //确认提现
+  withdrawal(){
+    if(!$("input[name=money]").val()){
+      layer.msg("请输入提现金额");
+      return
+    }
+    if(!$("input[name=payPwd]").val()){
+      layer.msg("请输入密码");
+      return
+    }
+    if(!this.snBingding){
+      layer.msg("请选择提现银行");
+      return
+    }
+    let d = new Date();
+    let str = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" "+(d.getHours()+1)+":"+d.getMinutes()
+    this.nowTime = str;
+    this.money = $("input[name=money]").val();
+    let payPwd = $("input[name=payPwd]").val();
+    this.service.settlement(this.money,this.snBingding,payPwd)
+      .subscribe(data =>{
+        if(data.code==0){
+          console.log(data.data);
+          this.withdrawalId = data.data;
+          $(".tixian").hide();
+          $(".detail").show();
+        }else{
+          layer.msg(data.msg)
+        }
+      })
+  }
+  //完成
+  complete(){
+    window.location.reload();
+    this.router.navigateByUrl("content/myWallet/withdrawal");
+  }
+}

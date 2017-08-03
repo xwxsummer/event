@@ -1,0 +1,250 @@
+
+import {Component, ChangeDetectorRef} from '@angular/core';
+import { RouterModule,ActivatedRoute, Router } from '@angular/router';
+declare var mui: any;
+declare var $: any;
+import { deliverGoodsService } from './deliverGoods.service';
+import { Title }from '@angular/platform-browser';
+@Component({
+  selector: 'app-deliverGoods',
+  templateUrl: './deliverGoods.component.html',
+  styleUrls: ['./deliverGoods.component.css'],
+  providers:[ deliverGoodsService ]
+
+})
+export class DeliverGoods {
+  phone = "";
+  name = "";
+  address = "";
+  receivelist = [];
+  sendlist = [];
+  imgList = [];
+  remarkText = '';
+  receive =[];
+  tips = [];
+  public freightPrice;
+  public transportationInfo:Object;
+  public submitlag:boolean;//表单是否可以提交
+  public orderNo:any;
+  constructor(
+      public router: Router,
+      public service : deliverGoodsService,
+      public ref: ChangeDetectorRef,
+      public titleService: Title
+  ){
+  }
+  ngOnInit() {
+      sessionStorage['from']='deliverGoods';
+      this.titleService.setTitle('发布货源');
+      this.submitlag=false;
+      //详情标签
+      this.service.getSystemLabelByType().subscribe(data=>this.tips=data.data.map(i=>i.name));
+      let self = this;
+      this.getSessionStorage();
+      this.service.findDefault().subscribe(data=>{
+        console.log('获取地址:',data);
+        self.receive.push(...data.data);
+        self.ref.markForCheck();
+        self.ref.detectChanges();
+        data.data.forEach( (data) => {
+            if(data.type === 1) {
+              let d = sessionStorage['sendAddress'] ? JSON.parse(sessionStorage['sendAddress']) : data;
+              this.sendlist.push(d)
+            }else{
+              let d = sessionStorage['receiveAddress'] ? JSON.parse(sessionStorage['receiveAddress']) : data;
+              this.receivelist.push(d)
+            }
+        })
+    });
+
+    //表单校验
+      $('#myForm').delegate('input[required]','change',function(){
+        const pattern = {
+            goodsName:{test:/^[^！^￥^…^（^）^【^】^‘^；^：^”^“^。^，^、^？^《^》]+$/,toast:'请输入正确货物名称'},
+            goodsAmount:{test:/^[\d\.]+$/,toast:'请输入数字'},
+            goodsPrice:{test:/^[\d\.]+$/,toast:'请输入数字'},
+            goodsSale:{test:/^[\d\.]+$/,toast:'请输入数字'},
+            freightPrice:{test:/^[\d\.]+$/,toast:'请输入数字'},
+            endTime:{test:/^[\d\- :]+$/,toast:'请选择时间'},
+            latestArrivalTime:{test:/^[\d\- :]+$/,toast:'请选择时间'},
+        };
+        if( pattern[this.name].test.test(this.value) ){
+            //输入有效
+            $(this).removeClass('notValid');
+            $('.mui-toast-message').click();
+        }else{
+            //输入无效
+            $(this).addClass('notValid');
+            mui.toast(pattern[this.name].toast);
+        }
+        //输入的值都有效
+        $('input.notValid').length === 0 &&
+        !$('input[required]').get().find(i=>i.value.length === 0) &&
+        self.sendlist.length && self.receivelist.length ?
+            $('.button[type=button]').removeAttr('disabled'):
+            $('.button[type=button]').attr('disabled','disabled');
+      })
+
+      if(sessionStorage['deliverGoods']==='sell'){
+        this.freightPrice="价格"
+        $('input[name=goodsPrice]').parent().prev().remove();
+        $('input[name=goodsPrice]').parent().remove();
+        $('input[name=goodsSale]').parent().prev().remove();
+        $('input[name=goodsSale]').parent().remove();
+        $('.c_bottom1').eq(1).prev().remove();
+        $('.c_bottom1').eq(1).remove();
+      }else {
+        this.freightPrice="运费"
+      }
+  }
+  //加载后读取sessionStorage数据
+  getSessionStorage(){
+      setTimeout(()=>{
+          let data = JSON.parse(sessionStorage['deliverGoodsInfo'] || '{}');
+
+          this.imgList.push( ...data['imgList'] );
+          this.AdditionalTipArr.push( ...data['AdditionalTipArr'] );
+          this.remarkText = data['this.remarkText'];
+          $('input[name=goodsName]').val( data['goodsName'] || '' );
+          $('input[name=goodsAmount]').val( data['goodsAmount'] || '' );
+          $('input[name=goodsPrice]').val( data['goodsPrice'] || '' );
+          $('input[name=goodsSale]').val( data['goodsSale'] || '' );
+          $('input[name=freightPrice]').val( data['freightPrice'] || '' );
+          $('input[name=endTime]').val( data['endTime'] || '' );
+          $('input[name=latestArrivalTime]').val( data['latestArrivalTime'] || '' );
+
+          $('input').trigger('input');//触发input事件，通知angular
+          $('input[required]').trigger('change');
+          $('.mui-toast-message').click();
+      },300)
+}
+    //路由前保存input数据到sessionStorage
+    saveSessionStorage(){
+      let data = {};
+        data['imgList'] = this.imgList;
+        data['goodsName'] = $('input[name=goodsName]').val();
+        data['goodsAmount'] = $('input[name=goodsAmount]').val();
+        data['goodsPrice'] = $('input[name=goodsPrice]').val();
+        data['goodsSale'] = $('input[name=goodsSale]').val();
+        data['freightPrice'] = $('input[name=freightPrice]').val();
+        data['endTime'] = $('input[name=endTime]').val();
+        data['latestArrivalTime'] = $('input[name=latestArrivalTime]').val();
+        data['AdditionalTipArr'] = this.AdditionalTipArr;
+        data['this.remarkText'] = this.remarkText;
+
+        sessionStorage['deliverGoodsInfo'] = JSON.stringify(data);
+    }
+
+  setImgList(event){
+          this.imgList = event;
+          console.log(this.imgList)
+  }
+  setRemarkText(text){
+    this.remarkText = text;
+    //console.log(this.remarkText)
+  }
+
+  Shipmentdetails(type){
+      this.saveSessionStorage();
+    this.router.navigateByUrl("personalCenter/ManageReceive?type="+type+'&from='+'deliverGoods');
+    console.log(type)
+  }
+  //Remarks
+  Remarks(){
+      this.saveSessionStorage();
+    this.router.navigateByUrl("deliverGoods/Remarks");
+  }
+
+
+//备注组件
+appRemarksToggle(){
+    mui('#appRemarks').popover('toggle');
+}
+//其他描述组件
+AdditionalTip = [false,false,false,false,false,false];//所有描述
+old_AdditionalTip = this.AdditionalTip.slice();//之前被激活的描述，用于取消
+AdditionalTipArr = [];//用于传递的文本值
+//激活
+AdditionalTip_activate(){
+    //还原取消前的值
+    this.old_AdditionalTip.forEach((value,index)=>{this.AdditionalTip[index]=value});
+    mui('#sheet1').popover('toggle');
+    this.old_AdditionalTip = this.AdditionalTip.slice();
+  }
+//点击描述
+AdditionalTip_click(info){
+    switch(this.AdditionalTip[info]){
+      case true:
+        this.AdditionalTip[info] = false;
+        break;
+      case false:
+        //如果被激活的大于三个不操作
+        if( this.AdditionalTip.filter(i=>i === true).length >= 3 )break;
+        this.AdditionalTip[info]=true;
+    }
+  }
+ //点击确定
+AdditionalTip_confirm(){
+    this.AdditionalTipArr = $('li.mui-table-view-cell.special').get().map(i=>i.innerText);
+    //保存当前值用于取消
+    this.old_AdditionalTip = this.AdditionalTip.slice();
+    mui('#sheet1').popover('hide');
+}
+//点击取消
+AdditionalTip_colse(){
+   mui('#sheet1').popover('hide');
+}
+  now = new Date();
+  showMsg3(){
+    let dtPicker = new mui.DtPicker(
+        {
+            beginDate: new Date(this.now.getFullYear(), this.now.getMonth(), this.now.getDate())
+        }
+    );
+    dtPicker.show(function (selectItems) {
+        $('#endTime').val(selectItems.text).change();
+    })
+  }
+  showMsg4() {
+    let dtPicker = new mui.DtPicker(
+        {
+            beginDate: new Date(this.now.getFullYear(), this.now.getMonth(),this.now.getDate())
+        }
+    );
+    dtPicker.show(function (selectItems) {
+        $('#latestArrivalTime').val(selectItems.text).change();
+    });
+
+  }
+//提交货源
+  onSubmit(myForm){
+      this.saveSessionStorage();
+    let params = {};
+    $('[name]').each((index,val)=>params[val['name']]=val['value']);
+    console.log(params);
+    console.log('提交地址:',this.sendlist,this.receivelist);
+    this.submitlag=true;
+    if(sessionStorage['deliverGoods']==='sell'){
+
+      this.service.submitOrder(params,this.sendlist,this.receivelist,this.AdditionalTipArr.join('|'),this.receive,this.imgList.map(i=>i.src),this.remarkText)
+        .then(data=>{
+              this.submitlag=false;
+              sessionStorage["OrderNo"]=data.data;
+              sessionStorage.removeItem('deliverGoodsInfo');
+              data.code!==0?
+                  mui.alert(data.msg):
+                  // this.router.navigateByUrl("deliverGoods/PublicGoods/"+data.data);
+
+                  this.router.navigateByUrl("deliverGoods/Success");
+          });
+    }
+    else this.service.submitOrderInfo(params,this.sendlist,this.receivelist,this.AdditionalTipArr.join('|'),this.receive,this.imgList.map(i=>i.src),this.remarkText)
+      .then(data=>{
+            this.submitlag=false;
+            sessionStorage["OrderNo"]=data.data;
+            data.msg!=="success"?
+                mui.alert(data.msg):
+                this.router.navigateByUrl("deliverGoods/PublicGoods/"+data.data);
+        });
+  }
+}

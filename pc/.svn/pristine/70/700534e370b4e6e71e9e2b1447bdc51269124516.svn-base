@@ -1,0 +1,186 @@
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+import { MyGoodsService } from "app/content/my-goods/my-goods.service";
+import {imgCompress} from "./imgCompress";
+declare var layui: any;
+declare var layer: any;
+declare var $: any;
+@Component({
+  selector: 'app-deliver-goods',
+  templateUrl: './deliver-goods.component.html',
+  styleUrls: ['./deliver-goods.component.css']
+
+})
+export class DeliverGoodsComponent implements OnInit {
+  tips = [];
+  receive = [];
+  sendlist = [];
+  receivelist = [];
+  imgList = [];
+  public loadingIndex:number;
+  public submitlag: boolean;//表单是否可以提交
+  constructor(
+    public router: Router,
+    public service: MyGoodsService,
+    public ref: ChangeDetectorRef,
+
+
+  ) { }
+  removeImage(index){
+    this.imgList.splice(index,1);
+  }
+  ngOnInit() {
+    let self = this;
+    // 详情标签
+    this.service.getSystemLabelByType(1).subscribe(data => this.tips = data.data.map(i => i.name));
+    // layer.msg('欢迎登录马上来');
+    layui.use('laydate', function() {
+
+      var laydate = layui.laydate;
+      var start = {
+        min: laydate.now()
+        , max: '2020-06-16 23:59:59'
+        , istoday: false
+        , choose: function(datas) {
+          end.min = datas; //开始日选好后，重置结束日的最小日期
+          end['start'] = datas //将结束日的初始值设定为开始日
+        }
+      };
+
+      var end = {
+        min: laydate.now()
+        , max: '2020-06-16 23:59:59'
+        , istoday: false
+        , choose: function(datas) {
+          start.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+      };
+      $("#LAY_demorange_s").click(function() {
+        start['elem'] = this;
+        laydate(start);
+      });
+      $("#LAY_demorange_e").click(function() {
+        end['elem'] = this;
+        laydate(end);
+      });
+
+
+    });
+    //默认地址
+    this.service.findDefault().subscribe(data => {
+      let self = this;
+      console.log('获取地址:', data);
+      self.receive.push(...data.data);
+      self.ref.markForCheck();
+      self.ref.detectChanges();
+      data.data.forEach((data) => {
+        if (data.type === 1) {
+          let d = sessionStorage['sendAddress'] ? JSON.parse(sessionStorage['sendAddress']) : data;
+          this.sendlist.push(d)
+        } else {
+          let d = sessionStorage['receiveAddress'] ? JSON.parse(sessionStorage['receiveAddress']) : data;
+          this.receivelist.push(d)
+        }
+      })
+    });
+
+    let filechooser = document.getElementById("file");
+    // $("#upload")
+    //   .on("touchstart", function() {
+    //     $(this).addClass("touch")
+    //   })
+    //   .on("touchend", function() {
+    //     $(this).removeClass("touch")
+    //   });
+    //var imgOutput = this.imgOutput;
+    filechooser.onchange = function() {
+      if (!(<HTMLInputElement>this).files.length) return;
+      var files = Array.from((<HTMLInputElement>this).files);
+      if (self.imgList.length >= 6) {
+        //mui.alert("最多同时只可上传6张图片");
+        return;
+      }
+      files.forEach(function(file, i) {
+        if (!/\/(?:jpeg|png|gif)/i.test(file.type)) return;
+        imgCompress(file, 0.1).then(function(result) {
+          // var li = document.createElement("li");
+          // $(li).css("background-image", "url(" + result + ")");
+          // $(".img-list").append($(li));
+          // console.log(imgList);
+          //imgList.push(new imgData(<string>result,file.type));
+          self.service.upBase64Image(<string>result)
+            .then(data => data.json().data)
+            .then(data => {
+              console.log(data);
+              self.imgList.push(data["domain"] + data["pathList"]);
+              //self.imgList.push(new imgData(data["domain"] + data["pathList"], file.type, data["pathList"][0]));
+            });
+          // imgList.push({data:result,type:file.type});
+          //imgOutput.emit(imgList);
+
+        });
+      })
+    };
+
+  }
+  // 提交货源
+  onSubmit() {
+    let self = this;
+    let params = {};
+    self.loadingIndex = layer.load(3, {
+    shade: [0.1,'#fff'] //0.1透明度的白色背景
+
+});
+    $('[name]').each((index, val) => val['value'] ? params[val['name']] = val['value'] : null);
+    console.log(params);
+    console.log('提交地址:', this.sendlist, this.receivelist);
+    this.submitlag = true;
+    let tipsText = $('li.special').get().map(i=>i.innerText).join('|');
+    this.service.submitOrderInfo(params, this.sendlist, this.receivelist, tipsText, this.receive, this.imgList)
+      .then(data => {
+        this.submitlag = false;
+        sessionStorage["OrderNo"] = data.data;
+        data.msg !== "success" ?
+          layer.msg(data.msg) :
+
+          this.router.navigateByUrl("content/myGoods/confirmgoods/" + data.data);
+          layer.close(self.loadingIndex);
+      });
+
+  }
+  address() {
+    this.router.navigateByUrl("content/personalCenter/address")
+  }
+add(){
+
+    this.router.navigateByUrl("content/personalCenter/receivaddress")
+
+}
+  // confirm() {
+  //   this.router.navigateByUrl("content/myGoods/confirmgoods")
+  // }
+
+  //其他描述组件
+  AdditionalTip = [false, false, false, false, false, false];//所有描述
+  old_AdditionalTip = this.AdditionalTip.slice();//之前被激活的描述，用于取消
+  //AdditionalTipArr = [];//用于传递的文本值
+  //激活
+  //点击描述
+  AdditionalTip_click(info) {
+    switch (this.AdditionalTip[info]) {
+      case true:
+        this.AdditionalTip[info] = false;
+        break;
+      case false:
+        //如果被激活的大于三个不操作
+        if (this.AdditionalTip.filter(i => i === true).length >= 3) {
+
+          layer.msg('最多选择三个') ;
+        }else{
+          this.AdditionalTip[info] = true;
+        };
+
+
+    }
+  }
+}

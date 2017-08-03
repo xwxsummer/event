@@ -1,0 +1,22 @@
+.search{
+    height: 8rem;
+    margin-left: 40px;
+    width:96%;
+    margin-top:1%;
+    border-color:#e2e8ec;
+}
+.search tr td input{
+    border-radius: 5px;
+    display: inline-block;
+    width: 40%;
+}
+.paging{
+    width:98%;
+    height: 5%;
+    background-color: #f3f6f8;
+    margin-left: 1%;
+    border: 1px solid #ccc; 
+    border-top:none;
+    text-align: center;
+    padding-top: 1%;
+}

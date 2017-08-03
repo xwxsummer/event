@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>微信授权</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+		<script type="text/javascript" src="http://test.clxkj.cn/assets/zepto.min.js"></script>
+		<style>#content{margin: 50px auto 0 auto;text-align: center;}</style>
+	</head>
+	<body>
+		<div id="content">请求处理中</div>
+	</body>
+<script>
+function getQueryString(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
+$(function(){
+	var code=getQueryString("code");
+	if(code==null||code==''){
+		$("#content").text('授权code为空');
+		return;
+	}
+	$.ajax({
+		type:"get",//localhost:8000 www.clxkj.cn:8088
+		url:"http://www.clxkj.cn:8088/user-service/owner/user/weixinAuth?code="+code,
+		async:true,
+		success(ret){
+			if(ret.code==0){
+				localStorage.setItem("data", JSON.stringify(ret.data));
+				window.location.href='/index.html';
+			}else if(ret.code==4010){
+				//没有绑定手机号 需要跳转到绑定页面
+				$("#content").text(ret.msg);
+				localStorage.setItem("data", JSON.stringify(ret.data));
+				window.location.href='/index.html#/register';
+			}else{
+				$("#content").text(ret.msg);
+			}
+		}
+	});
+});
+</script>
+</html>

@@ -1,0 +1,84 @@
+import { Injectable } from '@angular/core';
+import { Http, Jsonp, URLSearchParams, Headers, Response, RequestOptions } from '@angular/http';
+import { Api } from "app/api";
+import { Ajax } from "app/ajax";
+import { SessionStorage } from "app/fragment/session_storage";
+import { Observable } from 'rxjs';
+declare var md5: any;
+
+@Injectable()
+export class MyWalletService {
+  constructor(
+    public sessionStorage:SessionStorage,
+    public ajax:Ajax,
+    public http:Http
+    ) {
+     }
+//钱包余额
+  public wallet():Observable<any>{
+    return this.ajax.myget(Api.wallet+"?userCode="+this.sessionStorage.getObject("data").walletCode);
+  }
+ //查询收支明细
+  public tradeFindList(fund:string):Observable<any>{
+    let UserCode = "?userCode="+this.sessionStorage.getObject("data").walletCode;
+    let Fund = fund? "&fund="+ fund :'';
+    return this.ajax.myget(Api.findList+UserCode+Fund);
+  }
+  //网银支付 cpcnDirect
+  public cpcnDirect(posts):Observable<any>{
+    let rechargeCpcnDirectDTO={
+      "accountType": posts.accountType,
+      "amount": posts.money,
+      "bankID": posts.cardId,
+      "payerName": this.sessionStorage.getObject("data").name,
+      "userCode": this.sessionStorage.getObject("data").walletCode
+    }
+    return this.ajax.myPost(Api.cpcnDirect,rechargeCpcnDirectDTO);
+  }
+  //调用银行接口
+  public zhongjin(data):Observable<any>{
+    console.log(data)
+    let zfDTO={
+      "message":data.message,
+      "signature":data.signature
+    }
+    return this.ajax.myPost(data.action,zfDTO);
+  }
+  //查询银行卡列表
+  public bankCardFindList():Observable<any>{
+    return this.ajax.myget(Api.bankCardFindList+"?userCode="+this.sessionStorage.getObject("data").walletCode);
+  }
+  //绑定银行卡http://47.92.133.76:8301/payment-service/bankCard
+   public bankCard(posts):Observable<any>{
+    let seveDTO={
+      "accountType": posts.accountType,
+      "bank":posts.bank,
+      "bankCode":posts.bankCode,
+      "cardNo":posts.cardNo,
+      "faster":posts.faster,
+      "idNo":posts.idNo,
+      "idType":"0",
+      "mobile":posts.mobile,
+      "name": posts.name,
+      "type":"10",
+      "userCode": this.sessionStorage.getObject("data").walletCode
+    }
+    return this.ajax.myPost(Api.addbankCard,seveDTO);
+  }
+  //开通快捷支付，检验验证码
+  public binding(serialNumber,smsCode):Observable<any>{
+    let params = new URLSearchParams();
+    params.set("serialNumber",serialNumber);
+    params.set("smsCode",smsCode);
+    return this.ajax.myPost(Api.addbankCard,params);
+  }
+  //解绑银行卡
+  public unBinding(id,pwd):Observable<any>{
+    let pwds=md5(pwd);//加密
+    let params = new URLSearchParams();
+    params.set("userCode",this.sessionStorage.getObject("data").walletCode);
+    params.set("id",id);
+    params.set("pwd",pwds)
+    return this.ajax.myPut(Api.unBinding,params)
+  }
+}

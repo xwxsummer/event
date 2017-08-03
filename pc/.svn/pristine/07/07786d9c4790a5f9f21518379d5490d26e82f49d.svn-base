@@ -1,0 +1,94 @@
+/* You can add global styles to this file, and also import other style files */
+html,body,div,h1,h2,h3,h4,h5,h6,p,address,dl,dt,dd,ol,ul,li,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,menu,nav,output ,section,time,mark,audio,video,progress{margin:0;padding:0; }
+*{
+    margin:0;
+    padding:0;
+    /* font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif; */
+    /* font-size: 18px; */
+}
+ul li{
+    list-style: none;
+    border: 0;
+}
+ul li:active{
+    border:0px;
+}
+a{color:#2d374b;text-decoration:none}
+a:hover{color:#cd0200;text-decoration:underline}
+body{font:12px"Arial","Microsoft YaHei","黑体","宋体",sans-serif;background:#fff;-webkit-text-size-adjust:100%;}
+html,body{
+    height: 100%;
+    width: 100%;
+    background: #e7e8eb;
+}
+.list tr{
+    border-color:#e2e8ec;
+}
+.list td{
+    text-align: center;
+    border-color:#e2e8ec;
+}
+
+
+
+.list th{
+    text-align: center;
+    border-color:#e2e8ec;
+    background-color: #e7e8eb;
+}
+.h90{
+    height: 90px;
+}
+.h49{
+    height: 49px;
+}
+.bg_color{
+    background-color: #e7e8eb;
+}
+.border_color{
+    border:1px solid #ccc;
+}
+.bt_color{
+    background-color: #eb5529;
+}
+.bt-b{
+    border-bottom: 1px solid #cccccc;
+}
+.mb_10{
+    margin-bottom: 20px;
+}
+.font24{
+    font-size: 24px;
+}
+
+.title{
+    height: 90px;
+    line-height: 90px;
+    padding-left: 40px;
+}
+.e85529{
+    color: #e85529;
+}
+.refuse{
+    width:98%;
+    margin-left:1%;
+    border:1px solid #e2e2e2;
+    padding-left:1%;
+    padding-right:1%;
+    padding-top:1%;
+    padding-bottom:1%;
+    line-height:22px;
+}
+a{
+    text-decoration:none;
+    color:blue;
+    }
+a:hover{
+    text-decoration:none;
+}
+.layui-layer-dialog .layui-layer-content{
+  text-align: center;
+}
+.bgc_e8{
+    background-color: #e85529;
+}

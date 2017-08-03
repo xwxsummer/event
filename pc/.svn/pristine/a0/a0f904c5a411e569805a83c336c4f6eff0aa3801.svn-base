@@ -1,0 +1,95 @@
+
+<div class="title h90 bt-b font24">接单查询</div>
+
+<table class="search">
+	<tr>
+		<td>接单编号：<input  ngModel name="number" type="text" class="form-control" sytle="width:150px"></td>
+		<td>车牌号：<input  ngModel name="truckNo" type="text" class="form-control"></td>
+		<td>接单时间：<input   ngModel name="beginTime" id="startTime" type="text" class="form-control" style="width:35%" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD  hh:mm:ss'})">--<input type="text"
+		  ngModel name="endTime"	id="endTime" style="width:35%" class="form-control" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD  hh:mm:ss'})"></td>
+      <td>货物状态：
+        <select id="test">
+          <option value ="107">请选择</option>
+          <option value ="101">运输中</option>
+          <option value="106">已完成</option>
+          <option value="104">协商中</option>
+          <option value="103">取消</option>
+        </select>
+      </td>
+		<td><button class=" button form-control" (click)="form()">筛选</button></td>
+		<td><button class="button form-control" (click)="clear()">重置</button></td>
+	</tr>
+</table>
+ <div class="layui-form">
+        <table class="layui-table" style="width:98%;margin-left:1%">
+          <colgroup>
+            <col width="150">
+            <col width="400">
+            <col width="150">
+            <col width="150">
+            <col width="150">
+						<col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col>
+          </colgroup>
+          <tr style="background-color:#f3f6f8">
+            <th>接单编号</th>
+            <th>货物信息</th>
+            <th>收货单位</th>
+            <th>司机</th>
+            <th>车牌号</th>
+            <th>担保状态</th>
+            <th>交易状态</th>
+						<th>货物状态</th>
+						<th>操作</th>
+          </tr> 
+		<tr *ngFor="let data of datas">
+			<td>{{data.childNo}}</td>
+			<td>
+				<div>
+					<span>货物名称：{{data.goodsName }}&nbsp;&nbsp;货物运费：{{data.freightPrice.toFixed(2) }}元/吨</span><br>
+					<span>收货地址：{{adress}}</span>
+        </div>
+			</td>
+			<td>{{data.receiveCompany}}</td>
+      <td>{{data.driverName}}</td>
+      <td>{{data.truckNo}}</td>
+			<td>{{data.insurance==0?"未担保":"已担保"}}</td>
+			<td>
+				<span  *ngIf="data?.status==150||data?.status==151">已支付</span>
+        <span  *ngIf="data?.status!=150&&data?.status!=151">未支付</span>
+			</td>
+			<td>
+				<span  *ngIf="data?.status==10">运输中</span>
+        <span  *ngIf="data?.status==2">接单成功</span>
+        <span  *ngIf="data?.status==3">前往货源地</span>
+        <span  *ngIf="data?.status==4">到达货源地</span>
+        <span  *ngIf="data?.status==50">货主确认车辆</span>
+        <span  *ngIf="data?.status==51">货主装车</span>
+        <span  *ngIf="data?.status==52">司机确认装车</span>
+        <span  *ngIf="data?.status==53">前往目的地</span>
+        <span  *ngIf="data?.status==54">到达目的地</span>
+        <span  *ngIf="data?.status==101">货主确认收货</span>
+        <span  *ngIf="data?.status==102">司机确认收货</span>
+        <span  *ngIf="data?.status==150">完成</span>
+        <span  *ngIf="data?.status==151">评价完成</span>
+        <span  *ngIf="data?.status==200">货主拒绝装车</span>
+        <span  *ngIf="data?.status==210">货主取消</span>
+        <span  *ngIf="data?.status==211">司机取消</span>
+				<span  *ngIf="data?.status==213">系统取消</span>
+        <span  *ngIf="data?.status==220">协商中</span>
+			</td>
+			<td>
+				<a (click)="orderView(data?.childNo)">查看</a>&nbsp;
+				<a *ngIf="data?.status<150" (click)="childCancel()">取消</a>
+				<a *ngIf="data?.orderStatus!=10&&data?.orderStatus!=2" (click)="childCancel()">轨迹查询</a>
+			</td>
+		</tr>
+  </table>
+</div>
+<div class="paging">
+	<app-pagination [pageSize]="pageSize" [totalNum]="totalNum"  (pageChange)="changePageNum($event)"></app-pagination>
+</div>
+

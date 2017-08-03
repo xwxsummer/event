@@ -1,0 +1,235 @@
+
+<!-- <div class="right-top" (click)="black()">
+        <span class="first">1.司机接单</span>
+        <span class="second">2.到达货源地</span>
+        <span class="three">3.确认装货</span>
+        <span class="four">4.到达目的地</span>
+        <span class="five">5.确认卸货</span>
+        <span class="six">6.完成</span>
+</div> -->
+<div class="right-top">
+      <img style="width:30px;height:40px;margin-left:30px" src="../../../../assets/images/fh.jpg"  (click)="back()">
+    </div>
+    <div class="right-bottom">
+      <div class="littleTittle"><strong>货源详情</strong></div>
+      <div class="layui-form">
+        <table class="layui-table">
+          <colgroup>
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="200">
+          </colgroup>
+          <tr>
+            <td colspan='6'>
+              接单编号：{{data.childNo}} &nbsp;&nbsp;
+              支付状态：	
+              <span  *ngIf="data?.status==150||data?.status==151">已支付</span>
+              <span  *ngIf="data?.status!=150&&data?.status!=151">未支付</span>
+              &nbsp;&nbsp;
+              货单状态：
+              	<span class="e85529" *ngIf="data?.status==10">运输中</span>
+                <span class="e85529" *ngIf="data?.status==2">接单成功</span>
+                <span class="e85529" *ngIf="data?.status==3">前往货源地</span>
+                <span class="e85529" *ngIf="data?.status==4">到达货源地</span>
+                <span class="e85529" *ngIf="data?.status==50">货主确认车辆</span>
+                <span class="e85529" *ngIf="data?.status==51">货主装车</span>
+                <span class="e85529" *ngIf="data?.status==52">司机确认装车</span>
+                <span class="e85529" *ngIf="data?.status==53">前往目的地</span>
+                <span class="e85529" *ngIf="data?.status==54">到达目的地</span>
+                <span class="e85529" *ngIf="data?.status==100">货主确认车辆</span>
+                <span class="e85529" *ngIf="data?.status==101">货主确认收货</span>
+                <span class="e85529" *ngIf="data?.status==102">司机确认收货</span>
+                <span class="e85529" *ngIf="data?.status==150">完成</span>
+                <span class="e85529" *ngIf="data?.status==151">评价完成</span>
+                <span class="e85529" *ngIf="data?.status==200">货主拒绝装车</span>
+                <span class="e85529" *ngIf="data?.status==210">货主取消</span>
+                <span class="e85529" *ngIf="data?.status==211">司机取消</span>
+                <span class="e85529" *ngIf="data?.status==213">系统取消</span>
+                <span class="e85529" *ngIf="data?.status==220">协商中</span>
+                <span class="e85529" *ngIf="data?.status==230">司机支付失败</span>
+            </td>
+          </tr>
+          <tr style="background-color:#f3f6f8">
+            <td>货物名称</td>
+            <td>数量（吨）</td>
+            <td>运费（元/吨）</td>
+            <td>价值（元/吨）</td>
+            <td>是否担保</td>
+            <td>操作</td>
+          </tr> 
+          <tr>
+            <td>{{data.goodsName}}</td>
+            <td>{{data.goodsAmount}}</td>
+            <td>{{data.freightPrice}}</td>
+            <td>{{data.goodsPrice}}</td>
+            <td>{{data.insurance==1?"已担保":"未担保"}}</td>
+            <td><a (click)="map(data.childNo)">轨迹查询</a></td>
+          </tr>
+        </table>
+      </div>
+      <div class="littleTittle"><strong>司机信息</strong></div>
+      <div class="layui-form">
+        <table class="layui-table">
+          <colgroup>
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="150">
+           
+            <col width="200">
+            <col>
+          </colgroup>
+          <tr style="background-color:#f3f6f8">
+            <td>司机姓名</td>
+            <td>手机号</td>
+            <td>车牌号</td>
+            <td>车型</td>
+            
+            <td>载重</td>
+          </tr> 
+          <tr>
+            <td>{{data.driverName}}</td>
+            <td>{{data.driverPhone}}</td>
+            <td>{{data.truckNo}}</td>
+            <td>{{data.truckModel}}</td>
+            
+            <td>{{data.truckLoad}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="littleTittle"><strong>发货信息</strong></div>
+      <div class="layui-form">
+        <table class="layui-table">
+          <colgroup>
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="250">
+            <col>
+          </colgroup>
+          <tr style="background-color:#f3f6f8">
+            <td>发货人姓名</td>
+            <td>手机号</td>
+            <td>发货单位</td>
+            <td>详细地址</td>
+          </tr> 
+          <tr>
+            <td>{{data.sendName}}</td>
+            <td>{{data.sendPhone}}</td>
+            <td>{{data.sendCompany}}</td>
+            <td>{{data.sendAddress}}</td>
+          </tr>
+        </table>
+      </div>
+       <div class="littleTittle"><strong>收货信息</strong></div>
+      <div class="layui-form">
+        <table class="layui-table">
+          <colgroup>
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="250">
+            <col>
+          </colgroup>
+          <tr style="background-color:#f3f6f8">
+            <td>收货人姓名</td>
+            <td>手机号</td>
+            <td>收货单位</td>
+            <td>详细地址</td>
+          </tr> 
+          <tr>
+            <td>{{data.receiveName}}</td>
+            <td>{{data.receivePhone}}</td>
+            <td>{{data.receiveCompany}}</td>
+            <td>{{data.receiveAddress}}</td>
+          </tr>
+        </table>
+      </div>
+        <!-- *ngIf="data.sendTare"-->
+      <div  >
+      <div class="littleTittle" ><strong>装货信息</strong></div>
+      <div class="layui-form">
+        <table class="layui-table">
+          <colgroup>
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col>
+          </colgroup>
+          <tr style="background-color:#f3f6f8">
+            <td>皮重（吨）</td>
+            <td>毛重（吨）</td>
+            <td>净重（吨）</td>
+            <td>运费（元）</td>
+            <!-- <td>装货备注</td>
+            <td>司机备注</td> -->
+          </tr> 
+          <tr>
+            <td>{{data.sendTare}}</td>
+            <td>{{data.sendRough}}</td>
+            <td>{{sendNetWeight}}</td>
+            <td>{{sendFreight}}</td>
+            <!-- <td><a>查看</a></td>
+            <td><a>查看</a></td> -->
+          </tr>
+        </table>
+      </div>
+      </div>
+    <!--  -->
+      <div *ngIf="data.receiveTare">
+       <div class="littleTittle"><strong>交货信息</strong></div>
+      <div class="layui-form">
+        <table class="layui-table">
+          <colgroup>
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col>
+          </colgroup>
+          <tr style="background-color:#f3f6f8">
+            <td>皮重（吨）</td>
+            <td>毛重（吨）</td>
+            <td>净重（吨）</td>
+            <td>运费（元）</td>
+            <!-- <td>扣款明细</td>
+            <td>收货图片</td> -->
+           
+          </tr> 
+          <tr>
+            <td>{{data.receiveTare}}</td>
+            <td>{{data.receiveRough}}</td>
+            <td>{{receiveNetWeight}}</td>
+            <td>{{receiveFreight}}</td>
+            <!-- <td><a>查看</a></td>
+            <td><a>查看</a></td> -->
+          </tr>
+        </table>
+      </div>
+      </div>
+      <div *ngIf="data.status==200">
+        <div class="littleTittle"><strong>拒绝装车原因</strong></div>
+        <div class="refuse">
+            {{data?.remark}}
+            <div>
+              <img src="{{img}}" *ngFor="let img of imgListNew "/>
+            </div>
+        </div>
+      </div>
+      <div class="littleTittle"><strong>货单日志</strong></div>
+       <div class="refuse">
+        <div *ngIf="data?.payTime">货单创建时间：{{data.payTime}}</div>
+        <div *ngIf="data?.arriveTime">到达货源地时间：{{data.arriveTime}}</div>
+        <div *ngIf="data?.loadTime">装货完成时间：{{data.loadTime}}</div>
+        <div *ngIf="data?.receiveTime">到达目的地时间：{{data.receiveTime}}</div>
+        <div *ngIf="data?.unloadTime">货单完成时间：{{data.unloadTime}}</div>
+      </div>
+    </div>

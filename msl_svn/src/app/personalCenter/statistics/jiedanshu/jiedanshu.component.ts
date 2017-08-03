@@ -44,7 +44,6 @@ export class Jiedanshu implements OnInit{
         .subscribe(data=>{
           if(data.code==0){//成功
             this.data=data.data;
-            console.log(this.data);
             if(this.data.length==0){
               this.noneIfno=2;
             }else{

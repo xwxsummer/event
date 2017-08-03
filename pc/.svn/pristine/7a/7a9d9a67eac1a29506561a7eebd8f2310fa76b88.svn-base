@@ -1,0 +1,141 @@
+
+    <div class="right-top">
+      <img style="width:30px;height:40px;margin-left:30px" src="../../../../assets/images/fh.jpg"  (click)="back()">
+    </div>
+
+    <div class="right-bottom">
+      <div class="littleTittle"><strong>货源详情</strong></div>
+      <div class="layui-form">
+        <table class="layui-table" style="width:98%;margin-left:1%">
+          <colgroup>
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="200">
+            <col>
+          </colgroup>
+          <tr>
+            <td colspan='6'>
+              货单编号：{{data?.orderNo}} &nbsp;&nbsp;
+              支付状态：
+              <span class="e85529" *ngIf="data?.orderStatus==10">已支付</span>
+              <span class="e85529" *ngIf="data?.orderStatus==11">已支付</span>
+              <span *ngIf="data?.orderStatus==2">已支付</span>
+              <span *ngIf="data?.orderStatus==1">未支付</span>
+              <span *ngIf="data?.orderStatus==60">支付失败</span>
+              <span *ngIf="data?.orderStatus==40">取消</span>
+              <span *ngIf="data?.orderStatus==30">已支付</span>
+              <span *ngIf="data?.orderStatus==20">支付中</span>&nbsp;&nbsp;
+              货单状态：
+
+                  <span class="e85529" *ngIf="data?.orderStatus==1">未发布</span>
+                  <span class="e85529" *ngIf="data?.orderStatus==2">已发布</span>
+                  <span class="e85529" *ngIf="data?.orderStatus==10">运输中</span>
+                  <span class="e85529" *ngIf="data?.orderStatus==11">暂停</span>
+                  <span class="e85529" *ngIf="data?.orderStatus==20">支付中</span>
+                  <span class="e85529" *ngIf="data?.orderStatus==30">完成</span>
+                  <span class="e85529" *ngIf="data?.orderStatus==40">取消</span>
+                  <span class="e85529" *ngIf="data?.orderStatus==60">支付失败</span>
+            </td>
+          </tr>
+          <tr style="background-color:#f3f6f8">
+            <th>货物名称</th>
+            <th>数量（吨）</th>
+            <th>运费（元/吨）</th>
+            <th>价值（元/吨）</th>
+            <th>是否担保</th>
+            <th>操作</th>
+          </tr>
+          <tr>
+            <td>{{data?.goodsName}}</td>
+            <td>{{data?.goodsAmount}}</td>
+            <td>{{data?.freightPrice}}</td>
+            <td>{{data?.goodsPrice}}</td>
+            <td>{{dbState}}</td>
+            <td>
+              <!-- <a  *ngIf="data?.orderStatus==1">删除&nbsp;&nbsp;</a> -->
+              <a  *ngIf="data?.orderStatus==1">发布</a>
+              <a  *ngIf="data?.orderStatus==10||data?.orderStatus==2" (click)="showBg()">取消&nbsp;&nbsp;</a>
+              <a (click)="OrderQuery(data?.orderNo);$event.stopPropagation();" *ngIf="data?.orderStatus==10||data?.orderStatus==30">接单查询</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="littleTittle"><strong>发货信息</strong></div>
+      <div class="layui-form">
+        <table class="layui-table" style="width:98%;margin-left:1%">
+          <colgroup>
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="250">
+            <col>
+          </colgroup>
+          <tr style="background-color:#f3f6f8">
+            <th>发货人姓名</th>
+            <th>手机号</th>
+            <th>发货单位</th>
+            <th>详细地址</th>
+          </tr>
+          <tr>
+            <td>{{data?.sendName}}</td>
+            <td>{{data?.sendPhone}}</td>
+            <td>{{data?.sendCompany}}</td>
+            <td>{{data?.sendAddress}}</td>
+          </tr>
+        </table>
+      </div>
+       <div class="littleTittle"><strong>收货信息</strong></div>
+      <div class="layui-form">
+        <table class="layui-table" style="width:98%;margin-left:1%">
+          <colgroup>
+            <col width="150">
+            <col width="150">
+            <col width="150">
+            <col width="250">
+            <col>
+          </colgroup>
+          <tr style="background-color:#f3f6f8">
+            <th>收货人姓名</th>
+            <th>手机号</th>
+            <th>收货单位</th>
+            <th>详细地址</th>
+          </tr>
+          <tr>
+            <td>{{data?.receiveName}}</td>
+            <td>{{data?.receivePhone}}</td>
+            <td>{{data?.receiveCompany}}</td>
+            <td>{{data?.receiveAddress}}</td>
+          </tr>
+        </table>
+      </div>
+       <div class="littleTittle"><strong>货单日志</strong></div>
+       <div class="refuse">
+        <div *ngIf="data?.createTime">货单创建时间：{{data?.createTime}}</div>
+        <div *ngIf="data?.arriveTime">到达货源地时间：{{data?.arriveTime}}</div>
+        <div *ngIf="data?.loadTime">装货完成时间：{{data?.loadTime}}</div>
+        <div *ngIf="data?.receiveTime">到达目的地时间：{{data?.receiveTime}}</div>
+        <div *ngIf="data?.unloadTime">货单完成时间：{{data?.unloadTime}}</div>
+        <div *ngIf="data?.endTime">最晚接单时间：{{data?.endTime}}</div>
+        <div *ngIf="data?.latestArrivalTime">最晚装货时间：{{data?.latestArrivalTime}}</div>
+      </div>
+    </div>
+
+
+<div id="main">
+<div id="fullbg"></div>
+<div id="dialog">
+    <div>
+      <ul class="cancel_ul" >
+        <li class="cancel_li" [class.special]="AdditionalTip[i]" *ngFor="let siteRefuse of dataRefuse;let i=index" (click)="AdditionalTip_click(i,siteRefuse?.name)">{{siteRefuse?.name}}</li>
+      </ul>
+    </div>
+    <div class="button-class">
+      <button (click)="goodsCancle(data.orderNo)">确定提交</button>
+      <button (click)="closeBg();">关闭</button>
+    </div>
+</div>
+</div>

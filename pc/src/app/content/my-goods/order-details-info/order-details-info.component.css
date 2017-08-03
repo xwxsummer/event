@@ -1,0 +1,132 @@
+
+.right-top {
+  height: 90px;
+  border-bottom: 1px solid #cccccc;
+  line-height: 90px;
+}
+.right-top span {
+  display: block;
+  width: 16%;
+  height: 3rem;
+  float: left;
+  color: #ffffff;
+  text-align: center;
+  line-height: 3rem;
+  position: absolute;
+  top: 2.5rem;
+}
+
+.right-top span:nth-child(1) {
+  background: url('../../../../assets/images/a.png') no-repeat;
+  background-size: 14rem;
+  left: 2.2rem;
+}
+
+.right-top span:nth-child(2) {
+    background: url('../../../../assets/images/a2.png') no-repeat;
+    background-size: 14rem;
+    color: #999;
+    left: 20.2rem;
+}
+
+.right-top span:nth-child(3) {
+    background: url('../../../../assets/images/a2.png') no-repeat;
+    background-size: 14rem;
+    color: #999;
+    left: 38rem;
+}
+
+.right-top span:nth-child(4) {
+    background: url('../../../../assets/images/a2.png') no-repeat;
+    background-size: 14rem;
+    color: #999;
+    left: 56rem;
+}
+
+.right-bottom {
+    width: 98%;
+    float: left;
+    height: 84%;
+    border: 1px solid #cccccc;
+    margin: 15px 0 10px 10px;
+    overflow-y: scroll;
+}
+.littleTittle{
+    margin-left:1%;
+    margin-top:10px;
+    margin-bottom:10px;
+    padding-left:1%;
+    font-size:18px;
+    border-left:2px solid #e85529;
+}
+.blue{
+    color:pink;
+}
+
+
+#main { 
+height: 100%;
+padding-top:90px; 
+text-align:center; 
+} 
+#fullbg { 
+/* background-color:gray;  */
+left:0; 
+opacity:0.5; 
+position:absolute; 
+top:0; 
+z-index:3; 
+filter:alpha(opacity=50); 
+-moz-opacity:0.5; 
+-khtml-opacity:0.5; 
+} 
+#dialog { 
+background-color:#fff; 
+border:5px solid rgba(0,0,0, 0.4); 
+height:400px; 
+left:50%; 
+margin:-200px 0 0 -200px; 
+padding:1px; 
+position:fixed !important; /* 浮动对话框 */ 
+position:absolute; 
+top:50%; 
+width:400px; 
+z-index:5; 
+border-radius:5px; 
+display:none; 
+} 
+#dialog p { 
+margin:0 0 12px; 
+height:24px; 
+line-height:24px; 
+background:#CCCCCC; 
+} 
+/*#dialog p.close { 
+text-align:right; 
+padding-right:10px; 
+} 
+#dialog p.close a { 
+color:#333; 
+text-decoration:none; 
+} */
+.cancel_ul .special{
+  padding-bottom: 0px;
+  border: 1px solid #ea5529;
+  color: #ea5529;
+}
+.cancel_ul{
+    margin-top: 30px;
+}
+.cancel_li{
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 47%;
+  margin-bottom: 1.1rem;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  color: #999;
+  float:left;
+  margin-left: 2px;
+  margin-right: 2px;
+}

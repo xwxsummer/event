@@ -1,0 +1,132 @@
+.header{
+  height: 10rem;
+  background: url("../../../../../assets/images/img.png");
+  border: none;
+}
+.header .header_center{
+  width: 90%;
+  height: 10rem;
+
+  margin: 0 auto;
+  overflow: hidden;
+}
+.header .header_center .left{
+  width: 35%;
+  height: 10rem;
+  /*background: #1f1f22;*/
+  float: left;
+}
+.header .header_center .left .to{
+  width:68px;
+  height:68px;
+  border-radius:68px;
+  /*background: #ea5529;*/
+  border: 1px solid #e5e5e5;
+  margin: 10px auto;
+}
+.header .header_center .left .img img{
+  width: 4.5rem;
+}
+.header .header_center .right{
+  float: right;
+  width: 65%;
+  height: 10rem;
+
+}
+.header .header_center .right .right_top{
+  height: 3rem;
+  /*border-bottom: 1px solid #e5e5e5;*/
+  line-height: 3rem;
+  color: #fff;
+}
+.header .header_center .right .right_bottom{
+  height: 4.5rem;
+
+}
+.header .header_center .right .right_bottom_1{
+  width: 63%;
+  height: 4.5rem;
+
+  float: left;
+}
+.header .header_center .right .right_bottom_1 img{
+  width: 1rem;
+  height: 1rem;
+}
+.header .header_center .right .right_bottom_1 span{
+  display: block;
+}
+.header .header_center .right .right_bottom .phone{
+  float: left;
+  width: 29%;
+  height: 2rem;
+  background: url("../../../../../assets/images/phone.png") no-repeat right;
+  background-size: 1.8rem;
+  border-left: 1px solid #e5e5e5;
+  margin-top: 10%;
+
+}
+.header .header_center .right .blacklist{
+  width: 6rem;
+  height: 2rem;
+  background: url("../../../../../assets/images/h.png") no-repeat left;
+  background-size: 1.2rem;
+  float: right;
+  line-height: 2rem;
+  text-align: right;
+  color: #fff;
+}
+.box2{
+  background: #fff;
+}
+.box .box2 .center{
+  width: 90%;
+  height: 7rem;
+  margin: 0 auto;
+
+}
+.box .box2 .center h4{
+  height: 2.5rem;
+  line-height: 2.5rem;
+  color: #000;
+  border-bottom: 1px solid #e5e5e5;
+}
+.box .box2 .center .left,.box .box2 .center .right{
+  width: 9rem;
+  float: left;
+}
+.box .box2 .center .left span,.box .box2 .center .right span{
+  display: block;
+  padding-top: 0.75rem;
+}
+.box .box2 .center .right{
+  float: right;
+}
+.box .bottom{
+  min-height: 28rem;
+  background: #fff;
+}
+.box .bottom .center{
+  width: 90%;
+  min-height: 18rem;
+  margin: 0 auto;
+}
+.box .bottom .center h4{
+  height: 2.5rem;
+  line-height: 2.5rem;
+  color: #000;
+}
+.box .bottom .center .evaluate{
+  min-height: 15rem;
+}
+.box .bottom .center .evaluate span{
+  width: 25%;
+  float: left;
+  height: 2rem;
+  color: #ea5529;
+  line-height: 2rem;
+  text-align: center;
+  border: 1px solid #ea5529;
+  border-radius: 5px;
+  margin: 0.55rem;
+}

@@ -1,0 +1,61 @@
+.box {
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  overflow: hidden;
+}
+
+.box .img {
+  margin: 6rem auto auto auto;
+  background: url("../../../../../../assets/images/succe.png") no-repeat;
+  background-size: 100% 100%;
+}
+
+.box span {
+  display: block;
+  text-align: center;
+  padding-top: 0.5rem;
+  padding-left: 1.1rem;
+  font-size: 1rem;
+}
+
+.box .box2 {
+  width: 90%;
+  height: 4rem;
+  background: #ccc;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.box .box2 .span {
+  display: block;
+  width: 3.2rem;
+  height: 3.2rem;
+  float: left;
+  margin-top: 0.4rem;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.box .box2 i {
+  color: #000;
+}
+
+.box .box2 i:nth-child(2) {
+  padding-top: 0.8rem;
+  display: block;
+}
+
+.box .box2 i:nth-child(4) {
+  padding-right: 0.3rem;
+  float: right;
+}
+
+#input {
+  width: 50%;
+  background: #ea5529;
+  display: block;
+  color: #fff;
+  border: 0;
+  margin: 17px auto;
+}

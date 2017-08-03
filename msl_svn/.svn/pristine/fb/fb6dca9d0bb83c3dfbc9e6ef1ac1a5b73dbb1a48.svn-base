@@ -1,0 +1,310 @@
+/**
+ * Created by Administrator on 2017/5/2 0002.
+ */
+import { Component, OnInit } from '@angular/core';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+import { Observable }from 'rxjs/Observable';
+import { Subject }from 'rxjs/Subject';
+import { Title }from '@angular/platform-browser';
+import { personalCenterService } from  '../../personalCenter.service';
+import { saveDTO } from  './saveDTO';
+import { cardData } from  './cardData';
+//本地缓存
+import { LocalStorage } from '../../../local_storage';
+
+declare var mui: any;
+declare var $: any;
+
+
+@Component({
+  selector: 'app-mybank',
+  templateUrl: './mybank.component.html',
+  styleUrls: ['./mybank.component.css']
+
+})
+
+
+export class Mybank implements OnInit {
+  public data;
+  public myData;
+  public saveDTO: saveDTO;
+  public isShow: number;
+  public message: string;//显示的信息
+  public cardData: cardData;//银行卡详情
+  public showTrue: boolean;//层显示？
+  public walletCode: number;//钱包
+  public picker: any;
+  constructor(
+    public router: Router,
+    public localStorage: LocalStorage,
+    public service: personalCenterService
+  ) {
+    this.saveDTO = new saveDTO();
+    this.cardData = new cardData();
+  }
+
+  ngOnInit(): void {
+
+    let self = this;
+    this.message = "";
+    this.showTrue = false;
+    //查询姓名
+    this.isShow = 1;//查询银行卡 2添加银行卡
+    this.service.personalCenterInfo()
+      .subscribe(data => {
+        if (data.code == 0) {//成功
+          this.saveDTO.name = data.data.name;
+        }
+
+      });
+    this.walletCode = parseFloat(this.localStorage.get("walletCode"));
+    //查询银行卡列表walletCode
+    this.service.bankCardFindList(this.walletCode)
+      .subscribe(data => {
+        if (data.code == 0) {//成功
+          this.data = data.data;
+        }
+      });
+    this.service.wallet(localStorage['walletCode']).subscribe(res => {
+      this.myData = res.data;
+    });
+    mui.ready(function() {
+      console.log("mui ready");
+      var activeIndex = 0;// 数字索引
+      var resultValue = "";// 密码结果
+      var inputList = mui(".input-item");// 所有输入框
+      var numberList = mui(".keyboard-number");// 所有数字键
+
+      // 数字键盘点击事件
+      mui("#keyboard").on("tap", ".keyboard-number", function() {
+        //console.log("tap:",this.innerText);
+        addNumber(this.innerText);
+      });
+
+      mui("#keyboard").on("tap", ".keboard-action", function() {
+        var value = this.getAttribute("data-action");
+        switch (value) {
+          case "cancel":
+            if (activeIndex > 0) {
+              cancelNumber();
+            }
+            break;
+          case "reset":
+            resetInput();
+            break;
+        }
+      });
+      // 添加数字
+      function addNumber(num) {
+        inputList[activeIndex].innerText = "*";
+        resultValue += num;
+        activeIndex++;
+        console.log('password:', resultValue);
+        // 检测密码长度
+        if (activeIndex >= 6) {
+          self.checkPassword(resultValue);
+          resetInput();
+        }
+      }
+      // 撤销数字
+      function cancelNumber() {
+        activeIndex--;
+        inputList[activeIndex].innerText = "";
+        resultValue = resultValue.substring(0, resultValue.length - 1);
+      }
+      // 密码框置空
+      function resetInput() {
+        activeIndex = 0;
+        resultValue = "";
+        mui(".input-item").each(function(index, element) {
+          (<HTMLElement>element).innerText = "";
+        });
+      }
+
+    });
+  }
+  //忘记密码
+  pw() {
+
+  }
+  //添加银行卡
+  submitForm() {
+    this.saveDTO.accountType = this.isShow ==2 ? 11 : 12;
+    this.saveDTO.bank = $('#bank').text();
+    this.saveDTO.bankCode = $('#bank').val();
+    this.saveDTO.cardNo = $('#cardNo').val();
+    this.saveDTO.faster = $('#faster')[0].checked ? 1 : 0;
+    this.saveDTO.idNo = $('#idNo').val();
+    this.saveDTO.idType = $('#idType').val();
+    this.saveDTO.mobile = $('#mobile').val();
+    this.saveDTO.name = $('#name').val();
+    this.saveDTO.type = '10';
+    this.saveDTO.userCode = this.walletCode;
+    for(let key in this.saveDTO){
+      if(this.saveDTO[key]===undefined){
+        mui.toast('未填写完整');
+        return;
+      }
+    }
+    //添加银行卡
+    this.service.addbankCard(this.saveDTO)
+      .subscribe(data => {
+        if (data.code == 0) {//成功
+          this.router.navigateByUrl("personalCenter/MobileComponent");
+          this.isShow = 1;//查询银行卡 2添加银行卡  3管理银行卡
+
+          // location.reload();
+        } else {
+          mui.toast(data.msg, { duration: 'short', type: 'div' });
+        }
+      });
+  }
+
+  submitForm1() {
+    this.saveDTO.accountType = this.isShow ==2 ? 11 : 12;
+    this.saveDTO.bank = $('#bank').text();
+    this.saveDTO.bankCode = $('#bank').val();
+    this.saveDTO.cardNo = $('#cardNo').val();
+    this.saveDTO.name = $('#name').val();
+    this.saveDTO.type = '10';
+    this.saveDTO.userCode = this.walletCode;
+    for(let key in this.saveDTO){
+      if(this.saveDTO[key]===undefined){
+        mui.toast('未填写完整');
+        return;
+      }
+    }
+    //添加银行卡
+    this.service.addbankCard(this.saveDTO)
+      .subscribe(data => {
+        if (data.code == 0) {//成功
+          this.isShow = 1;//查询银行卡 2添加银行卡  3管理银行卡
+          this.router.navigateByUrl("personalCenter/SuccessmobileComponent");
+          // location.reload();
+        } else {
+          mui.toast(data.msg, { duration: 'short', type: 'div' });
+        }
+      });
+  }
+
+  //点击银行卡详情
+  manangeCard(data) {
+    this.isShow = 3;//查询银行卡 2添加银行卡
+    this.cardData = data;
+    this.message = "确定要解除" + this.cardData.cardNo + "的快捷支付功能吗？";
+  }
+  //点击添加银行卡
+  addBank() {
+    mui.confirm('企业账户仅可提现，不可绑快捷支付', '请选择银行账户类型', ['个人', '企业'], (i) => {
+      if (i.index == 0) {
+        this.isShow = 2;//查询银行卡 2添加银行卡
+      }else{
+        this.isShow = 4;
+      }
+    });
+
+  }
+  //弹出层事件
+  cengShow(msg) {
+    this.showTrue = false;
+    if (msg == 1) {
+      if (this.myData.pwd == 0) {//没有设置秘密
+        mui.toast("没有设置秘密，请设置秘密", { duration: 'short', type: 'div' });
+      } else {
+        mui('.mui-popover').popover('show');
+      }
+    }
+  }
+  //密码请求
+  checkPassword(Value) {
+    this.service.unBinding(this.walletCode, this.cardData.id, Value)
+      .subscribe(
+      data => {
+        if (data.code == 0) {//成功
+          mui.toast("删除成功", { duration: 'short', type: 'div' });
+          this.router.navigateByUrl("personalCenter/Wallet");
+        } else {
+          mui.toast(data.msg, { duration: 'short', type: 'div' });
+        }
+      });
+  }
+  //点击管理银行卡
+  manageCard() {
+    this.showTrue = true;
+  }
+  //返回上一页personalCenter/Wallet
+  goBack() {
+    this.router.navigateByUrl("personalCenter/Wallet");
+
+  }
+  //返回主页
+  goHome() {
+    this.router.navigateByUrl("market/MarketInfo?info=marketInfo");
+  }
+  bank() {
+    var picker = new mui.PopPicker();
+    picker.setData([
+      { value: "100", text: "邮储银行" },
+      { value: "102", text: "工商银行" },
+      { value: "103", text: "农业银行" },
+      { value: "104", text: "中国银行" },
+      { value: "105", text: "建设银行" },
+      { value: "301", text: "交通银行" },
+      { value: "302", text: "中信银行" },
+      { value: "303", text: "光大银行" },
+      { value: "304", text: "华夏银行" },
+      { value: "305", text: "民生银行" },
+      { value: "306", text: "广发银行" },
+      { value: "307", text: "平安银行" },
+      { value: "308", text: "招商银行" },
+      { value: "309", text: "兴业银行" },
+      { value: "310", text: "浦发银行" },
+      { value: "316", text: "浙商银行" },
+      { value: "401", text: "上海银行" },
+      { value: "403", text: "北京银行" },
+      { value: "408", text: "宁波银行" },
+      { value: "409", text: "齐鲁银行" },
+      { value: "422", text: "河北银行" },
+      { value: "423", text: "杭州银行" },
+      { value: "424", text: "南京银行" },
+      { value: "434", text: "天津银行" },
+      { value: "440", text: "徽商银行" },
+      { value: "447", text: "兰州银行" },
+      { value: "448", text: "江西银行" },
+      { value: "450", text: "青岛银行" },
+      { value: "491", text: "桂林银行" },
+      { value: "1405", text: "广州农村商业银行" },
+      { value: "1562", text: "珲春农商银行" },
+      { value: "1565", text: "颖淮农村商业银行" },
+      { value: "1580", text: "延边农村商业银行" }
+    ]);
+    picker.show(function(selectItems) {
+      $('#bank').text(selectItems[0].text);
+      $('#bank').val(selectItems[0].value);
+      console.log(selectItems[0].text);
+      console.log(selectItems[0].value);
+    })
+  }
+  cardNo(){
+    var picker = new mui.PopPicker();
+    picker.setData([
+      { value: "0", text: "身份证" },
+      { value: "1", text: "户口薄" },
+      { value: "2", text: "护照" },
+      { value: "3", text: "军官证" },
+      { value: "4", text: "士兵证" },
+      { value: "5", text: "港澳居民来往内地通行证" },
+      { value: "6", text: "台湾同胞来往内地通行证" },
+      { value: "7", text: "临时身份证" },
+      { value: "8", text: "外国人居留证" },
+      { value: "9", text: "警官证" }
+
+    ]);
+    picker.show(function(selectItems) {
+      $('#idType').text(selectItems[0].text);
+      $('#idType').val(selectItems[0].value);
+      console.log(selectItems[0].text);
+      console.log(selectItems[0].value);
+    })
+  }
+}

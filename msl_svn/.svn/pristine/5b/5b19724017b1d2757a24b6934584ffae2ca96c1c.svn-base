@@ -1,0 +1,153 @@
+input[type='number']{
+    width: 60%;
+    display: inline-block;
+    margin-bottom: 0px;
+    padding: 0;
+    -webkit-user-select: text;
+    border:none;
+    /*border-bottom: 1px solid #e5e5e5;*/
+    border-radius: 0px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+.box{
+    background: #efeff4;
+}
+
+.box2 .box3{
+    height: 4rem;
+   }
+.bank{
+    height: 4rem;
+    margin: 0 auto;
+    line-height: 4rem;
+    padding-left: 15px;
+    position: absolute;
+}
+.bank .bank_h img{
+     height: 2rem;
+     width: 2rem;
+    vertical-align: middle;
+ }
+.bank span:nth-child(4){
+    font-size: 1rem;
+    float: right;
+    padding-right: 15px;
+}
+#input{
+    width: 50%;
+    background: #ea5529;
+    display: block;
+    color: #fff;
+    border: 0;
+}
+#span{
+  color: #ea5529;
+  padding-left: 0.5rem;
+  font-size: 0.5rem;
+
+}
+.input_org{
+  border-bottom: 0;
+  font-size: 1rem;
+}
+.box .box4{
+  height: 3rem;
+}
+.box .box4 span{
+  line-height: 3rem;
+  color: #000;
+  padding-left: 15px
+}
+.mui-radio input[type='radio']:before, .mui-checkbox input[type='checkbox']:before{
+  margin-top: 0.7rem;
+  display: block;
+}
+.box .add{
+    width: 90%;
+    height: 3rem;
+    margin: 0 auto;
+    background: url("../../../../assets/images/jia.png") no-repeat left;
+    background-size: 1rem;
+    display: block;
+}
+.box .add span{
+    padding-left: 1.8rem;
+    line-height: 3rem;
+}
+.mui-content{
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+}
+table#number_input {
+    background-color: white;
+    width: 100%;
+    text-align: center;
+
+}
+
+table#number_input td {
+    border: 1px solid gainsboro;
+    border-right: 0;
+    width: 10%;
+    height: 60px;
+    padding-top: 0.7rem;
+    font-size: 2rem;
+}
+
+table#number_input td:last-child {
+    border-right: 1px solid gainsboro;
+}
+
+table#keyboard {
+    /*position: fixed;*/
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width: 100%;
+    height: 160px;
+    background-color: white;
+}
+
+table#keyboard td {
+    border: 1px solid gainsboro;
+    border-right: 0;
+    border-bottom: 0;
+    width: 33%;
+    height: 75px;
+}
+
+table#keyboard td:enabled {
+    color: red;
+}
+
+table#keyboard td:last-child {
+    border-right: 1px solid gainsboro;
+}
+
+.forgetPassword{
+    color: #0062CC;
+}
+.mui-popover.mui-popover-action .mui-table-view {
+    margin: 0;
+    text-align: center;
+    color: #999;
+    border-radius: 0px;
+}
+.mui-input-row label{
+  line-height: 2rem;
+  padding: 0px;
+}
+.mui-radio input[type='radio']:before, .mui-checkbox input[type='checkbox']:before{
+  margin-top: 0.3rem;
+    display: block;
+}
+.box_h{
+  margin-top: 0.8rem;
+  padding-right: 1.2rem;
+}
+.box td{
+    font-size: 1.5rem;
+}

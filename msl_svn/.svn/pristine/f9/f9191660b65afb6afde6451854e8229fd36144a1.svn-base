@@ -1,0 +1,92 @@
+<div class="component" id="id">
+  <!-- <form class="" #myForm="ngForm" (ngSubmit)="onSubmit(myForm.value)" > -->
+  <form  #myForm="ngForm" id="myForm" >
+    <div class="c_top">
+        <div class="c_top_box">
+          <!-- <form class="" #myForm="ngForm" (ngSubmit)="onSubmit(myForm.value)"> -->
+            <label>货物名称: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="margin-top: 1.2rem" class="mui-input-clear" ngModel name="goodsName" required type="text" /></label>
+            <br/>
+            <label>货物数量: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input ngModel name="goodsAmount" required type="text"/>&nbsp;&nbsp;吨</label>
+            <br/>
+            <label>货物价值: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input ngModel name="goodsPrice" required type="text"/>&nbsp;&nbsp;元/吨</label>
+            <br/>
+            <label>货物价格: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input ngModel name="goodsSale" required type="text"/>&nbsp;&nbsp;元/吨</label>
+            <br/>
+            <label>货物运费: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input ngModel name="freightPrice" required type="text"/>&nbsp;&nbsp;元/吨</label>
+            <br/>
+            <span class="left" (click)="showMsg3()">最晚接单时间：<input  disabled="disabled" ngModel name="endTime" required id="endTime" #endTime type="text" /><span class="label">&nbsp;&nbsp;</span></span><br/>
+            <span class="left" (click)="showMsg4()">最晚装货时间：<input  disabled="disabled" ngModel name="latestArrivalTime" required id="latestArrivalTime" #latestArrivalTime type="text" /><span class="TwoLabel">&nbsp;&nbsp;</span></span>
+
+            <br/>
+            <!--<div class="button" (click)="onSubmit(myForm.value)" >提交货源</div>-->
+          <!-- </form> -->
+
+            <label  (click)="AdditionalTip_activate()">其他描述：（选填）
+                <b style="color: #0a01ff;" *ngIf="AdditionalTipArr.length==0">添加</b>
+                <b style="color: #0a01ff;" *ngIf="AdditionalTipArr.length>0">修改</b>
+            </label><br/>
+            <!-- 开始-->
+            <div class="border">
+                <span *ngFor="let text of AdditionalTipArr">{{text}}</span>
+            </div>
+            <!--<div>456456</div>-->
+            <label style="margin-top: 38px;line-height: 40px" id="RemarksToggle"  (click)="appRemarksToggle()">备注（选填）：
+              <b style="color: #0a01ff;" *ngIf="imgList.length==0">添加</b>
+              <b style="color: #0a01ff;" *ngIf="imgList.length>0">修改</b>
+            </label>
+            <!-- 备注组件 -->
+            <app-Remarks id="appRemarks" class="mui-popover mui-popover-bottom mui-popover-action"
+            (imgOutput)="setImgList($event)" (textOutput)="setRemarkText($event)" >app-Remarks</app-Remarks>
+
+            <div class="remarks">
+                <p>{{remarkText}}</p>
+                <div class="remarks2">
+                    <span *ngFor="let img of imgList" [ngStyle]="{'background-image':'url(' + img.data + ')'}" ></span>
+                </div>
+            </div>
+            <!--<div style="width: 50px;height:50px;background: #0000FF;margin: 10px;float: left;">hfakjfh</div>-->
+        </div>
+    </div>
+      <div style="height: 0.75rem;background: #efeff4"></div>
+    <div class="c_bottom">
+        <div class="c_bottom1" (click)="Shipmentdetails(1)">
+            <h4 style="height: 1.2rem;background: #ffffff; color: #333333;margin-top: 10px;margin-bottom: 10px;padding-left: 0.8rem;">发货信息</h4>
+            <div *ngFor="let item of sendlist" style="background: #f9f9fb">
+              <span style="margin-left: 0.8rem;">{{item.phone}}</span>
+              <span>发货人：{{item.name}}</span>
+              <div style="padding-top: 10px;height: 3rem;margin-left: 0.8rem;">发货地址：{{item.province}} {{item.city}} {{item.county}} {{item.town}} {{item.address}}</div>
+            </div>
+
+            <p *ngIf="sendlist.length==0"><img src="">添加发货信息</p>
+
+        </div>
+        <img class="w100 deliverGoods_bottom" src="../assets/images/deliverGoods_bottom.png">
+        <div class="c_bottom1" (click)="Shipmentdetails(2)">
+            <h4 style="height: 1.2rem; color: #333333;margin-top: 10px;margin-bottom: 10px;padding-left: 0.8rem;background: #ffffff;">收货信息</h4>
+            <div *ngFor="let item of receivelist" style="background: #f9f9fb;height: 3rem">
+              <span style="margin-left: 0.8rem;">{{item.phone}}</span>
+              <span>收货人：{{item.name}}</span>
+              <div style="padding-top: 10px;height: 3rem;margin-left: 0.8rem;">收货地址：{{item.province}} {{item.city}} {{item.county}} {{item.town}} {{item.address}}</div>
+            </div>
+            <!--<p><img src="">添加收货信息</p>-->
+            <p *ngIf="receivelist.length==0"><img src="">添加收货信息</p>
+        </div>
+        <img class="w100 deliverGoods_bottom" src="../assets/images/deliverGoods_bottom.png">
+        <input class="button" value="提交货源" type="button"  [disabled]="submitlag" (click)="onSubmit(myForm.value)" >
+    </div>
+  </form>
+</div>
+
+<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action ">
+    <!-- 可选择菜单 -->
+    <div class="cancle_resuit text_center fonNormal">其他描述</div>
+    <ul class="mui-table-view back_fff cancel_ul">
+        <li *ngFor="let tip of tips;let i=index" class="mui-table-view-cell cancel_li" [class.special]="AdditionalTip[i]" (click)="AdditionalTip_click(i)">{{tip}}</li>
+        <li class="cancle_no bgc_c0c0" (click)="AdditionalTip_colse()">
+            <span><b style="color: #FFFFFF;">取消</b></span>
+        </li>
+        <li class="cancle_yes bgc_ea5529 " (click)="AdditionalTip_confirm()" >
+            <span><b style="color: #FFFFFF;">确定</b></span>
+        </li>
+    </ul>
+</div>

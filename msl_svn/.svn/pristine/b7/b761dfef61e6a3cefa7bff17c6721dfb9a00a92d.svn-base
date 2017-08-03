@@ -1,0 +1,69 @@
+.padding16{
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+}
+.height3{
+  height: 3rem;
+  line-height: 3rem;
+}
+li{
+  line-height: 1.6rem;
+}
+.detail_li{
+  width: 50%;
+}
+.sure{
+  width: 70%;
+  height: 2.6rem;
+  line-height: 2.6rem;
+  border-radius: 10px;
+  margin: 0 auto;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  margin-left: 15%;
+  color: #ffffff;
+  background-color:#ea5529;
+  border:none;
+}
+.remarks2{
+    width: 90%;
+    margin: 0 auto;
+}
+.remarks p{
+    padding-left: 1.5rem;
+    width: 95%;
+}
+.remarks span{
+    display: inline-block;
+    width: 32%;
+    /*margin: 5px;*/
+    height: 4rem;
+    background: #CCCCCC;
+    background-size: 100% 100%;
+}
+.imgs{
+  font-size: 18px;
+  vertical-align: middle;
+}
+.camera{
+  width: 8%;
+  height: 3%;
+  margin-left: 10%;
+  margin-right: 5px;
+}
+/*input:disabled {
+  background-color: #fff;
+}*/
+textarea{
+  background-color:#ebebeb;
+  border:1px solid #e5e5e5;
+   border-radius:5px
+}
+.addImg{
+  border: 1px dashed #e5e5e5; 
+  background-color: #ebebeb;
+  border-radius: 10px;
+  padding-left: 16px;
+  margin-bottom: 10px;
+   vertical-align: middle;
+}

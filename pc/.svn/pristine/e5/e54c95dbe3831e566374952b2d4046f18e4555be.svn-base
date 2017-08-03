@@ -1,0 +1,136 @@
+
+<div class="title h90 bt-b font24">{{title}}</div>
+<div *ngIf="totalNum">
+<form #myForm="ngForm">
+<table class="search">
+	<tr>
+		<td>接单编号：<input ngModel name="childNo" id="childNo" type="text" class="layui-input" sytle="width:150px"></td>
+		<td>车牌号：<input  ngModel name="truckNo" id ="truckNo" type="text" class="layui-input"></td>
+    <!--<li><a>*</a>截止日期：<input ngModel name="endTime" required id="endTime" #endTime readonly="readonly" id="LAY_demorange_s" class="layui-input" /></li>
+                <li><a>*</a>最晚装货时间：<input ngModel name="latestArrivalTime" required id="latestArrivalTime" #latestArrivalTime readonly="readonly"  id="LAY_demorange_e" class="layui-input"/></li>-->
+		<td>接单时间：
+      <input  ngModel name="startTime" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" type="text" readonly="readonly" id="startTime" class="layui-input" style="width:35%"> --
+      <input  ngModel name="endTime"  onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" type="text" style="width:35%" readonly="readonly"  id="endTime" class="layui-input"></td>
+    <!-- <td>担保状态：<select   ngModel name="insurance" class=" select layui-input">
+				<option>已担保</option>
+				<option>未担保</option>
+				</select>
+		</td> -->
+    <td><button class=" button layui-input" (click)="form(myForm.value)" style="color:#fff">筛&nbsp;选</button></td>
+     <td><button class="button layui-input" (click)="clear()" style="color:#fff">重&nbsp;置</button></td> 
+	</tr>
+	 <!-- <tr>
+    <td>发货单位：<input  ngModel name="sendCompany" type="text" class="layui-input"></td>
+		<td>收货单位：<input  ngModel name="receiveCompany" type="text" class="layui-input"></td>
+		
+		<td><button class="button layui-input" (click)="clear()" style="color:#fff">重&nbsp;置</button></td>
+	</tr>  -->
+</table>
+</form>
+ <div class="layui-form">
+        <table class="layui-table" style="width:98%;margin-left:1%">
+          <colgroup>
+            <col width="150">
+            <col width="450">
+            <col width="150">
+            <col width="150">
+            <col width="100">
+            <col width="100">
+            <col width="100">
+            <col width="100">
+            <col width="200">
+            <col width="200">
+            <col>
+          </colgroup>
+          <tr style="background-color:#f3f6f8">
+            <th>运单号</th>
+            <th>货物信息</th>
+            <th>发货单位</th>
+            <th>收货单位</th>
+            <th>车牌号</th>
+						<th>司机</th>
+            <th>担保状态</th>
+            <th>交易状态</th>
+						<th>货物状态</th>
+						<th>操作</th>
+          </tr> 
+		<tr *ngFor="let data of datas">
+			<td>{{data.childNo}}</td>
+			<td>
+				<div>
+					<span>货物名称：{{data.goodsName }}&nbsp;&nbsp;货物运费：{{data.freightPrice.toFixed(2) }}元/吨</span><br>
+					<span>收货地址：{{adress}}</span>
+        </div>
+      </td>
+      <td>{{data.sendCompany}}</td>
+      <td>{{data.receiveCompany}}</td>
+      <td>{{data.truckNo}}</td>
+      <td>{{data.driverName}}</td>
+			<td>{{data.insurance==1?"已担保":"未担保"}}</td>
+			<td>
+				<span *ngIf="data?.status==150||data?.status==151">已支付</span>
+        <span *ngIf="data?.status!=150&&data?.status!=151">未支付</span>
+			</td>
+			<td>
+        <!--{{data.status}}-->
+                <span   *ngIf="data?.status==1">新创建</span>
+                <span   *ngIf="data?.status==2">接单成功</span>
+                <span   *ngIf="data?.status==3">前往货源地</span>
+                <span   *ngIf="data?.status==4">到达货源地</span>
+                <span   *ngIf="data?.status==50">货主确认车辆</span>
+                <span   *ngIf="data?.status==51">货主装车</span>
+                <span   *ngIf="data?.status==52">司机确认装车</span>
+                <span   *ngIf="data?.status==53">前往目的地</span>
+                <span   *ngIf="data?.status==54">到达目的地</span>
+                <span   *ngIf="data?.status==100">货主确认车辆</span>
+                <span   *ngIf="data?.status==101">货主确认收货</span>
+                <span   *ngIf="data?.status==102">司机确认收货</span>
+                <span   *ngIf="data?.status==120">支付中</span>
+                <span   *ngIf="data?.status==121">货主装车支付中</span>
+                <span   *ngIf="data?.status==123">确认收货支付中</span>
+                <span   *ngIf="data?.status==150">完成</span>
+                <span   *ngIf="data?.status==151">评价完成</span>
+                <span   *ngIf="data?.status==200">货主拒绝装车</span>
+                <span   *ngIf="data?.status==210">货主取消</span>
+                <span   *ngIf="data?.status==211">司机取消</span>
+                <span   *ngIf="data?.status==212">客服取消</span>
+                <span   *ngIf="data?.status==213">系统取消</span>
+                <span   *ngIf="data?.status==220">协商中</span>
+                <span   *ngIf="data?.status==221">客服处理完毕</span>
+                <span   *ngIf="data?.status==222">装货异常</span>
+                <span   *ngIf="data?.status==230">司机支付失败</span>
+                <span   *ngIf="data?.status==232">确认收货支付失败</span>
+                <span   *ngIf="data?.status==231">货主装车调整失败</span>
+			</td>
+			<td>
+				<a (click)="childView(data.childNo)">查看</a>&nbsp;
+				<a  *ngIf="data.status==2||data.status==3||data.status==4" (click)="childCancel(data.childNo)">取消</a>
+				<a *ngIf="data?.status!=210&&data?.status!=211&&data?.status!=212&&data?.status!=213&&data?.status!=230" (click)="map(data.childNo)">轨迹查询</a>
+			</td>
+		</tr>
+  </table>
+</div>
+<div class="paging">
+<!--totalNum
+		<app-pagination [totalNum]='20' [pageSize]="10" (pageChange)="changePageNum($event)"></app-pagination>-->
+		<!--[totalPages]="totalPage"  [currentPage]="pageNum"-->
+	<app-pagination [pageSize]="pageSize" [totalNum]="totalNum"  (pageChange)="changePageNum($event)"></app-pagination>
+</div>
+
+<div id="main">
+<div id="fullbg"></div> 
+<div id="dialog"> 
+    <div>
+			<div *ngIf="myMoney!=0">需支付违约金：{{myMoney}}元</div>
+      <ul class="cancel_ul" >
+        <li class="cancel_li" [class.special]="AdditionalTip[i]" *ngFor="let siteRefuse of dataRefuse;let i=index" (click)="AdditionalTip_click(i,siteRefuse?.name)">{{siteRefuse?.name}}</li>
+      </ul>
+    </div>
+    <div class="button-class">
+      <button (click)="goodsCancle()">确定提交</button>
+      <button (click)="closeBg();">关闭</button> 
+    </div>
+</div> 
+</div> 
+</div>
+<div *ngIf="totalNum==0" style="text-align:center;font-size:32px;">暂无相关信息</div>

@@ -1,0 +1,26 @@
+.outside{
+    width:150px;
+    height:400px;
+    left:100%;
+    top:100%;
+    margin-left:-150px;
+    margin-top:-500px;
+    position:fixed;
+    color: white;
+}
+.bt{
+    width:100%;
+    margin-top:20px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    text-align: center;
+}
+.bt1{
+     height: 70px;
+    padding-top:20px;
+}
+.bt2{
+    padding-top:10px;
+    height:120px;
+    line-height:20px;
+}

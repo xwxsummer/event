@@ -1,0 +1,67 @@
+import { Component, OnInit } from '@angular/core';
+import { RouterModule,ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+//本地缓存
+import { LocalStorage } from '../../../../local_storage';
+//验证
+import { ValidateMessage } from '../../../../fragment/validateMessage';
+//http
+import { personalCenterService } from  '../../../personalCenter.service';
+@Component({
+  selector: 'app-mobile',
+  templateUrl: './mobile.component.html',
+  styleUrls: ['./mobile.component.css']
+})
+export class MobileComponent implements OnInit {
+  public ValidateMessage;//验证验证码
+  public countdown:number;//timer倒计时
+  public yzm:string;//验证码文字
+  public timer;//定时器
+  public isClick:boolean;//定时器
+  public myCaptcha:boolean;//验证码
+  public mobile:string;//电话号码
+  public submitlag:boolean;//表单是否可以提交
+
+  constructor(
+    public router: Router,
+    public routeInfo:ActivatedRoute,//页面间传值
+    public localStorage: LocalStorage,
+    public titleService: Title,
+    public service : personalCenterService
+  ) {
+this.ValidateMessage = new ValidateMessage();
+   }
+
+  ngOnInit() {
+    this.titleService.setTitle('找回交易密码');
+    this.countdown=60;
+    this.isClick=true;
+    this.yzm="获取验证码";
+    this.submitlag=false;
+    this.mobile=this.localStorage.getObject("data").mobile;
+    this.mobile=this.mobile.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+
+  }
+  //用户验证码  有权限
+  changCaptcha(){
+      if(this.isClick){
+          this.isClick=false;
+          this.timer=setInterval(() => {
+              if (this.countdown == 0) {
+                  this.yzm="获取验证码";
+                  this.countdown = 60;
+                  this.isClick=true;
+                  clearInterval(this.timer);
+              } else {
+                  this.yzm="重新发送(" + this.countdown + ")";
+                  this.countdown--;
+                  return false;
+              }
+          }, 1000);
+          // this.service.captcha(this.localStorage.getObject("data").mobile);
+      }
+  }
+  success(){
+    this.router.navigateByUrl("personalCenter/SuccessmobileComponent");
+  }
+}

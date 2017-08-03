@@ -1,0 +1,94 @@
+import { Component, OnInit } from '@angular/core';
+import { MyWalletService } from "app/content/my-wallet/my-wallet.service";
+declare let layui: any;
+declare let layer: any;
+declare let $: any;
+
+@Component({
+  selector: 'app-payments',
+  templateUrl: './payments.component.html',
+  styleUrls: ['./payments.component.css']
+})
+export class PaymentsComponent implements OnInit {
+  public data;
+  public income:number=0;
+  public spending:number=0;
+  public pageSize:number=5;
+  public totalNum;
+  public tzpageNum=1;
+  public pageNum;
+  public page;
+  constructor(
+     public service:MyWalletService
+  ) { }
+ 
+    finds(){
+      this.service.tradeFindList(this.pageSize,this.tzpageNum,'')
+      .subscribe(data=>{
+          console.log( data); 
+          this.data=data.data;
+          this.totalNum=data.total;//记录总条数
+          this.pageNum=data.pageNum;//当前处在的页数
+          for(var i=0;i<data.data.length;i++){
+            if(data.data[i].figure>0){
+              console.log(data.data[i].figure)
+                this.income +=data.data[i].figure
+            }
+            if(data.data[i].figure<0){
+              this.spending +=data.data[i].figure
+            }
+          }      
+        }
+      );
+    }
+  changePageNum(pageChange:number){
+     this.tzpageNum =  pageChange;
+     console.log(this.tzpageNum);
+      this.finds();
+  }
+  ngOnInit() {
+     this.finds();
+    layui.use('laydate', function () {
+      let laydate = layui.laydate;
+      let start = {
+        min: '2016-01-01 23:59:59'
+        , max: '2100-06-16 23:59:59'
+        , istoday: false
+        , choose: function (datas) {
+          end.min = datas; //开始日选好后，重置结束日的最小日期
+          end['start'] = datas //将结束日的初始值设定为开始日
+        }
+      };
+
+      let end = {
+        min: '2016-01-01 23:59:59'
+        , max: '2100-06-16 23:59:59'
+        , istoday: false
+        , choose: function (datas) {
+          start.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+      };
+      $("#startTime").click(function () {
+        start['elem'] = this;
+        laydate(start);
+      });
+      $("#endTime").click(function () {
+        end['elem'] = this;
+        laydate(end);
+      });
+    });
+  }
+
+getList(page: number) {
+    this.page = page;
+    let startTime: string = $('#startTime').val();
+    let endTime: string = $('#endTime').val();
+    if (startTime == null || startTime == "") {
+      startTime = "2016-01-01";
+    }
+    if (endTime == null || endTime == "") {
+      let laydate = layui.laydate;
+      endTime = laydate.now();
+    }
+  }
+} 

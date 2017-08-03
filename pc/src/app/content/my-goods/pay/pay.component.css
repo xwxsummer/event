@@ -1,0 +1,127 @@
+.right-top {
+  height: 90px;
+  border-bottom: 1px solid #cccccc
+}
+
+.right-top span {
+  display: block;
+  width: 16%;
+  height: 3rem;
+  float: left;
+  color: #ffffff;
+  text-align: center;
+  line-height: 3rem;
+  position: absolute;
+  top: 2.5rem;
+  font-size: 0.75rem;
+  /*cursor: pointer;*/
+  /*background: url('../../../../assets/images/a.png') no-repeat;*/
+}
+
+.right-top span:nth-child(1) {
+  background: url('../../../../assets/images/a.png') no-repeat;
+  background-size: 100% 100%;
+  left: 3.2rem;
+}
+
+.right-top span:nth-child(2) {
+  background: url('../../../../assets/images/a.png') no-repeat;
+  background-size: 100% 100%;
+  left: 23.2rem;
+}
+
+.right-top span:nth-child(3) {
+  background: url('../../../../assets/images/a.png') no-repeat;
+  background-size: 100% 100%;
+  left: 43rem;
+}
+
+.right-top span:nth-child(4) {
+  background: url('../../../../assets/images/a2.png') no-repeat;
+  background-size: 100% 100%;
+  color: #999;
+  left: 63rem;
+}
+
+.box {
+  height: 60%;
+  width: 98%;
+  margin-left: 15px;
+}
+
+.box h4 {
+  height: 45px;
+  font-size: 1rem;
+  color: #555555;
+  /*background: #ffffff;*/
+  line-height: 45px;
+
+}
+
+.box h4 span {
+  color: #e85529;
+}
+
+.box .pay {
+  height: 66px;
+  border: 2px solid #cccccc;
+}
+
+.box .pay span {
+  line-height: 66px
+}
+
+.box .button {
+  border: 0;
+  display: block;
+  width: 10%;
+  height: 2.5rem;
+  text-align: center;
+  background: #e85529;
+  color: #ffffff;
+  border-radius: 5px;
+  margin-top: 1rem;
+
+  cursor: pointer;
+}
+.box .input{
+  display:block;
+  width: 15%;
+  height: 3rem;
+  font-size: 3rem;
+  border-radius: 5px;
+
+
+  border: 1px solid #cccccc;
+}
+.box .span{
+  display: inline-block;
+
+  color: #cccccc;
+  font-style: 0.7rem;
+  margin-top:0.5rem;
+}
+.text input {
+  border: 1px solid gainsboro;
+  border-right: 0;
+  width: 30px;
+  height: 40px;
+  font-size: 30px;
+  text-align: center
+}
+
+.text input:last-child {
+  border-right: 1px solid #e5e5e5;
+}
+.text{
+  background-color: white;
+  float: left;
+}
+.alieditContainer{position:relative;}
+.alieditContainer .i-text{position: absolute;color: #fff;opacity:0.2; width:306px; height:48px; font-size:12px; left:0; -webkit-user-select:initial;  /*取消禁用选择页面元素*/z-index:9;	padding:0;	borde:0;}
+.alieditContainer .sixDigitPassword {width:306px; height:48px; cursor:text; background:#fff; outline:none; position:relative; padding:13px 0; border:1px solid #ddd; border-radius:5px;}
+.alieditContainer .sixDigitPassword i {width:50px; height:16px; float:left; display:block; padding:4px 0; border-left:1px solid #cccccc;}
+.alieditContainer .sixDigitPassword i:first-child{border-left:0;}
+.alieditContainer .sixDigitPassword i.active{background-image: url("https://t.alipayobjects.com/images/rmsweb/T1nYJhXalXXXXXXXXX.gif");background-repeat: no-repeat;background-position: center center; }
+.alieditContainer .sixDigitPassword b{display:block; margin:5px auto 4px auto; width:7px; height:7px; overflow:hidden; display:none;/*visibility:hidden;*/ background:#000; border-radius:100%;}
+.alieditContainer .sixDigitPassword .guangbiao{width:50px; height:48px; position:absolute; display:block; left:0px; top:-1px; border:1px solid rgba(82, 168, 236, .8); border:1px solid #00ffff\9; border-radius:5px; visibility:visible; -webkit-box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.75), 0 0 8px rgba(82, 168, 236, 0.6); box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);}

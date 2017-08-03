@@ -1,0 +1,231 @@
+<div class="title h90 bt-b font24">银行卡管理</div>
+<div class="wrap">
+    <div class="card_list">
+        <div class="ForList" *ngFor="let data of datas">
+          <img src={{data.bank}}>
+          &nbsp;&nbsp;&nbsp;尾号{{data.cardNo}}&nbsp;&nbsp;&nbsp;{{data.type==10?"借记卡":"信用卡"}}&nbsp;&nbsp;&nbsp;单笔限额：{{data.singleMax==0?"不限额":data.singleMax+"元"}}&nbsp;&nbsp;&nbsp;每日限额：{{data.dayMax==0?"不限额":data.dayMax+"元"}}&nbsp;&nbsp;&nbsp;{{data.faster}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="removeBinding" (click)="removeBinding(data.id)">解除绑定</a>
+        </div>  
+    </div>
+      <div (click)="pushCard()" class="pushCard" id="addCard">
+        添加新卡
+    </div>
+</div>
+
+<!-- 弹框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+      <div class="modal-header" style="background-color:#ebebeb">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">
+					&times;
+				</button>
+				<strong class="modal-title" id="myModalLabel">
+					合作银行/机构&nbsp;&nbsp;&nbsp;借记卡
+				</strong>
+			</div>
+			<div class="modal-body middleContent">
+        <!-- 第一步：银行卡的查看 -->
+         <div class="card">
+          <div class="brImg">
+            <input type="radio" name="1" value="104">
+            <img src="../../../../assets/images/104.jpg">
+            <input type="radio" name="1" value="105">
+            <img src="../../../../assets/images/105.jpg">
+            <input type="radio" name="1" value="103">
+            <img src="../../../../assets/images/103.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="102">
+            <img src="../../../../assets/images/102.jpg">
+            <input type="radio" name="1" value="100">
+            <img src="../../../../assets/images/100.jpg">
+            <input type="radio" name="1" value="447">
+            <img src="../../../../assets/images/447.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="440">
+            <img src="../../../../assets/images/440.jpg">
+            <input type="radio" name="1" value="434">
+            <img src="../../../../assets/images/434.jpg">
+            <input type="radio" name="1" value="424">
+            <img src="../../../../assets/images/424.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="422">
+            <img src="../../../../assets/images/422.jpg">
+            <input type="radio" name="1" value="408">
+            <img src="../../../../assets/images/408.jpg">
+            <input type="radio" name="1" value="403">
+            <img src="../../../../assets/images/403.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="401">
+            <img src="../../../../assets/images/401.jpg">
+            <input type="radio" name="1" value="310">
+            <img src="../../../../assets/images/310.jpg">
+            <input type="radio" name="1" value="309">
+            <img src="../../../../assets/images/309.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="308">
+            <img src="../../../../assets/images/308.jpg">
+            <input type="radio" name="1" value="307">
+            <img src="../../../../assets/images/307.jpg">
+            <input type="radio" name="1" value="305">
+            <img src="../../../../assets/images/305.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="304">
+            <img src="../../../../assets/images/304.jpg">
+            <input type="radio" name="1" value="303">
+            <img src="../../../../assets/images/303.jpg">
+            <input type="radio" name="1" value="302">
+            <img src="../../../../assets/images/302.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="450">
+            <img src="../../../../assets/images/450.jpg">
+            <input type="radio" name="1" value="316">
+            <img src="../../../../assets/images/316.jpg">
+            <input type="radio" name="1" value="423">
+            <img src="../../../../assets/images/423.jpg">
+          </div>
+          <div class="brImg">
+            <input type="radio" name="1" value="306">
+            <img src="../../../../assets/images/306.jpg">
+          </div>
+        </div>
+        <!-- 第二步：选择账户类型 -->
+        <div class="accountType" style="display:none">
+            <div style="padding-left:10px;width:400px;border:2px solid #ccc;
+              background-color:#ebebeb;height:60px;line-height:60px;">
+              <img src={{cardId}}>&nbsp;&nbsp;&nbsp;&nbsp;
+              储蓄卡&nbsp;&nbsp;&nbsp;&nbsp;<a (click)="backBankList()">更换</a>
+            </div><hr>
+            <div>
+              选择账户类型:
+            </div><hr>
+            <div>
+              <input type="radio" value="11" name="2" (click)="personAccount()">个人账户
+            </div><hr>
+            <div>
+              <input type="radio" value="12" name="2" (click)="firmAccount()">企业账户 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>(不可以绑定快捷支付方式)</span>
+            </div><hr>
+        </div>
+        <!-- 第三1步企业账户绑定卡 -->
+        <div class="firmAccount" style="display:none;margin-left:20%">
+            <div class="inputDiv">
+               <label><span class="e85529">*</span>持卡人:</label><input type="text"  name="name">
+            </div>
+            <div class="inputDiv">
+               <label><span class="e85529">*</span>银行卡号</label><input type="text" name="cardNo"  minlength='16' maxlength="19">
+            </div>
+            <div class="inputDiv">
+               <label><span class="e85529">*</span>开户行名称:</label><input type="text" name="bank">
+            </div>
+        </div>
+        <!-- 第三2步个人账户绑定卡 -->
+        <div class="back" style="display:none;margin-left:20%">
+            <div class="inputDiv">
+              <label><span class="e85529">*</span>持卡人:</label> <input type="text" name="name1" readonly="readongly" value={{name}}>
+            </div>
+            <div class="inputDiv">
+                <label><span class="e85529">*</span>银行卡号:</label><input type="text" name="cardNo1" minlength="16" maxlength="19">
+            </div>
+            <div class="inputDiv">
+                <label><span class="e85529">*</span>开户行名称:</label><input type="text" name="bank1">
+            </div>
+            <div class="inputDiv">
+                <label><span class="e85529">*</span>银行预留手机号:</label><input type="text" name="mobile"  maxlength="11">
+            </div>
+            <div class="inputDiv">
+                <label><span class="e85529">*</span>开户证件类型:</label>
+               <select id="IdentificationType" name="idType" >
+              <option value="0">身份证</option>
+              <option value="1">户口薄</option>
+              <option value="2">护照</option>
+              <option value="3">军官证</option>
+              <option value="4">士兵证</option>
+              <option value="5">港澳居民来往内地通行证</option>
+              <option value="6">台湾同胞来往内地通行证</option>
+              <option value="7">临时身份证</option>
+              <option value="8">外国人居留证</option>
+              <option value="9">警官证</option>
+              <option value="X">其他证件</option>
+            </select>
+            </div>
+            <div class="inputDiv">
+               <label><span class="e85529">*</span>开户证件号:</label><input type="text" name="idNo"  maxlength="18">
+            </div>
+            <div class="checkbox">
+               <label><span class="e85529"><input type="checkbox" id="faster" name="faster"  checked="checked"></span>绑定快捷支付方式</label>
+            </div>
+            <!-- <div>
+                <button class="personButton" (click)="confirm()">
+                    确&nbsp;&nbsp;认
+                </button>
+            </div> -->
+        </div>
+        <!-- 第四步个人账户绑定卡获取手机验证码 -->
+        <div class="verCode" style="display:none">
+            <div class="mobileStyle">请输入{{mobile}}收到的验证码</div>
+            <div class="yzmStyle">
+              <label><span class="e85529">*</span>验证码:</label><input type="text" placeholder="请输入验证码"  maxlength="6" name="validation">
+            </div>
+            <!-- <div>
+              <button class="noYzm">未收到验证码</button>&nbsp;
+              <button (click)="binding()">确认绑定</button>
+            </div> -->
+        </div>
+        <!-- 第五步绑定成功 -->
+        <div class="bindingSuccess" style="display:none">
+           <div class="seccess">
+             <img src="../../../../assets/images/fbcg.png">
+             <div class="fonts">绑定成功!</div>
+       </div>
+        </div>
+      </div>
+	    <div class="modal-footer" style="background-color:#ebebeb">
+        <button type="button" class="next1"  id="next1" (click)="next1()">下一步</button>
+        <button type="button" class="next1" id="next3" (click)="confirm()" style="display:none">确认</button> 
+        <button type="button" class="next1" id="next2" (click)="confirmAccount()" style="display:none">确认</button>
+        <!-- <button class="next1" id="next4" style="display:none">未收到验证码</button>&nbsp;&nbsp; -->
+        <button class="next1" id="next5" style="display:none" (click)="binding()">确认绑定</button>
+         <!-- <button type="button" class="btn btn-default down" id="shut" data-dismiss="modal" (click)="clear()">关闭</button>  -->
+         <button type="button" class="btn btn-default  next1" id="finish1" data-dismiss="modal" (click)="complete()" style="display:none">完成</button> 
+		  </div>
+		</div>
+  </div>
+</div>
+
+<!-- 弹框 -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+      <div class="modal-header" style="background-color:#ebebeb">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">
+					&times;
+        </button>
+        	<strong class="modal-title" id="myModalLabel">
+					  提示消息
+				</strong>
+			</div>
+	  <div class="modal-body middleContent">
+      <div class="pwd">
+        <div>马上来钱包支付密码</div>
+        <div class="inputDiv"><input type="text" name="pwd" maxlength="6" onfocus="this.type='password'">&nbsp;&nbsp;<a (click)="changePwd()">忘记密码？</a></div>
+        <div class="tishi">请输入六位数字密码</div>
+      </div>
+      <div class="seccess" style="display:none">
+            <img src="../../../../assets/images/fbcg.png">
+            <div class="fonts">解绑成功!</div>
+      </div>
+    </div>
+	  <div class="modal-footer" style="background-color:#ebebeb">
+      <div type="button" class="btn bg-e8 btnStyle" id="removeQr" (click)="remove()">确认解绑</div>
+      <!-- <button type="button" class="btn btn-default" id="cancle" data-dismiss="modal" (click)="clear()">取消</button> -->
+      <button type="button" class="btn next1" id = "finish" data-dismiss="modal" (click)="complete()" style="display:none">完成</button>
+		</div>
+	</div>
+</div>
+</div>
